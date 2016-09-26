@@ -4,25 +4,28 @@
     android:layout_height="match_parent">
 
     <!-- The main content view -->
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ly_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+        <TextView
+            android:layout_width="30dp"
+            android:id="@+id/text1"
+            android:layout_height="20dp"
+            android:background="@color/colorMainStyle"/>
+        </LinearLayout>
 
 
     <!-- The navigation drawer -->
-   <!-- <fragment
-        android:id="@+id/fragment_drawer"
-        android:layout_width="160dp"
-        android:layout_height="match_parent"
-        android:background="@color/colorMainStyle"
-        android:choiceMode="singleChoice"
-        android:layout_gravity="start"/>-->
-    <ListView
-        android:id="@+id/list_left_drawer"
+    <LinearLayout
+        android:id="@+id/ll_drawer"
         android:layout_width="160dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/colorMainStyle"
-        android:choiceMode="singleChoice"/>
+        android:choiceMode="singleChoice">
+        <!--抽屉布局-->
+        <include layout="@layout/layout_drawer" />
+    </LinearLayout>
+
 </android.support.v4.widget.DrawerLayout>
