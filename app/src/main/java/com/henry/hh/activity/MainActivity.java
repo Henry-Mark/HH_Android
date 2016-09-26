@@ -2,12 +2,8 @@ package com.henry.hh.activity;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.v4.text.TextUtilsCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 
 import com.henry.hh.R;
-import com.henry.hh.utils.ToastUtils;
 
 /**
  * Date: 16-9-24 下午10:55
