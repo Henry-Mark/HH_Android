@@ -1,7 +1,8 @@
 package com.henry.hh.activity;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.os.PersistableBundle;
+import android.support.v4.widget.DrawerLayout;
 
 import com.henry.hh.R;
 
@@ -12,15 +13,27 @@ import com.henry.hh.R;
  * Description:
  */
 public class MainActivity extends BaseActivity {
+
+    private DrawerLayout drawer_layout;
+
+
+
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
+
     }
 
     @Override
     protected void bindControls() {
         super.bindControls();
+        drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
 
     }
 }

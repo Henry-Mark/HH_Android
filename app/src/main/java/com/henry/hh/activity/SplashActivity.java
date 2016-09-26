@@ -1,4 +1,4 @@
-package com.henry.hh;
+package com.henry.hh.activity;
 
 import android.os.Bundle;
 import android.widget.Toast;
