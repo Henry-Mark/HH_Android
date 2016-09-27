@@ -1,6 +1,7 @@
 package com.henry.hh.utils;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 /**
@@ -11,29 +12,40 @@ import android.widget.LinearLayout;
  */
 public class ControlsUtils {
 
+
     /**
      * 设置控件宽度
-     * @param view 控件
-     * @param width 宽度，单位：像素
+     * @param view      控件
+     * @param width     宽度，单位：像素
      */
-    public static void setWidth(View view, int width){
-        // 取控件mGrid当前的布局参数
-        LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) view.getLayoutParams();
-        linearParams.weight = width;
-        view.setLayoutParams(linearParams);
-
+    public static void setWidth(View view, int width ){
+        ViewGroup.LayoutParams params = view.getLayoutParams();
+        params.width = width;
+        view.setLayoutParams(params);
     }
 
     /**
      * 设置控件高度
-     * @param view 控件
+     * @param view      控件
+     * @param height    高度，单位：像素
+     */
+    public static void setHeight(View view ,int height){
+        ViewGroup.LayoutParams params = view.getLayoutParams();
+        params.height = height;
+        view.setLayoutParams(params);
+    }
+
+    /**
+     * 设置控件大小
+     * @param view  控件
+     * @param width 宽度，单位：像素
      * @param height 高度，单位：像素
      */
-    public static void setHeight(View view,int height){
-        // 取控件mGrid当前的布局参数
-        LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) view.getLayoutParams();
-        linearParams.height = height;
-        view.setLayoutParams(linearParams);
+    public static void setSize(View view,int width,int height){
+        ViewGroup.LayoutParams params = view.getLayoutParams();
+        params.width = width;
+        params.height = height;
+        view.setLayoutParams(params);
     }
 
 

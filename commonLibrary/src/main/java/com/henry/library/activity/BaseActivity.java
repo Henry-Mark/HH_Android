@@ -27,7 +27,6 @@ public class BaseActivity extends AppCompatActivity {
         TAG = getClass().getName();
         Log.i(TAG, "onCreate...");
 
-        bindControls();
 
     }
 
@@ -70,13 +69,6 @@ public class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.i(TAG, "onDestroy...");
-
-    }
-
-    /**
-     * 绑定控件
-     */
-    protected void bindControls() {
 
     }
 
