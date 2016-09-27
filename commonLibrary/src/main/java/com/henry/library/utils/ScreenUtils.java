@@ -1,4 +1,4 @@
-package com.henry.hh.utils;
+package com.henry.library.utils;
 
 import android.app.Activity;
 import android.content.Context;

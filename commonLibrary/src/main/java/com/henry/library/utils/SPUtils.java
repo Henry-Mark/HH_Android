@@ -1,4 +1,4 @@
-package com.henry.hh.utils;
+package com.henry.library.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

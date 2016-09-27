@@ -1,15 +1,13 @@
 package com.henry.hh.activity;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.henry.hh.R;
 import com.henry.hh.utils.ControlsUtils;
-import com.henry.hh.utils.ScreenUtils;
+import com.henry.library.activity.BaseActivity;
 
 /**
  * Date: 16-9-24 下午10:55

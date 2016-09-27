@@ -1,13 +1,10 @@
 package com.henry.hh.activity;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
-import com.henry.hh.activity.BaseActivity;
-import com.henry.hh.activity.GuideActivity;
-import com.henry.hh.activity.MainActivity;
+import com.henry.library.activity.BaseActivity;
 import com.henry.hh.constants.Constants_SP;
-import com.henry.hh.utils.SPUtils;
+import com.henry.library.utils.SPUtils;
 
 /**
  * Date: 16-9-24 下午9:51
