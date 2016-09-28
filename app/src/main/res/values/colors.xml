@@ -5,4 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <!--app主题风格色彩-->
     <color name="colorMainStyle">#409cff</color>
+
+    <color name="c_b7bff0">#b7bff0</color>
+    <color name="c_e9e794">#e9e794</color>
+
 </resources>
