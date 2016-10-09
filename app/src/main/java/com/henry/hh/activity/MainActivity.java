@@ -1,67 +1,71 @@
 package com.henry.hh.activity;
 
+import android.graphics.Color;
+import android.support.v4.app.FragmentTabHost;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.DrawerLayout;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TabHost;
+import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.henry.hh.R;
-import com.henry.hh.fragment.DrawerFragment;
-import com.henry.library.utils.ControlsUtils;
-import com.henry.library.activity.BaseActivity;
-import com.henry.library.utils.ScreenUtils;
+import com.henry.hh.constants.TabDatas;
 
-/**
- * Date: 16-9-24 下午10:55
- * Creator: henry
- * Email: heneymark@gmail.com
- * Description:
- */
-public class MainActivity extends BaseActivity {
-
-    //抽屉控件
-    private DrawerLayout drawer_layout;
-    //抽屉布局（左侧）
-    private FrameLayout mDrawer;
-
-    private TextView mText;
-
-
+public class MainActivity extends AppCompatActivity implements TabHost.OnTabChangeListener {
+    private FragmentTabHost tabHost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //绑定控件
-        bindControls();
-        //初始化抽屉Fragment
-        initDrawerView();
+        tabHost=(FragmentTabHost)super.findViewById(android.R.id.tabhost);
+        tabHost.setup(this,super.getSupportFragmentManager()
+                ,R.id.contentLayout);
+        tabHost.getTabWidget().setDividerDrawable(null);
+        tabHost.setOnTabChangedListener(this);
+        initTab();
 
-        mText.setText("I miss you!");
     }
 
-    /**
-     * 初始化抽屉Fragment
-     */
-    private void initDrawerView() {
-        DrawerFragment drawerFragment = new DrawerFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fl_drawer, drawerFragment).commit();
+    private void initTab(){
+        String tabs[]=TabDatas.getTabsTxt();
+        for(int i=0;i<tabs.length;i++){
+            TabHost.TabSpec tabSpec=tabHost.newTabSpec(tabs[i]).setIndicator(getTabView(i));
+            tabHost.addTab(tabSpec,TabDatas.getFragments()[i],null);
+            tabHost.setTag(i);
+        }
+    }
+    private View getTabView(int idx){
+        View view= LayoutInflater.from(this).inflate(R.layout.footer_tabs,null);
+        ((TextView)view.findViewById(R.id.title_footer)).setText(TabDatas.getTabsTxt()[idx]);
+        if(idx==0){
+            ((TextView)view.findViewById(R.id.title_footer)).setTextColor(Color.RED);
+            ((ImageView)view.findViewById(R.id.img_footer)).setImageResource(TabDatas.getTabsImgLight()[idx]);
+        }else{
+            ((ImageView)view.findViewById(R.id.img_footer)).setImageResource(TabDatas.getTabsImg()[idx]);
+        }
+        return view;
     }
 
-
-    /**
-     * 绑定控件
-     */
-    protected void bindControls() {
-        drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawer = (FrameLayout) findViewById(R.id.fl_drawer);
-        //设置抽屉宽度为频幕宽度的3/5
-        ControlsUtils.setWidth(mDrawer, ScreenUtils.getScreenWidth(this) * 3 / 5);
-        mText = (TextView) findViewById(R.id.text1);
+    @Override
+    public void onTabChanged(String tabId) {
+        updateTab();
     }
 
+    private void updateTab(){
+        TabWidget tabw=tabHost.getTabWidget();
+        for(int i=0;i<tabw.getChildCount();i++){
+            View view=tabw.getChildAt(i);
+            ImageView iv=(ImageView)view.findViewById(R.id.img_footer);
+            if(i==tabHost.getCurrentTab()){
+                ((TextView)view.findViewById(R.id.title_footer)).setTextColor(Color.RED);
+                iv.setImageResource(TabDatas.getTabsImgLight()[i]);
+            }else{        ((TextView)view.findViewById(R.id.title_footer)).setTextColor(Color.GRAY);
+                iv.setImageResource(TabDatas.getTabsImg()[i]);
+            }
 
+        }
+    }
 }

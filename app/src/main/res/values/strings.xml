@@ -5,4 +5,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--用于引导页-->
     <string name="string_imu">I miss U</string>
+
+    <string name="test">Test</string>
 </resources>

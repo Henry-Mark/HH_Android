@@ -10,29 +10,22 @@ import android.view.ViewGroup;
 import com.henry.hh.R;
 
 /**
- * Date: 16-10-08 下午8:55
- * Creator: henry
- * Email: heneymark@gmail.com
- * Description:抽屉内容
+ * A simple {@link Fragment} subclass.
+ * 聊天室，用于展示聊天列表
  */
-public class DrawerFragment extends Fragment {
+public class ChatroomFragment extends Fragment {
 
-    public DrawerFragment() {
+
+    public ChatroomFragment() {
         // Required empty public constructor
     }
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_drawer, container, false);
+        return inflater.inflate(R.layout.fragment_chatroom, container, false);
     }
 
 }
