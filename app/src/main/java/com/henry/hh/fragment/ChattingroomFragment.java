@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.henry.hh.R;
 import com.henry.hh.adapter.TestAdapter;
 import com.henry.hh.entity.ChattingRoom;
-import com.henry.library.interfaces.OnRecyclerItemClickListener;
+import com.henry.hh.interfaces.OnRecyclerItemClickListener;
 import com.henry.library.View.DividerItemDecoration;
 import com.henry.library.utils.TimeUtils;
 
