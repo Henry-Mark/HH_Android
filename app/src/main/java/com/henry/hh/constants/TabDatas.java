@@ -1,7 +1,7 @@
 package com.henry.hh.constants;
 
 import com.henry.hh.R;
-import com.henry.hh.fragment.ChatroomFragment;
+import com.henry.hh.fragment.ChattingroomFragment;
 import com.henry.hh.fragment.ExplorationParkFragment;
 import com.henry.hh.fragment.LivingCircleFragment;
 
@@ -48,7 +48,7 @@ public class TabDatas {
      * @return
      */
     public static Class[] getFragments() {
-        Class[] clz = {ChatroomFragment.class, LivingCircleFragment.class, ExplorationParkFragment.class};
+        Class[] clz = {ChattingroomFragment.class, LivingCircleFragment.class, ExplorationParkFragment.class};
         return clz;
     }
 }

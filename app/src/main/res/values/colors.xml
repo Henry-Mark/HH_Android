@@ -11,4 +11,6 @@
 
     <color name="colorTabTextNormal">#a7a7a2</color>
 
+    <color name="divide_gray_color">#3F51B5</color>
+
 </resources>
