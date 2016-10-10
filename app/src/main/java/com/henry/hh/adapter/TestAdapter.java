@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.henry.hh.R;
 import com.henry.hh.entity.ChattingRoom;
-import com.henry.hh.interfaces.OnRecyclerItemClickListener;
+import com.henry.library.interfaces.OnRecyclerItemClickListener;
 import com.henry.library.View.CircleImageView;
 import com.henry.library.View.CircleTextImageView;
 import com.henry.library.adapter.BaseRecyclerAdapter;
