@@ -2,6 +2,7 @@ package com.henry.hh.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.henry.hh.R;
 import com.henry.hh.constants.TabDatas;
+import com.henry.hh.dialog.PromptDialog;
 import com.henry.library.activity.BaseActivity;
 
 public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener {
@@ -71,5 +73,16 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             }
 
         }
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            PromptDialog promptDialog = new PromptDialog(this,"slfblabfl");
+            promptDialog.show(getFragmentManager(),"promptDialog");
+        }
+
+        return false;
     }
 }

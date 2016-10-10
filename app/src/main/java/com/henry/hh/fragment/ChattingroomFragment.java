@@ -60,8 +60,8 @@ public class ChattingroomFragment extends Fragment {
             @Override
             public void onItemClick(View view, List data, int position) {
 //                Toast.makeText(getActivity(),"...."+position,Toast.LENGTH_SHORT).show();
-                PromptDialog promptDialog = new PromptDialog(getActivity(),"slfblabfl");
-                promptDialog.show(getActivity().getFragmentManager(),"promptDialog");
+//                PromptDialog promptDialog = new PromptDialog(getActivity(),"slfblabfl");
+//                promptDialog.show(getActivity().getFragmentManager(),"promptDialog");
             }
         });
         return view;
