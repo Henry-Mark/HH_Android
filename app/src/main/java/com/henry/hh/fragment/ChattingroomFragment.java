@@ -8,12 +8,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.henry.hh.R;
 import com.henry.hh.adapter.ChattingRoomAdapter;
+import com.henry.hh.adapter.TestAdapter;
 import com.henry.hh.entity.ChattingRoom;
+import com.henry.hh.interfaces.OnRecyclerItemClickListener;
 import com.henry.library.View.DividerItemDecoration;
 import com.henry.library.utils.TimeUtils;
+import com.henry.library.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +29,7 @@ import java.util.List;
 public class ChattingroomFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private ChattingRoomAdapter roomAdapter;
+    private TestAdapter roomAdapter;
     private LinearLayoutManager mLayoutManager;
 
     public ChattingroomFragment() {
@@ -47,8 +51,16 @@ public class ChattingroomFragment extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
         //创建并设置Adapter
-        roomAdapter = new ChattingRoomAdapter(getActivity(),getDatas());
+        roomAdapter = new TestAdapter(getActivity(),getDatas());
+//        roomAdapter.refresh(getDatas());
         recyclerView.setAdapter(roomAdapter);
+
+        roomAdapter.setOnItemClickListener(new OnRecyclerItemClickListener() {
+            @Override
+            public void onItemClick(View view, List data, int position) {
+                Toast.makeText(getActivity(),"...."+position,Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
 
     }
