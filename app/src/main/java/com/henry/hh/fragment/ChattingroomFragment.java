@@ -8,10 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.henry.hh.R;
-import com.henry.hh.adapter.TestAdapter;
+import com.henry.hh.adapter.ChattingRoomAdapter;
+import com.henry.hh.dialog.PromptDialog;
 import com.henry.hh.entity.ChattingRoom;
 import com.henry.hh.interfaces.OnRecyclerItemClickListener;
 import com.henry.library.View.DividerItemDecoration;
@@ -27,7 +27,7 @@ import java.util.List;
 public class ChattingroomFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private TestAdapter roomAdapter;
+    private ChattingRoomAdapter roomAdapter;
     private LinearLayoutManager mLayoutManager;
 
     public ChattingroomFragment() {
@@ -39,8 +39,8 @@ public class ChattingroomFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =inflater.inflate(R.layout.fragment_chattingroom, container, false);
-        recyclerView = (RecyclerView)view.findViewById(R.id.recycler_chatting);
+        View view = inflater.inflate(R.layout.fragment_chattingroom, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_chatting);
         //创建默认的线性LayoutManager
         mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -49,28 +49,31 @@ public class ChattingroomFragment extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
         //创建并设置Adapter
-        roomAdapter = new TestAdapter(getActivity(),getDatas());
-//        roomAdapter.refresh(getDatas());
+        roomAdapter = new ChattingRoomAdapter(getActivity());
+
         recyclerView.setAdapter(roomAdapter);
+        roomAdapter.refresh(getDatas());
 
         roomAdapter.setOnItemClickListener(new OnRecyclerItemClickListener() {
             @Override
             public void onItemClick(View view, List data, int position) {
-                Toast.makeText(getActivity(),"...."+position,Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(),"...."+position,Toast.LENGTH_SHORT).show();
+                PromptDialog promptDialog = new PromptDialog(getActivity());
+                promptDialog.show(getActivity().getFragmentManager(), "promptDialog");
             }
         });
         return view;
 
     }
 
-    private List<ChattingRoom> getDatas(){
+    private List<ChattingRoom> getDatas() {
         List<ChattingRoom> mList = new ArrayList<>();
-        for (int i=0;i<5;i++){
+        for (int i = 0; i < 5; i++) {
             ChattingRoom room = new ChattingRoom();
-            room.setAmountUnread(i+5);
-            room.setUserId("id"+i);
-            room.setContent("content"+i);
-            room.setMessageTime(TimeUtils.getSysCurrentMillis()-i*1000000);
+            room.setAmountUnread(i + 5);
+            room.setUserId("id" + i);
+            room.setContent("content" + i);
+            room.setMessageTime(TimeUtils.getSysCurrentMillis() - i * 1000000);
             mList.add(room);
         }
 

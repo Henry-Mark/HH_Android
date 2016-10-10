@@ -6,6 +6,10 @@
     <!--用于引导页-->
     <string name="string_imu">I miss U</string>
 
+    <string name="prompt">提示</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+
     <string name="test">Test</string>
     <string name="test_time">12:12</string>
 </resources>
