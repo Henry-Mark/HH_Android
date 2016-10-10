@@ -66,9 +66,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="3dp"
             app:citv_fill_color="@android:color/holo_red_light"
-            app:citv_text_color="@android:color/white"
             app:citv_text_padding="3dp"
-            app:citv_text_text="99" />
+            app:citv_text_text="99"
+            app:citv_text_size="10sp" />
 
     </LinearLayout>
 
