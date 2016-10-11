@@ -21,16 +21,11 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
         mContext = this;
 
         // 获取当前类名
         TAG = getClass().getName();
         Log.i(TAG, "onCreate...");
-
-
     }
 
     @Override

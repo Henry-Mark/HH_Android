@@ -1,6 +1,7 @@
 package com.henry.hh.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -14,9 +15,12 @@ import com.henry.hh.R;
 import com.henry.hh.constants.TabDatas;
 import com.henry.hh.dialog.PromptDialog;
 import com.henry.library.activity.BaseActivity;
+import com.henry.library.utils.ScreenUtils;
 
 public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener {
     private FragmentTabHost tabHost;
+    private String TAG_DIALOG = "promptDialog";
+    PromptDialog promptDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,13 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         tabHost.getTabWidget().setDividerDrawable(null);
         tabHost.setOnTabChangedListener(this);
         initTab();
+
+        PromptDialog fragment = (PromptDialog) getFragmentManager().findFragmentByTag(TAG_DIALOG);
+        if (fragment != null) {
+            getFragmentManager().beginTransaction().remove(fragment).commit();
+            new PromptDialog(this,"ikkkkkkkk",ScreenUtils.getScreenWidth(this)).show(getFragmentManager(), TAG_DIALOG );
+        }
+
 
     }
 
@@ -79,8 +90,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK){
-            PromptDialog promptDialog = new PromptDialog(this,"slfblabfl");
-            promptDialog.show(getFragmentManager(),"promptDialog");
+            promptDialog = new PromptDialog(this,"slfblabfl", ScreenUtils.getScreenWidth(this));
+            promptDialog.show(getFragmentManager(),TAG_DIALOG);
         }
 
         return false;
