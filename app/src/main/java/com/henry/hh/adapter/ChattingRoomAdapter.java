@@ -28,7 +28,9 @@ import java.util.List;
  * Email: heneymark@gmail.com
  * Description: 聊天室列表的适配器
  */
-public class ChattingRoomAdapter extends BaseRecyclerAdapter<ChattingRoomAdapter.ViewHolder, ChattingRoom> implements View.OnClickListener {
+public class ChattingRoomAdapter
+        extends BaseRecyclerAdapter<ChattingRoomAdapter.ViewHolder, ChattingRoom>
+        implements View.OnClickListener {
 
     //点击监听事件
     private OnRecyclerItemClickListener mOnItemClickListener = null;
@@ -62,11 +64,13 @@ public class ChattingRoomAdapter extends BaseRecyclerAdapter<ChattingRoomAdapter
     @Override
     public void onClick(View view) {
         //使用getTag方法获取数据
-        mOnItemClickListener.onItemClick(view, datalist, (Integer) view.getTag());
+        if (mOnItemClickListener != null)
+            mOnItemClickListener.onItemClick(view, datalist, (Integer) view.getTag());
     }
 
     /**
      * item点击事件
+     *
      * @param listener
      */
     public void setOnItemClickListener(OnRecyclerItemClickListener listener) {

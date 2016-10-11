@@ -14,13 +14,14 @@ import android.widget.TextView;
 import com.henry.hh.R;
 import com.henry.hh.constants.TabDatas;
 import com.henry.hh.dialog.PromptDialog;
+import com.henry.hh.interfaces.OnDialogClickListener;
 import com.henry.library.activity.BaseActivity;
 import com.henry.library.utils.ScreenUtils;
 
-public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener {
+public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener, OnDialogClickListener {
     private FragmentTabHost tabHost;
     private String TAG_DIALOG = "promptDialog";
-    PromptDialog promptDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +37,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         PromptDialog fragment = (PromptDialog) getFragmentManager().findFragmentByTag(TAG_DIALOG);
         if (fragment != null) {
             getFragmentManager().beginTransaction().remove(fragment).commit();
-            new PromptDialog(this,"ikkkkkkkk",ScreenUtils.getScreenWidth(this)).show(getFragmentManager(), TAG_DIALOG );
+            showDialog();
         }
-
-
     }
 
     private void initTab() {
@@ -87,13 +86,32 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     }
 
 
+    /**
+     * 显示提示对话框
+     */
+    private void showDialog() {
+        PromptDialog promptDialog = new PromptDialog(this, "slfblabfl", ScreenUtils.getScreenWidth(this));
+        promptDialog.show(getFragmentManager(), TAG_DIALOG);
+        promptDialog.setOnDialogClickListener(this);
+    }
+
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK){
-            promptDialog = new PromptDialog(this,"slfblabfl", ScreenUtils.getScreenWidth(this));
-            promptDialog.show(getFragmentManager(),TAG_DIALOG);
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            showDialog();
         }
 
         return false;
+    }
+
+    @Override
+    public void onOkClick() {
+        finish();
+    }
+
+    @Override
+    public void onCancel() {
+
     }
 }

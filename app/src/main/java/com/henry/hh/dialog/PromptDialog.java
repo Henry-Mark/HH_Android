@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.henry.hh.R;
+import com.henry.hh.interfaces.OnDialogClickListener;
 
 /**
  * Date: 16-10-10 下午8:17
@@ -22,7 +23,7 @@ import com.henry.hh.R;
  * Email: heneymark@gmail.com
  * Description:提示对话框
  */
-public class PromptDialog extends DialogFragment {
+public class PromptDialog extends DialogFragment implements View.OnClickListener {
     private Context context;
     //提示的信息
     private String msg;
@@ -39,6 +40,9 @@ public class PromptDialog extends DialogFragment {
     private String SCREENWIDTH = "width";
 
     private int screenWidth;
+
+    //设置监听
+    private OnDialogClickListener dialogClickListener = null;
 
     /**
      * 构造方法
@@ -66,7 +70,6 @@ public class PromptDialog extends DialogFragment {
         if ((arguments = this.getArguments()) != null) {
             this.MESSAGE = arguments.getString(MESSAGE);
             this.screenWidth = arguments.getInt(SCREENWIDTH);
-
         }
 
     }
@@ -80,9 +83,7 @@ public class PromptDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_dialog_prompt, container, false);
         //点击window外的区域 是否消失
         getDialog().setCanceledOnTouchOutside(false);
-
         bindView(view);
-
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         mMsg.setText(msg == null ? "" : msg);
@@ -99,12 +100,37 @@ public class PromptDialog extends DialogFragment {
         mMsg = (TextView) view.findViewById(R.id.dialog_content);
         mOk = (Button) view.findViewById(R.id.bt_dialog_ok);
         mCancel = (Button) view.findViewById(R.id.bt_dialog_cancel);
+        mOk.setOnClickListener(this);
+        mCancel.setOnClickListener(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
         getDialog().getWindow().setLayout(screenWidth * 3 / 5, screenWidth * 3 / 8);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == mOk) {
+            if (dialogClickListener != null) {
+                dismiss();
+                dialogClickListener.onOkClick();
+            }
+        } else if (v == mCancel) {
+            if (dialogClickListener != null) {
+                dismiss();
+                dialogClickListener.onCancel();
+            }
+        }
+    }
+
+    /**
+     * 设置监听事件
+     *
+     * @param listener
+     */
+    public void setOnDialogClickListener(OnDialogClickListener listener) {
+        this.dialogClickListener = listener;
     }
 }
