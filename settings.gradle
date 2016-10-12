@@ -1,1 +1,1 @@
-include ':app', ':commonLibrary', ':titanicLibrary',":library"
+include ':app', ':commonLibrary', ':titanicLibrary',":bgaRefreshLibrary"
