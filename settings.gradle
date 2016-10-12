@@ -1,1 +1,1 @@
-include ':app', ':commonLibrary', ':titanicLibrary'
+include ':app', ':commonLibrary', ':titanicLibrary',":library"
