@@ -72,7 +72,7 @@ public class ChattingroomFragment extends Fragment {
         List<ChattingRoom> mList = new ArrayList<>();
         for (int i=0;i<5;i++){
             ChattingRoom room = new ChattingRoom();
-            room.setAmountUnread(i+5);
+            room.setAmountUnread(i+7);
             room.setUserId("id"+i);
             room.setContent("content"+i);
             room.setMessageTime(TimeUtils.getSysCurrentMillis()-i*1000000);

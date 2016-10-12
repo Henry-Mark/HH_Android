@@ -53,8 +53,22 @@ public class ChattingRoomAdapter
         ChattingRoom room = datalist.get(position);
         holder.mUser.setText(room.getUserId());
         holder.mContent.setText(room.getContent());
-        holder.mAmount.setText("" + room.getAmountUnread());
         holder.mTime.setText(TimeUtils.getRelativeTime(context, room.getMessageTime()));
+
+        /**
+         * 设置未读消息条数
+         * 1.0 - 9 条，显示具体条数，前后各加一个空格，已保证大小长度与两个数字相同
+         * 2.10 - 99 条，显示具体条数；
+         * 3.大于100条时，只显示99条；
+         */
+        int amount = room.getAmountUnread();
+        if (amount < 10) {
+            holder.mAmount.setText(" " + amount + " ");
+        } else if (amount < 100)
+            holder.mAmount.setText("" + amount);
+        else
+            holder.mAmount.setText("99");
+
 
         ControlsUtils.setHeight(holder.mLayout, ScreenUtils.getScreenHeight(context) / 10);
         //将数据保存在itemView的Tag中，以便点击时进行获取

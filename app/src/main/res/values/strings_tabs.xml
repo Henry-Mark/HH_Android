@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--tab名称-->
+    <string name="tab_chattingroom">聊天室</string>
+    <string name="tab_explorations">生活圈</string>
+    <string name="tab_livingcircle">探索园</string>
+    <string name="tab_myhome">我的家</string>
+</resources>
