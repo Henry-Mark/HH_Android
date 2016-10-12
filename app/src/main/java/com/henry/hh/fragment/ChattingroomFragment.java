@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.henry.hh.R;
 import com.henry.hh.adapter.ChattingRoomAdapter;
@@ -18,19 +19,30 @@ import com.henry.hh.entity.ChattingRoom;
 import com.henry.hh.interfaces.OnRecyclerItemClickListener;
 import com.henry.library.View.DividerItemDecoration;
 import com.henry.library.utils.TimeUtils;
+import com.henry.library.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+import cn.bingoogolapple.refreshlayout.BGARefreshViewHolder;
 
 /**
  * A simple {@link Fragment} subclass.
  * 聊天室，用于展示聊天列表
  */
-public class ChattingroomFragment extends Fragment {
+public class ChattingroomFragment extends Fragment implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
     private RecyclerView recyclerView;
     private ChattingRoomAdapter roomAdapter;
     private LinearLayoutManager mLayoutManager;
+
+    private int mNewPageNumber = 0;
+    private int mMorePageNumber = 0;
+    private BGARefreshLayout mRefreshLayout;
 
     public ChattingroomFragment() {
         // Required empty public constructor
@@ -54,23 +66,31 @@ public class ChattingroomFragment extends Fragment {
         roomAdapter = new ChattingRoomAdapter(getActivity());
 
         recyclerView.setAdapter(roomAdapter);
-        roomAdapter.refresh(getDatas());
+        roomAdapter.refresh(getDatas(5));
 
         roomAdapter.setOnItemClickListener(new OnRecyclerItemClickListener() {
             @Override
             public void onItemClick(View view, List data, int position) {
-//                Toast.makeText(getActivity(),"...."+position,Toast.LENGTH_SHORT).show();
-//                PromptDialog promptDialog = new PromptDialog(getActivity(),"slfblabfl");
-//                promptDialog.show(getActivity().getFragmentManager(),"promptDialog");
+                Toast.makeText(getActivity(),"...."+position,Toast.LENGTH_SHORT).show();
             }
         });
+
+        mRefreshLayout = (BGARefreshLayout) view.findViewById(R.id.refreshLayout);
+
+        mRefreshLayout.setDelegate(this);
+        mRefreshLayout.setIsShowLoadingMoreView(true);
+        mRefreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getActivity().getApplicationContext(), true));
+
         return view;
 
     }
 
-    private List<ChattingRoom> getDatas(){
+
+
+
+    private List<ChattingRoom> getDatas(int num){
         List<ChattingRoom> mList = new ArrayList<>();
-        for (int i=0;i<5;i++){
+        for (int i=0;i<num;i++){
             ChattingRoom room = new ChattingRoom();
             room.setAmountUnread(i+7);
             room.setUserId("id"+i);
@@ -80,5 +100,85 @@ public class ChattingroomFragment extends Fragment {
         }
 
         return mList;
+    }
+
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        mNewPageNumber++;
+//        if (mNewPageNumber > 4) {
+//            mRefreshLayout.endRefreshing();
+//            ToastUtils.showShort(getActivity(),"没有最新数据了");
+//            return;
+//        }
+//        mEngine.loadNewData(mNewPageNumber).enqueue(new Callback<List<RefreshModel>>() {
+//            @Override
+//            public void onResponse(Call<List<RefreshModel>> call, Response<List<RefreshModel>> response) {
+//                mRefreshLayout.endRefreshing();
+//                mAdapter.addNewData(response.body());
+//                mDataRv.smoothScrollToPosition(0);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<RefreshModel>> call, Throwable t) {
+//                mRefreshLayout.endRefreshing();
+//            }
+//        });
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+//                ToastUtils.showShort(getActivity(),"没有最新数据了");
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRefreshLayout.endRefreshing();
+                    }
+                });
+
+                cancel();
+            }
+        },3000,1000);
+
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+//        mMorePageNumber++;
+//        if (mMorePageNumber > 4) {
+//            mRefreshLayout.endLoadingMore();
+//            ToastUtils.showShort(getActivity(),"没有更多数据了");
+//            return false;
+//        }
+//        mEngine.loadMoreData(mMorePageNumber).enqueue(new Callback<List<RefreshModel>>() {
+//            @Override
+//            public void onResponse(Call<List<RefreshModel>> call, Response<List<RefreshModel>> response) {
+//                mRefreshLayout.endLoadingMore();
+//                mAdapter.addMoreData(response.body());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<RefreshModel>> call, Throwable t) {
+//                mRefreshLayout.endLoadingMore();
+//            }
+//        });
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+//                ToastUtils.showShort(getActivity(),"没有最新数据了");
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        roomAdapter.refresh(getDatas(10));
+                        ToastUtils.showShort(getActivity(),"没有最新数据了");
+                        mRefreshLayout.endLoadingMore();
+                        cancel();
+                    }
+                });
+
+            }
+        },2000,1000);
+//        mRefreshLayout.endLoadingMore();
+        return true;
     }
 }

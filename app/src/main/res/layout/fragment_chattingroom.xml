@@ -1,15 +1,34 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/MatchMatch"
     tools:context="com.henry.hh.fragment.ChattingroomFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_chatting"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:id="@+id/refreshLayout"
+        style="@style/MatchMatch">
 
-    </android.support.v7.widget.RecyclerView>
+       <!-- <cn.bingoogolapple.refreshlayout.BGAStickyNavLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />-->
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_chatting"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+         <!--   <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+        </cn.bingoogolapple.refreshlayout.BGAStickyNavLayout>
+-->
+
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 
 </FrameLayout>
