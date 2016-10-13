@@ -25,7 +25,6 @@ public class GuideActivity extends BaseActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_guide);
         TitanicTextView tv = (TitanicTextView) findViewById(R.id.titanic);
-
         // set fancy typeface
         tv.setTypeface(Typefaces.get(this, "Satisfy-Regular.ttf"));
 

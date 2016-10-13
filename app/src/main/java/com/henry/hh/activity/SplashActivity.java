@@ -31,7 +31,6 @@ public class SplashActivity extends BaseActivity {
 
     }
 
-
     /**
      * 判断是否是第一次进去该应用
      *
@@ -45,6 +44,4 @@ public class SplashActivity extends BaseActivity {
         }
         return true;
     }
-
-
 }

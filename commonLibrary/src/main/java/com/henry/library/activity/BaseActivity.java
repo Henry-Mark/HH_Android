@@ -3,9 +3,12 @@ package com.henry.library.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Window;
+import android.view.View;
+
+import com.henry.library.utils.ToastUtils;
 
 /**
  * Date: 16-9-24 下午11:52
@@ -71,6 +74,17 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     /**
+     * 查找View
+     *
+     * @param id   控件的id
+     * @param <VT> View类型
+     * @return
+     */
+    protected <VT extends View> VT getViewById(@IdRes int id) {
+        return (VT) findViewById(id);
+    }
+
+    /**
      * 重写startActivity方法
      *
      * @param cls
@@ -107,4 +121,21 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * 显示Toast
+     *
+     * @param text
+     */
+    protected void showToast(String text) {
+        ToastUtils.showShort(mContext, text);
+    }
+
+    /**
+     * 显示Toast
+     *
+     * @param ResStr
+     */
+    protected void showToast(int ResStr) {
+        ToastUtils.showShort(mContext, ResStr);
+    }
 }
