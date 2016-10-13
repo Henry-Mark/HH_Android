@@ -3,7 +3,6 @@ package com.henry.hh.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,8 +12,6 @@ import android.widget.Toast;
 
 import com.henry.hh.R;
 import com.henry.hh.adapter.ChattingRoomAdapter;
-import com.henry.hh.adapter.TestAdapter;
-import com.henry.hh.dialog.PromptDialog;
 import com.henry.hh.entity.ChattingRoom;
 import com.henry.hh.interfaces.OnRecyclerItemClickListener;
 import com.henry.library.View.DividerItemDecoration;
@@ -28,7 +25,6 @@ import java.util.TimerTask;
 
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
-import cn.bingoogolapple.refreshlayout.BGARefreshViewHolder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,21 +36,41 @@ public class ChattingroomFragment extends Fragment implements BGARefreshLayout.B
     private ChattingRoomAdapter roomAdapter;
     private LinearLayoutManager mLayoutManager;
 
-    private int mNewPageNumber = 0;
-    private int mMorePageNumber = 0;
     private BGARefreshLayout mRefreshLayout;
 
     public ChattingroomFragment() {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =inflater.inflate(R.layout.fragment_chattingroom, container, false);
-        recyclerView = (RecyclerView)view.findViewById(R.id.recycler_chatting);
+        View view = inflater.inflate(R.layout.fragment_chattingroom, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_chatting);
+        mRefreshLayout = (BGARefreshLayout) view.findViewById(R.id.refreshLayout);
+        initRefresh();
+        initList();
+        roomAdapter.refresh(getDatas(5));
+
+        roomAdapter.setOnItemClickListener(new OnRecyclerItemClickListener() {
+            @Override
+            public void onItemClick(View view, List data, int position) {
+                Toast.makeText(getActivity(), "...." + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return view;
+
+    }
+
+    /**
+     * 初始化列表
+     *
+     * @return
+     */
+    private void initList() {
+
         //创建默认的线性LayoutManager
         mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -66,36 +82,26 @@ public class ChattingroomFragment extends Fragment implements BGARefreshLayout.B
         roomAdapter = new ChattingRoomAdapter(getActivity());
 
         recyclerView.setAdapter(roomAdapter);
-        roomAdapter.refresh(getDatas(5));
+    }
 
-        roomAdapter.setOnItemClickListener(new OnRecyclerItemClickListener() {
-            @Override
-            public void onItemClick(View view, List data, int position) {
-                Toast.makeText(getActivity(),"...."+position,Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        mRefreshLayout = (BGARefreshLayout) view.findViewById(R.id.refreshLayout);
-
+    /**
+     * 初始化刷新控件
+     */
+    private void initRefresh() {
         mRefreshLayout.setDelegate(this);
         mRefreshLayout.setIsShowLoadingMoreView(true);
         mRefreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getActivity().getApplicationContext(), true));
-
-        return view;
-
     }
 
 
-
-
-    private List<ChattingRoom> getDatas(int num){
+    private List<ChattingRoom> getDatas(int num) {
         List<ChattingRoom> mList = new ArrayList<>();
-        for (int i=0;i<num;i++){
+        for (int i = 0; i < num; i++) {
             ChattingRoom room = new ChattingRoom();
-            room.setAmountUnread(i+7);
-            room.setUserId("id"+i);
-            room.setContent("content"+i);
-            room.setMessageTime(TimeUtils.getSysCurrentMillis()-i*1000000);
+            room.setAmountUnread(i + 7);
+            room.setUserId("id" + i);
+            room.setContent("content" + i);
+            room.setMessageTime(TimeUtils.getSysCurrentMillis() - i * 1000000);
             mList.add(room);
         }
 
@@ -104,25 +110,6 @@ public class ChattingroomFragment extends Fragment implements BGARefreshLayout.B
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        mNewPageNumber++;
-//        if (mNewPageNumber > 4) {
-//            mRefreshLayout.endRefreshing();
-//            ToastUtils.showShort(getActivity(),"没有最新数据了");
-//            return;
-//        }
-//        mEngine.loadNewData(mNewPageNumber).enqueue(new Callback<List<RefreshModel>>() {
-//            @Override
-//            public void onResponse(Call<List<RefreshModel>> call, Response<List<RefreshModel>> response) {
-//                mRefreshLayout.endRefreshing();
-//                mAdapter.addNewData(response.body());
-//                mDataRv.smoothScrollToPosition(0);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<RefreshModel>> call, Throwable t) {
-//                mRefreshLayout.endRefreshing();
-//            }
-//        });
 
         new Timer().schedule(new TimerTask() {
             @Override
@@ -137,7 +124,7 @@ public class ChattingroomFragment extends Fragment implements BGARefreshLayout.B
 
                 cancel();
             }
-        },3000,1000);
+        }, 3000, 1000);
 
     }
 
@@ -170,15 +157,14 @@ public class ChattingroomFragment extends Fragment implements BGARefreshLayout.B
                     @Override
                     public void run() {
                         roomAdapter.refresh(getDatas(10));
-                        ToastUtils.showShort(getActivity(),"没有最新数据了");
+                        ToastUtils.showShort(getActivity(), "没有最新数据了");
                         mRefreshLayout.endLoadingMore();
                         cancel();
                     }
                 });
 
             }
-        },2000,1000);
-//        mRefreshLayout.endLoadingMore();
+        }, 2000, 1000);
         return true;
     }
 }
