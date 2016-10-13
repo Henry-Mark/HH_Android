@@ -37,7 +37,7 @@ public class TestAdapter extends BaseRecyclerAdapter<TestAdapter.TestViewHolder,
 
     @Override
     public TestViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.item_chat, parent, false);
+        View view = inflater.inflate(R.layout.item_chatroom, parent, false);
         //将创建的View注册点击事件
         view.setOnClickListener(this);
         return new TestViewHolder(view);

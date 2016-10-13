@@ -2,8 +2,6 @@ package com.henry.hh.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -19,8 +17,6 @@ import com.henry.library.adapter.RecyclerHolder;
 import com.henry.library.utils.ControlsUtils;
 import com.henry.library.utils.ScreenUtils;
 import com.henry.library.utils.TimeUtils;
-
-import java.util.List;
 
 /**
  * Date: 2016/10/10. 10:31
@@ -41,7 +37,7 @@ public class ChattingRoomAdapter
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.item_chat, parent, false);
+        View view = inflater.inflate(R.layout.item_chatroom, parent, false);
         //将创建的View注册点击事件
         view.setOnClickListener(this);
         return new ViewHolder(view);
