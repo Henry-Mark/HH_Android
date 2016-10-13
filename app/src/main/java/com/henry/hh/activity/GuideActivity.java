@@ -22,7 +22,6 @@ public class GuideActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_guide);
         TitanicTextView tv = (TitanicTextView) findViewById(R.id.titanic);
         // set fancy typeface
