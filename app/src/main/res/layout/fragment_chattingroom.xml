@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
-    tools:context="com.henry.hh.fragment.ChattingroomFragment">
+    tools:context="com.henry.hh.fragment.ChattingroomLogFragment">
 
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout
         android:id="@+id/refreshLayout"

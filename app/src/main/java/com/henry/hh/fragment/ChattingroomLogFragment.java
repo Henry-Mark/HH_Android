@@ -17,6 +17,7 @@ import com.henry.hh.adapter.ChattingRoomAdapter;
 import com.henry.hh.entity.ChattingRoom;
 import com.henry.hh.interfaces.OnRecyclerItemClickListener;
 import com.henry.library.View.DividerItemDecoration;
+import com.henry.library.fragment.BaseFragment;
 import com.henry.library.utils.TimeUtils;
 import com.henry.library.utils.ToastUtils;
 
@@ -32,7 +33,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * A simple {@link Fragment} subclass.
  * 聊天室，用于展示聊天列表
  */
-public class ChattingroomFragment extends Fragment implements BGARefreshLayout.BGARefreshLayoutDelegate {
+public class ChattingroomLogFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
     private RecyclerView recyclerView;
     private ChattingRoomAdapter roomAdapter;
@@ -40,17 +41,38 @@ public class ChattingroomFragment extends Fragment implements BGARefreshLayout.B
 
     private BGARefreshLayout mRefreshLayout;
 
-    public ChattingroomFragment() {
+    public ChattingroomLogFragment() {
         // Required empty public constructor
     }
 
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        // Inflate the layout for this fragment
+//        View view = inflater.inflate(R.layout.fragment_chattingroom, container, false);
+//        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_chatting);
+//        mRefreshLayout = (BGARefreshLayout) view.findViewById(R.id.refreshLayout);
+//        initRefresh();
+//        initList();
+//        roomAdapter.refresh(getDatas(5));
+//
+//        roomAdapter.setOnItemClickListener(new OnRecyclerItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, List data, int position) {
+//                Toast.makeText(getActivity(), "...." + position, Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(getActivity(), ChatActivity.class));
+//            }
+//        });
+//
+//        return view;
+//
+//    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_chattingroom, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_chatting);
-        mRefreshLayout = (BGARefreshLayout) view.findViewById(R.id.refreshLayout);
+    protected void doCreateView(Bundle savedInstanceState) {
+        setContentView(R.layout.fragment_chattingroom);
+        recyclerView = getViewById(R.id.recycler_chatting);
+        mRefreshLayout = getViewById(R.id.refreshLayout);
         initRefresh();
         initList();
         roomAdapter.refresh(getDatas(5));
@@ -62,9 +84,6 @@ public class ChattingroomFragment extends Fragment implements BGARefreshLayout.B
                 startActivity(new Intent(getActivity(), ChatActivity.class));
             }
         });
-
-        return view;
-
     }
 
     /**

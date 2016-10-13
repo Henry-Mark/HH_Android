@@ -1,10 +1,10 @@
 package com.henry.hh.constants;
 
 import com.henry.hh.R;
-import com.henry.hh.fragment.ChattingroomFragment;
-import com.henry.hh.fragment.ExplorationParkFragment;
-import com.henry.hh.fragment.LivingCircleFragment;
-import com.henry.hh.fragment.MyHomeFragment;
+import com.henry.hh.fragment.ChattingroomLogFragment;
+import com.henry.hh.fragment.ExplorationParkLogFragment;
+import com.henry.hh.fragment.LivingCircleLogFragment;
+import com.henry.hh.fragment.MyHomeLogFragment;
 
 /**
  * Date: 16-10-09 下午4:39
@@ -52,8 +52,8 @@ public class TabDatas {
      * @return
      */
     public static Class[] getFragments() {
-        Class[] clz = {ChattingroomFragment.class, LivingCircleFragment.class,
-                ExplorationParkFragment.class, MyHomeFragment.class};
+        Class[] clz = {ChattingroomLogFragment.class, LivingCircleLogFragment.class,
+                ExplorationParkLogFragment.class, MyHomeLogFragment.class};
         return clz;
     }
 }
