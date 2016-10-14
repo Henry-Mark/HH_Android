@@ -10,7 +10,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/bgaRefreshLibrary" />
             <option value="$PROJECT_DIR$/commonLibrary" />
+            <option value="$PROJECT_DIR$/emojiconLibrary" />
             <option value="$PROJECT_DIR$/titanicLibrary" />
           </set>
         </option>

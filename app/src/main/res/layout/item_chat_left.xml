@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/chat_item_date"
+        style="@style/chat_item_date"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/test_time"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp">
+
+        <com.henry.library.View.CircleImageView
+            android:id="@+id/chat_item_avatar"
+            style="@style/chat_item_avatar"
+            android:layout_alignParentLeft="true"
+            />
+
+        <RelativeLayout
+            android:id="@+id/chat_item_layout_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:gravity="center"
+            android:layout_toRightOf="@id/chat_item_avatar"
+            android:background="@drawable/chat_from_bg_selector">
+
+            <io.github.rockerhieu.emojicon.EmojiconTextView
+                android:id="@+id/chat_item_content_text"
+                style="@style/chat_item_text_content"
+                android:text="@string/test_time"/>
+
+            <ImageView
+                android:id="@+id/chat_item_content_image"
+                style="@style/chat_item_image_content"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/chat_item_fail"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/chat_item_layout_content"
+            android:background="@mipmap/msg_state_fail_resend"
+            android:focusable="false"
+            android:visibility="gone"/>
+
+        <ProgressBar
+            android:id="@+id/chat_item_progress"
+            style="@android:style/Widget.ProgressBar.Small.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/chat_item_layout_content"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -3,7 +3,6 @@ package com.henry.library.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -107,7 +106,7 @@ public class TitleActivity extends BaseActivity implements View.OnClickListener 
      * @param backwardView
      */
     protected void onBackward(View backwardView) {
-        Toast.makeText(this, "点击返回，可在此处调用finish()", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "点击返回，可在此处调用finish()", Toast.LENGTH_LONG).show();
         //finish();
     }
 
