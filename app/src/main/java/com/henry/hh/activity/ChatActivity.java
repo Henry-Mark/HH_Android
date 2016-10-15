@@ -7,17 +7,23 @@ import android.view.View;
 
 import com.henry.hh.R;
 import com.henry.hh.adapter.ChatAdapter;
+import com.henry.hh.entity.Faceicon;
 import com.henry.hh.entity.Message;
+import com.henry.hh.interfaces.OnOperationListener;
+import com.henry.hh.widget.ChatKeyboard;
 import com.henry.library.activity.TitleActivity;
 import com.henry.library.utils.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatActivity extends TitleActivity {
+import io.github.rockerhieu.emojicon.emoji.Emojicon;
+
+public class ChatActivity extends TitleActivity implements OnOperationListener {
 
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
+    private ChatKeyboard mChatKeyboard;
     private ChatAdapter chatAdapter;
 
     @Override
@@ -27,10 +33,19 @@ public class ChatActivity extends TitleActivity {
 
         showBackwardView("返回", true);
         setTitle("IMU");
+        initWidget();
 
-        recyclerView = getViewById(R.id.chat_recyclerview);
         initList();
         chatAdapter.refresh(getDatas(10));
+    }
+
+    /**
+     * 初始化控件
+     */
+    private void initWidget() {
+        recyclerView = getViewById(R.id.chat_recyclerview);
+        mChatKeyboard = (getViewById(R.id.chat_msg_input_box));
+        mChatKeyboard.setOnOperationListener(this);
     }
 
     /**
@@ -75,5 +90,41 @@ public class ChatActivity extends TitleActivity {
     protected void onBackward(View backwardView) {
         super.onBackward(backwardView);
         finish();
+    }
+
+    /**
+     * 返回键
+     */
+    @Override
+    public void onBackPressed() {
+        if (mChatKeyboard.isShow()) {
+            mChatKeyboard.hideLayout();
+        } else
+            super.onBackPressed();
+    }
+
+    @Override
+    public void send(String content) {
+        showToast("send");
+    }
+
+    @Override
+    public void selectedFace(Faceicon content) {
+        showToast("send");
+    }
+
+    @Override
+    public void selectedEmoji(Emojicon content) {
+        showToast("selectedFace");
+    }
+
+    @Override
+    public void selectedBackSpace(Emojicon back) {
+        showToast("selectedBackSpace");
+    }
+
+    @Override
+    public void selectedFunction(int index) {
+        showToast("selectedFunction");
     }
 }

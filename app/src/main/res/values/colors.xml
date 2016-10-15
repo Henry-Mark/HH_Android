@@ -13,5 +13,7 @@
     <color name="colorTabTextNormal">#a7a7a2</color>
 
     <color name="divide_gray_color">#3F51B5</color>
+    <!--聊天输入键盘背景颜色-->
+    <color name="emoji_keyboard_bg_light">#f6f5f5</color>
 
 </resources>
