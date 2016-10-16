@@ -125,6 +125,7 @@ public class ChatKeyboard extends RelativeLayout
         mEtMsg.addTextChangedListener(this);
 
         mBtnSend.setEnabled(false);
+        mEtMsg.requestFocus();
     }
 
     @Override
@@ -281,6 +282,7 @@ public class ChatKeyboard extends RelativeLayout
      * 隐藏表情所在的自定义布局
      */
     public void hideLayout() {
+
         mRlFace.setVisibility(View.GONE);
         if (mBtnFace.isChecked()) {
             mBtnFace.setChecked(false);
