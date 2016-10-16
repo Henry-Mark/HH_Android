@@ -51,4 +51,17 @@
         <item name="android:layout_marginRight">10dp</item>
         <item name="android:scaleType">fitCenter</item>
     </style>
+
+    <!--chat_function布局-->
+    <style name="chat_function_layout">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">false</item>
+        <item name="android:layout_weight">0.25</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
 </resources>

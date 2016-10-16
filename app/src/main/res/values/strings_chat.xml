@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="chat_send">发送</string>
+    <string name="chat_pic">图片</string>
+    <string name="chat_photo">拍照</string>
 </resources>
