@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -28,7 +31,7 @@ import java.util.List;
  * Description:聊天输入控件主界面
  */
 public class ChatKeyboard extends RelativeLayout
-        implements View.OnClickListener, OnSoftKeyboardStateListener {
+        implements View.OnClickListener, OnSoftKeyboardStateListener, TextWatcher {
 
 
     public static final int LAYOUT_TYPE_HIDE = 0;
@@ -119,6 +122,9 @@ public class ChatKeyboard extends RelativeLayout
         mEtMsg.setOnClickListener(this);
         mBtnFace.setOnClickListener(this);
         mBtnMore.setOnClickListener(this);
+        mEtMsg.addTextChangedListener(this);
+
+        mBtnSend.setEnabled(false);
     }
 
     @Override
@@ -189,6 +195,26 @@ public class ChatKeyboard extends RelativeLayout
     public void onSoftKeyboardClosed() {
 
     }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (TextUtils.isEmpty(s)) {
+            mBtnSend.setEnabled(false);
+        } else {
+            mBtnSend.setEnabled(true);
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+
 
     /***********************
      * 可选调用的方法 start
