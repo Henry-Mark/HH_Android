@@ -118,6 +118,9 @@ public class ChatKeyboard extends RelativeLayout
         mRlFace = (RelativeLayout) findViewById(R.id.toolbox_layout_face);
         mPagerFaceCagetory = (ViewPager) findViewById(R.id.toolbox_pagers_face);
 
+        adapter = new FaceCategroyAdapter(((FragmentActivity) getContext())
+                .getSupportFragmentManager(), LAYOUT_TYPE_FACE);
+
         mBtnSend.setOnClickListener(this);
         mEtMsg.setOnClickListener(this);
         mBtnFace.setOnClickListener(this);
