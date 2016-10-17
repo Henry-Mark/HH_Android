@@ -111,11 +111,6 @@ public class ChatActivity extends TitleActivity implements OnOperationListener {
     }
 
     @Override
-    public void selectedFace(Faceicon content) {
-        showToast("selectedFace");
-    }
-
-    @Override
     public void selectedEmoji(Emojicon emojicon) {
         mChatKeyboard.getEditTextBox().append(emojicon.getValue());
     }

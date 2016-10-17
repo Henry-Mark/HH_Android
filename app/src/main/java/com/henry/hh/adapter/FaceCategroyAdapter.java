@@ -1,13 +1,11 @@
 package com.henry.hh.adapter;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.henry.hh.fragment.ChatFunctionFragment;
 import com.henry.hh.fragment.EmojiPageFragment;
-import com.henry.hh.fragment.FacePageFragment;
 import com.henry.hh.interfaces.OnOperationListener;
 import com.henry.hh.widget.ChatKeyboard;
 
@@ -25,7 +23,7 @@ public class FaceCategroyAdapter extends FragmentStatePagerAdapter {
     private List<String> datas;
     private OnOperationListener listener;
 
-    public FaceCategroyAdapter(FragmentManager fm,int mode) {
+    public FaceCategroyAdapter(FragmentManager fm, int mode) {
         super(fm);
         sMode = mode;
     }
@@ -34,17 +32,8 @@ public class FaceCategroyAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         Fragment fragment = null;
         if (sMode == ChatKeyboard.LAYOUT_TYPE_FACE) {
-            if (position == 0) {
-                fragment = new EmojiPageFragment();
-                ((EmojiPageFragment) fragment).setOnOperationListener(listener);
-            } else {
-                position--;
-                fragment = new FacePageFragment();
-                ((FacePageFragment) fragment).setOnOperationListener(listener);
-                Bundle bundle = new Bundle();
-                bundle.putString(FacePageFragment.FACE_FOLDER_PATH, datas.get(position));
-                fragment.setArguments(bundle);
-            }
+            fragment = new EmojiPageFragment();
+            ((EmojiPageFragment) fragment).setOnOperationListener(listener);
         } else {
             fragment = new ChatFunctionFragment();
             ((ChatFunctionFragment) fragment).setOnOperationListener(listener);
