@@ -1,8 +1,8 @@
 package com.henry.hh.interfaces;
 
+import com.henry.hh.entity.Emojicon;
 import com.henry.hh.entity.Faceicon;
 
-import io.github.rockerhieu.emojicon.emoji.Emojicon;
 
 /**
  * Date: 16-10-15 下午10:01

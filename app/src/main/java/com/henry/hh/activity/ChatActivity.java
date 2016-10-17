@@ -3,23 +3,22 @@ package com.henry.hh.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.henry.hh.R;
 import com.henry.hh.adapter.ChatAdapter;
+import com.henry.hh.entity.Emojicon;
 import com.henry.hh.entity.Faceicon;
 import com.henry.hh.entity.Message;
 import com.henry.hh.interfaces.OnOperationListener;
+import com.henry.hh.utils.DisplayRules;
 import com.henry.hh.widget.ChatKeyboard;
 import com.henry.library.activity.TitleActivity;
 import com.henry.library.utils.TimeUtils;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.rockerhieu.emojicon.emoji.Emojicon;
 
 public class ChatActivity extends TitleActivity implements OnOperationListener {
 
@@ -113,17 +112,17 @@ public class ChatActivity extends TitleActivity implements OnOperationListener {
 
     @Override
     public void selectedFace(Faceicon content) {
-        showToast("send");
-    }
-
-    @Override
-    public void selectedEmoji(Emojicon content) {
         showToast("selectedFace");
     }
 
     @Override
+    public void selectedEmoji(Emojicon emojicon) {
+        mChatKeyboard.getEditTextBox().append(emojicon.getValue());
+    }
+
+    @Override
     public void selectedBackSpace(Emojicon back) {
-        showToast("selectedBackSpace");
+        DisplayRules.backspace(mChatKeyboard.getEditTextBox());
     }
 
     @Override
