@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.henry.hh.R;
 import com.henry.hh.SoftKeyboardStateHelper;
@@ -44,7 +45,7 @@ public class ChatKeyboard extends RelativeLayout
     private EditText mEtMsg;
     private CheckBox mBtnFace;
     private CheckBox mBtnMore;
-    private Button mBtnSend;
+    private TextView mBtnSend;
 
     /**
      * 表情
@@ -63,6 +64,8 @@ public class ChatKeyboard extends RelativeLayout
     private OnFaceListener faceListener;
     //点击表情按钮时的适配器
     private FaceCategroyAdapter adapter;
+
+    private List<String> mFaceData;
 
 
     public ChatKeyboard(Context context) {
@@ -112,7 +115,7 @@ public class ChatKeyboard extends RelativeLayout
      */
     private void bindView() {
         mEtMsg = (EditText) findViewById(R.id.toolbox_et_message);
-        mBtnSend = (Button) findViewById(R.id.toolbox_btn_send);
+        mBtnSend = (TextView) findViewById(R.id.toolbox_btn_send);
         mBtnFace = (CheckBox) findViewById(R.id.toolbox_btn_face);
         mBtnMore = (CheckBox) findViewById(R.id.toolbox_btn_more);
         mRlFace = (RelativeLayout) findViewById(R.id.toolbox_layout_face);
@@ -186,7 +189,7 @@ public class ChatKeyboard extends RelativeLayout
                 .getSupportFragmentManager(), mode);
         adapter.setOnOperationListener(listener);
         layoutType = mode;
-//        setFaceData(mFaceData);
+        setFaceData(mFaceData);
     }
 
 
@@ -209,8 +212,10 @@ public class ChatKeyboard extends RelativeLayout
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (TextUtils.isEmpty(s)) {
             mBtnSend.setEnabled(false);
+            mBtnSend.setBackgroundResource(R.drawable.corner_bg_button_send_unclickable);
         } else {
             mBtnSend.setEnabled(true);
+            mBtnSend.setBackgroundResource(R.drawable.corner_bg_button_send_clickable);
         }
     }
 
@@ -226,7 +231,7 @@ public class ChatKeyboard extends RelativeLayout
 
 
     public void setFaceData(List<String> faceData) {
-//        mFaceData = faceData;
+        mFaceData = faceData;
         adapter.refresh(faceData);
         mPagerFaceCagetory.setAdapter(adapter);
 //        mFaceTabs.setViewPager(mPagerFaceCagetory);

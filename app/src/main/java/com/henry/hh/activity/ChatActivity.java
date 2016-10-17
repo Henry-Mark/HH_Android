@@ -3,6 +3,7 @@ package com.henry.hh.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.henry.hh.R;
@@ -14,6 +15,7 @@ import com.henry.hh.widget.ChatKeyboard;
 import com.henry.library.activity.TitleActivity;
 import com.henry.library.utils.TimeUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +36,10 @@ public class ChatActivity extends TitleActivity implements OnOperationListener {
         showBackwardView("返回", true);
         setTitle("IMU");
         initWidget();
-
         initList();
         chatAdapter.refresh(getDatas(10));
+
+
     }
 
     /**
@@ -48,13 +51,13 @@ public class ChatActivity extends TitleActivity implements OnOperationListener {
         mChatKeyboard.setOnOperationListener(this);
     }
 
+
     /**
      * 初始化列表
      *
      * @return
      */
     private void initList() {
-
         //创建默认的线性LayoutManager
         mLayoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(mLayoutManager);
