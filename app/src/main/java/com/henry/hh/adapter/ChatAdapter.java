@@ -1,6 +1,8 @@
 package com.henry.hh.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +13,22 @@ import android.widget.TextView;
 
 import com.henry.hh.R;
 import com.henry.hh.entity.Message;
+import com.henry.hh.interfaces.OnChatItemClickListener;
+import com.henry.hh.interfaces.OnChatItemLongClickListener;
+import com.henry.hh.utils.ImageUtils;
 import com.henry.library.View.CircleImageView;
 import com.henry.library.adapter.BaseRecyclerAdapter;
 import com.henry.library.adapter.RecyclerHolder;
 import com.henry.library.utils.TimeUtils;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import io.github.rockerhieu.emojicon.EmojiconTextView;
 
 import static android.R.attr.data;
+import static android.R.attr.lines;
+import static android.R.attr.thickness;
 
 /**
  * Date: 2016/10/14. 11:15
@@ -33,6 +43,10 @@ public class ChatAdapter extends BaseRecyclerAdapter<ChatAdapter.ViewHolder, Mes
         ITEM1,
         ITEM2
     }
+
+    private Bitmap bitmap;
+    private OnChatItemClickListener clickListener;
+    private OnChatItemLongClickListener longClickListener;
 
     public ChatAdapter(Context context) {
         super(context);
@@ -51,9 +65,9 @@ public class ChatAdapter extends BaseRecyclerAdapter<ChatAdapter.ViewHolder, Mes
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
-        Message message = datalist.get(position);
+        final Message message = datalist.get(position);
         //设置时间
         holder.mTime.setText(TimeUtils.getRelativeTime(context, message.getTimeMillis()));
         /**
@@ -61,20 +75,22 @@ public class ChatAdapter extends BaseRecyclerAdapter<ChatAdapter.ViewHolder, Mes
          * MSG_TYPE_TEXT：文字（emjo）
          * MSG_TYPE_PHOTO:图片
          */
-        if (message.getType() == Message.MSG_TYPE_TEXT){
+        if (message.getType() == Message.MSG_TYPE_TEXT) {
             holder.mChatContent.setVisibility(View.VISIBLE);
-            holder.mChatContent.setText(message.getContent()==null?"":message.getContent());
+            holder.mChatContent.setText(message.getContent() == null ? "" : message.getContent());
             holder.mChatImg.setVisibility(View.GONE);
-        }else if (message.getType() == Message.MSG_TYPE_PHOTO){
+        } else if (message.getType() == Message.MSG_TYPE_PHOTO) {
             holder.mChatContent.setVisibility(View.GONE);
             holder.mChatImg.setVisibility(View.VISIBLE);
+            bitmap = ImageUtils.getLoacalBitmap(message.getContent());
+            holder.mChatImg.setImageBitmap(bitmap);
         }
 
 
         if (position % 2 == 0)
             holder.mLayoutContent.setBackgroundResource(R.drawable.chat_from_bg_selector);
         else
-        holder.mLayoutContent.setBackgroundResource(R.drawable.chat_to_bg_selector);
+            holder.mLayoutContent.setBackgroundResource(R.drawable.chat_to_bg_selector);
 
         /**
          * 消息状态
@@ -97,8 +113,54 @@ public class ChatAdapter extends BaseRecyclerAdapter<ChatAdapter.ViewHolder, Mes
                 break;
         }
 
+        //添加消息内容的点击事件
+        holder.mLayoutContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (message.getType() == Message.MSG_TYPE_TEXT && clickListener != null) {
+                    clickListener.onTextClick(position);
+                } else if (message.getType() == Message.MSG_TYPE_PHOTO && clickListener != null) {
+                    clickListener.onImgClick(position, bitmap);
+                }
+            }
+        });
+        //设置头像的点击事件
+        holder.mAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clickListener != null)
+                    clickListener.onAvatarClick(position);
+            }
+        });
+        //聊天消息longclick事件
+        holder.mLayoutContent.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                longClickListener.onContentLongClick(position);
+                return true;
+            }
+        });
+
         //将数据保存在itemView的Tag中，以便点击时进行获取
         holder.itemView.setTag(position);
+    }
+
+    /**
+     * 设置click事件
+     *
+     * @param listener
+     */
+    public void setOnItemClick(OnChatItemClickListener listener) {
+        this.clickListener = listener;
+    }
+
+    /**
+     * 设置longclick事件
+     *
+     * @param listener
+     */
+    public void setOnItemLongClick(OnChatItemLongClickListener listener) {
+        this.longClickListener = listener;
     }
 
     /**
