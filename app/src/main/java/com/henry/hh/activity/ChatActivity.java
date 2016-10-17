@@ -118,6 +118,8 @@ public class ChatActivity extends TitleActivity implements OnOperationListener {
         message.setContent(mChatKeyboard.getEditTextBox().getText().toString());
         message.setState(Message.MSG_STATE_SUCCESS);
         chatAdapter.append(message);
+        //显示最后一个item
+        recyclerView.scrollToPosition(chatAdapter.getItemCount()-1);
     }
 
     @Override
