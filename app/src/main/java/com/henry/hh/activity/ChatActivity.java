@@ -17,6 +17,7 @@ import com.henry.library.activity.TitleActivity;
 import com.henry.library.utils.TimeUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -27,6 +28,8 @@ public class ChatActivity extends TitleActivity implements OnOperationListener {
     private ChatKeyboard mChatKeyboard;
     private ChatAdapter chatAdapter;
 
+    private List<Message> messageList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +39,8 @@ public class ChatActivity extends TitleActivity implements OnOperationListener {
         setTitle("IMU");
         initWidget();
         initList();
-        chatAdapter.refresh(getDatas(10));
-
-
+        messageList = getDatas(10);
+        chatAdapter.refresh(messageList);
     }
 
     /**
@@ -108,6 +110,12 @@ public class ChatActivity extends TitleActivity implements OnOperationListener {
     @Override
     public void send(String content) {
         showToast("send");
+        Message message = new Message();
+        message.setTimeMillis(TimeUtils.getSysCurrentMillis());
+        message.setType(Message.MSG_TYPE_TEXT);
+        message.setContent(mChatKeyboard.getEditTextBox().getText().toString());
+        message.setState(Message.MSG_STATE_SUCCESS);
+        chatAdapter.append(message);
     }
 
     @Override
