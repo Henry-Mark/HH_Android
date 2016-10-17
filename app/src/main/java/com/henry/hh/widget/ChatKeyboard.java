@@ -189,7 +189,7 @@ public class ChatKeyboard extends RelativeLayout
                 .getSupportFragmentManager(), mode);
         adapter.setOnOperationListener(listener);
         layoutType = mode;
-        setFaceData(mFaceData);
+        mPagerFaceCagetory.setAdapter(adapter);
     }
 
 
@@ -228,24 +228,6 @@ public class ChatKeyboard extends RelativeLayout
     /***********************
      * 可选调用的方法 start
      ******************************/
-
-
-    public void setFaceData(List<String> faceData) {
-        mFaceData = faceData;
-        adapter.refresh(faceData);
-        mPagerFaceCagetory.setAdapter(adapter);
-//        mFaceTabs.setViewPager(mPagerFaceCagetory);
-//        if (layoutType == LAYOUT_TYPE_MORE) {
-//            mFaceTabs.setVisibility(GONE);
-//        } else {
-//            //加1是表示第一个分类为默认的emoji表情分类，这个分类是固定不可更改的
-//            if (faceData.size() + 1 < 2) {
-//                mFaceTabs.setVisibility(GONE);
-//            } else {
-//                mFaceTabs.setVisibility(VISIBLE);
-//            }
-//        }
-    }
 
     /**
      * 隐藏软键盘
