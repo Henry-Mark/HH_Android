@@ -61,6 +61,8 @@ public class ChatActivity extends TitleActivity implements OnOperationListener {
     private void initList() {
         //创建默认的线性LayoutManager
         mLayoutManager = new LinearLayoutManager(mContext);
+        //显示底部位置
+        mLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(mLayoutManager);
         //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
         recyclerView.setHasFixedSize(true);
