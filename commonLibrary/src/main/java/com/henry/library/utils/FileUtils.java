@@ -35,13 +35,20 @@ public class FileUtils {
         return "mounted".equals(Environment.getExternalStorageState());
     }
 
+    /**
+     * 保存文件到缓存
+     *
+     * @param fileData
+     * @param folderPath
+     * @param fileName
+     */
     public static void saveFileCache(byte[] fileData, String folderPath, String fileName) {
         File folder = new File(folderPath);
         folder.mkdirs();
         File file = new File(folderPath, fileName);
         ByteArrayInputStream is = new ByteArrayInputStream(fileData);
         FileOutputStream os = null;
-        if(!file.exists()) {
+        if (!file.exists()) {
             try {
                 file.createNewFile();
                 os = new FileOutputStream(file);
@@ -49,7 +56,7 @@ public class FileUtils {
                 boolean len = false;
 
                 int len1;
-                while(-1 != (len1 = is.read(e))) {
+                while (-1 != (len1 = is.read(e))) {
                     os.write(e, 0, len1);
                 }
 
@@ -63,6 +70,13 @@ public class FileUtils {
 
     }
 
+    /**
+     * 获取保存文件
+     *
+     * @param folderPath
+     * @param fileNmae
+     * @return
+     */
     public static File getSaveFile(String folderPath, String fileNmae) {
         File file = new File(getSavePath(folderPath) + File.separator + fileNmae);
 
@@ -75,22 +89,41 @@ public class FileUtils {
         return file;
     }
 
+    /**
+     * @param folderName
+     * @return
+     */
     public static String getSavePath(String folderName) {
         return getSaveFolder(folderName).getAbsolutePath();
     }
 
+    /**
+     * @param folderName
+     * @return
+     */
     public static File getSaveFolder(String folderName) {
         File file = new File(getSDCardPath() + File.separator + folderName + File.separator);
         file.mkdirs();
         return file;
     }
 
+    /**
+     * 获取SD路径
+     *
+     * @return
+     */
     public static String getSDCardPath() {
         return Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
+    /**
+     * 输入流转换为byte
+     *
+     * @param inStream
+     * @return
+     */
     public static final byte[] input2byte(InputStream inStream) {
-        if(inStream == null) {
+        if (inStream == null) {
             return null;
         } else {
             byte[] in2b = null;
@@ -100,7 +133,7 @@ public class FileUtils {
 
             try {
                 int rc1;
-                while((rc1 = in.read()) != -1) {
+                while ((rc1 = in.read()) != -1) {
                     swapStream.write(rc1);
                 }
 
@@ -115,18 +148,25 @@ public class FileUtils {
         }
     }
 
+    /**
+     * uri转换为文件
+     *
+     * @param aty
+     * @param uri
+     * @return
+     */
     public static File uri2File(Activity aty, Uri uri) {
         String[] projection;
-        if(Build.VERSION.SDK_INT < 11) {
+        if (Build.VERSION.SDK_INT < 11) {
             projection = new String[]{"_data"};
-            Cursor loader1 = aty.managedQuery(uri, projection, (String)null, (String[])null, (String)null);
+            Cursor loader1 = aty.managedQuery(uri, projection, (String) null, (String[]) null, (String) null);
             int cursor1 = loader1.getColumnIndexOrThrow("_data");
             loader1.moveToFirst();
             String column_index1 = loader1.getString(cursor1);
             return new File(column_index1);
         } else {
             projection = new String[]{"_data"};
-            CursorLoader loader = new CursorLoader(aty, uri, projection, (String)null, (String[])null, (String)null);
+            CursorLoader loader = new CursorLoader(aty, uri, projection, (String) null, (String[]) null, (String) null);
             Cursor cursor = loader.loadInBackground();
             int column_index = cursor.getColumnIndexOrThrow("_data");
             cursor.moveToFirst();
@@ -134,15 +174,21 @@ public class FileUtils {
         }
     }
 
+    /**
+     * 复制文件
+     *
+     * @param from
+     * @param to
+     */
     public static void copyFile(File from, File to) {
-        if(from != null && from.exists()) {
-            if(to != null) {
+        if (from != null && from.exists()) {
+            if (to != null) {
                 FileInputStream is = null;
                 FileOutputStream os = null;
 
                 try {
                     is = new FileInputStream(from);
-                    if(!to.exists()) {
+                    if (!to.exists()) {
                         to.createNewFile();
                     }
 
@@ -158,22 +204,30 @@ public class FileUtils {
         }
     }
 
+    /**
+     * @param is
+     * @param os
+     * @throws IOException
+     */
     public static void copyFileFast(FileInputStream is, FileOutputStream os) throws IOException {
         FileChannel in = is.getChannel();
         FileChannel out = os.getChannel();
         in.transferTo(0L, in.size(), out);
     }
 
+    /**
+     * @param closeables
+     */
     public static void closeIO(Closeable... closeables) {
-        if(closeables != null && closeables.length > 0) {
+        if (closeables != null && closeables.length > 0) {
             Closeable[] var4 = closeables;
             int var3 = closeables.length;
 
-            for(int var2 = 0; var2 < var3; ++var2) {
+            for (int var2 = 0; var2 < var3; ++var2) {
                 Closeable cb = var4[var2];
 
                 try {
-                    if(cb != null) {
+                    if (cb != null) {
                         cb.close();
                     }
                 } catch (IOException var6) {
@@ -184,13 +238,20 @@ public class FileUtils {
         }
     }
 
+    /**
+     * 图片格式转换为文件形式
+     *
+     * @param bitmap
+     * @param filePath
+     * @return
+     */
     public static boolean bitmapToFile(Bitmap bitmap, String filePath) {
         boolean isSuccess = false;
-        if(bitmap == null) {
+        if (bitmap == null) {
             return isSuccess;
         } else {
             File file = new File(filePath.substring(0, filePath.lastIndexOf(File.separator)));
-            if(!file.exists()) {
+            if (!file.exists()) {
                 file.mkdirs();
             }
 
@@ -209,6 +270,12 @@ public class FileUtils {
         }
     }
 
+    /**
+     * 读取文件
+     *
+     * @param filePath
+     * @return
+     */
     public static String readFile(String filePath) {
         FileInputStream is = null;
 
@@ -221,6 +288,13 @@ public class FileUtils {
         return inputStream2String(is);
     }
 
+    /**
+     * 从Asset中读取文件
+     *
+     * @param context
+     * @param name
+     * @return
+     */
     public static String readFileFromAssets(Context context, String name) {
         InputStream is = null;
 
@@ -233,8 +307,14 @@ public class FileUtils {
         return inputStream2String(is);
     }
 
+    /**
+     * 输入流-->文件
+     *
+     * @param is
+     * @return
+     */
     public static String inputStream2String(InputStream is) {
-        if(is == null) {
+        if (is == null) {
             return null;
         } else {
             StringBuilder resultSb = null;
@@ -244,7 +324,7 @@ public class FileUtils {
                 resultSb = new StringBuilder();
 
                 String len;
-                while((len = br.readLine()) != null) {
+                while ((len = br.readLine()) != null) {
                     resultSb.append(len);
                 }
             } catch (Exception var7) {
@@ -253,7 +333,7 @@ public class FileUtils {
                 closeIO(new Closeable[]{is});
             }
 
-            return resultSb == null?null:resultSb.toString();
+            return resultSb == null ? null : resultSb.toString();
         }
     }
 }

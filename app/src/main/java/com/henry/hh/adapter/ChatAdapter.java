@@ -2,8 +2,6 @@ package com.henry.hh.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -21,14 +19,7 @@ import com.henry.library.adapter.BaseRecyclerAdapter;
 import com.henry.library.adapter.RecyclerHolder;
 import com.henry.library.utils.TimeUtils;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 import io.github.rockerhieu.emojicon.EmojiconTextView;
-
-import static android.R.attr.data;
-import static android.R.attr.lines;
-import static android.R.attr.thickness;
 
 /**
  * Date: 2016/10/14. 11:15
@@ -113,15 +104,21 @@ public class ChatAdapter extends BaseRecyclerAdapter<ChatAdapter.ViewHolder, Mes
                 break;
         }
 
-        //添加消息内容的点击事件
-        holder.mLayoutContent.setOnClickListener(new View.OnClickListener() {
+        //添加文本消息内容的点击事件
+        holder.mChatContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (message.getType() == Message.MSG_TYPE_TEXT && clickListener != null) {
+                if (clickListener != null)
                     clickListener.onTextClick(position);
-                } else if (message.getType() == Message.MSG_TYPE_PHOTO && clickListener != null) {
+            }
+        });
+
+        //添加图片消息内容的点击事件
+        holder.mChatImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clickListener != null)
                     clickListener.onImgClick(position, bitmap);
-                }
             }
         });
         //设置头像的点击事件
@@ -133,13 +130,8 @@ public class ChatAdapter extends BaseRecyclerAdapter<ChatAdapter.ViewHolder, Mes
             }
         });
         //聊天消息longclick事件
-        holder.mLayoutContent.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                longClickListener.onContentLongClick(position);
-                return true;
-            }
-        });
+        holder.mChatContent.setOnLongClickListener(new itemLongClickListener(position));
+        holder.mChatImg.setOnLongClickListener(new itemLongClickListener(position));
 
         //将数据保存在itemView的Tag中，以便点击时进行获取
         holder.itemView.setTag(position);
@@ -174,6 +166,25 @@ public class ChatAdapter extends BaseRecyclerAdapter<ChatAdapter.ViewHolder, Mes
         //Enum类提供了一个ordinal()方法，返回枚举类型的序数，这里ITEM_TYPE.ITEM1.ordinal()代表0， ITEM_TYPE.ITEM2.ordinal()代表1
         int type = position % 2 == 0 ? ITEM_TYPE.ITEM1.ordinal() : ITEM_TYPE.ITEM2.ordinal();
         return type;
+    }
+
+    /**
+     * 消息长按效果
+     */
+    class itemLongClickListener implements View.OnLongClickListener {
+
+        private int position;
+
+        public itemLongClickListener(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            if (longClickListener != null)
+                longClickListener.onContentLongClick(position);
+            return true;
+        }
     }
 
     class ViewHolder extends RecyclerHolder {
