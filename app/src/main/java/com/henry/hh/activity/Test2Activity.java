@@ -18,6 +18,7 @@ public class Test2Activity extends BaseActivity {
         setContentView(R.layout.activity_test2);
         TextView tv = getViewById(R.id.textView2);
 
+
         if (liteOrm == null) {
             liteOrm = LiteOrm.newSingleInstance(this, "hh.db");
         }
