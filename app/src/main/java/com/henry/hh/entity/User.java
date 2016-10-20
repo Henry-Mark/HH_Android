@@ -2,12 +2,17 @@ package com.henry.hh.entity;
 
 import android.app.Application;
 
+import com.litesuits.orm.db.annotation.PrimaryKey;
+import com.litesuits.orm.db.annotation.Table;
+import com.litesuits.orm.db.enums.AssignType;
+
 /**
  * Date: 2016/10/20. 14:27
  * Creator: henry
  * Email: heneymark@gmail.com
  * Description: 关于用户信息的实体
  */
+@Table("user")
 public class User extends Application {
 
     public final static int USER_COMMON = 0;
@@ -20,6 +25,7 @@ public class User extends Application {
     /**
      * 用户ID
      */
+    @PrimaryKey(AssignType.BY_MYSELF)
     private int userId;
     /**
      * 用户昵称
