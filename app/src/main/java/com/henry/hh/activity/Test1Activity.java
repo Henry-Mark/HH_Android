@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.henry.hh.broadcastreceiver.ChattingMsgBroadcastReceiver;
 import com.henry.hh.R;
+import com.henry.hh.entity.GlobalData;
 import com.henry.hh.entity.User;
 import com.henry.hh.service.ChatService;
 import com.henry.library.activity.BaseActivity;
@@ -28,7 +29,8 @@ public class Test1Activity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test1);
         tv = getViewById(R.id.textView);
-        User user = (User) getApplication();
+        GlobalData data = (GlobalData) getApplication();
+        User user = data.getUser();
         tv.setText(user.getNickname());
 
         if (liteOrm == null) {
