@@ -5,12 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.henry.hh.BroadcastReceiverHelper;
+import com.henry.hh.broadcastreceiver.ChattingMsgBroadcastReceiver;
 import com.henry.hh.R;
 import com.henry.hh.entity.User;
 import com.henry.hh.service.ChatService;
@@ -20,13 +19,15 @@ import com.litesuits.orm.LiteOrm;
 
 public class Test1Activity extends BaseActivity {
     static LiteOrm liteOrm;
-ChatService chatService;
-    BroadcastReceiverHelper rhelper;
+    ChatService chatService;
+    ChattingMsgBroadcastReceiver rhelper;
+    TextView tv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test1);
-        TextView tv = getViewById(R.id.textView);
+        tv = getViewById(R.id.textView);
         User user = (User) getApplication();
         tv.setText(user.getNickname());
 
@@ -35,7 +36,7 @@ ChatService chatService;
         }
         liteOrm.setDebugged(true); // open the log
 
-        setOrm();
+//        setOrm();
 
 //        startActivity(Test2Activity.class);
         Intent intent = new Intent(this, ChatService.class);
@@ -44,7 +45,7 @@ ChatService chatService;
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chatService.sendMessage("Henry@hhhh");
+                chatService.sendMessage("all@hhhh");
             }
         });
 
@@ -52,14 +53,15 @@ ChatService chatService;
 
     @Override
     protected void onStart() {
-        rhelper=new BroadcastReceiverHelper(this);
-        rhelper.registerAction("com.cbin.sendMsg");
-        rhelper.receive(new BroadcastReceiverHelper.ReceiverMsg() {
+        rhelper = new ChattingMsgBroadcastReceiver(this);
+        rhelper.registerAction(ChattingMsgBroadcastReceiver.RECEIVE_MSG);
+        rhelper.receive(new ChattingMsgBroadcastReceiver.ReceiverMsg() {
             @Override
             public void onReceiveMsg(Intent intent) {
-                if(intent.getAction().equals("com.cbin.sendMsg")) {
-                    String string = intent.getStringExtra("T");
+                if (intent.getAction().equals(ChattingMsgBroadcastReceiver.RECEIVE_MSG)) {
+                    String string = intent.getStringExtra(ChattingMsgBroadcastReceiver.MSG);
                     LogUtils.d(TAG, string);
+                    tv.setText(string);
                 }
             }
         });

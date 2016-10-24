@@ -1,12 +1,15 @@
 package com.henry.hh.service;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.henry.hh.broadcastreceiver.ChattingMsgBroadcastReceiver;
+import com.henry.hh.constants.Condtsnts_URL;
+import com.henry.library.utils.LogUtils;
 
 import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketException;
@@ -15,8 +18,6 @@ import de.tavendo.autobahn.WebSocketHandler;
 public class ChatService extends Service {
     private final String TAG = "ChatService";
     private WebSocketConnection mConnect = new WebSocketConnection();
-
-    private static final String wsurl = "ws://172.16.50.126:8080/websocketServer";
     public ChatService() {
     }
 
@@ -51,6 +52,7 @@ public class ChatService extends Service {
     @Override
     public void onDestroy() {
         Log.d(TAG,"onDestroy...");
+        mConnect.disconnect();
         super.onDestroy();
     }
 
@@ -60,34 +62,29 @@ public class ChatService extends Service {
     private void connect() {
         Log.i(TAG, "ws connect....");
         try {
-            mConnect.connect(wsurl, new WebSocketHandler() {
+            mConnect.connect(Condtsnts_URL.WEBSOCKET_CHAT, new WebSocketHandler() {
                 @Override
                 public void onOpen() {
-                    Log.i(TAG, "Status:Connect to " + wsurl);
+                    LogUtils.i(TAG, "Status:Connect to server " );
                     sendUsername("Jack");
                 }
-
                 @Override
                 public void onTextMessage(String payload) {
                     Log.i(TAG, payload);
-//                    mText.setText(payload != null ? payload : "");
-//                    mConnect.sendTextMessage("I am android client");
-                    Intent intent = new Intent();
-                    intent.putExtra("T",payload);
-sendBroadcast(intent);
+                    Intent intent = new Intent(ChattingMsgBroadcastReceiver.RECEIVE_MSG);
+                    intent.putExtra(ChattingMsgBroadcastReceiver.MSG,payload);
+                    sendBroadcast(intent);
                 }
 
                 @Override
                 public void onClose(int code, String reason) {
-                    Log.i(TAG, "Connection lost..");
+                    LogUtils.i(TAG, "Connection lost..");
                 }
             });
         } catch (WebSocketException e) {
             e.printStackTrace();
         }
     }
-
-
 
     /**
      * 发送用户名给服务器
@@ -110,7 +107,7 @@ sendBroadcast(intent);
         if (mConnect.isConnected()) {
             mConnect.sendTextMessage(msg);
         } else {
-            Log.i(TAG, "no connection!!");
+            LogUtils.i(TAG, "no connection!!");
         }
     }
 

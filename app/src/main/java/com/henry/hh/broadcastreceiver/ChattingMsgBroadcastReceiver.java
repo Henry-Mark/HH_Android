@@ -1,4 +1,4 @@
-package com.henry.hh;
+package com.henry.hh.broadcastreceiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,12 +11,14 @@ import android.content.IntentFilter;
  * Email: heneymark@gmail.com
  * Description: 在动态注册中可将BroadcastReceiver的继承类进行封装，添加构造函数和BroadcastReceiver注册
  */
-public class BroadcastReceiverHelper extends BroadcastReceiver {
+public class ChattingMsgBroadcastReceiver extends BroadcastReceiver {
    private Context context=null;
-    private BroadcastReceiverHelper receiver;
+    private ChattingMsgBroadcastReceiver receiver;
     private ReceiverMsg receiverMsg;
 
-    public BroadcastReceiverHelper(Context context){
+    public static final String RECEIVE_MSG = "com.henry.action.RECEIVE_MSG";
+    public static final String MSG = "message";
+    public ChattingMsgBroadcastReceiver(Context context){
         this.context = context;
         receiver = this;
     }
@@ -28,6 +30,7 @@ public class BroadcastReceiverHelper extends BroadcastReceiver {
         context.registerReceiver(receiver, filter);}
     @Override
     public void onReceive(Context context, Intent intent) {
+
         receiverMsg.onReceiveMsg(intent);
 
     }
