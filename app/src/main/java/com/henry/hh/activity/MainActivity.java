@@ -23,7 +23,6 @@ public class MainActivity extends TitleActivity implements
     private FragmentTabHost tabHost;
     private String TAG_DIALOG = "promptDialog";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
