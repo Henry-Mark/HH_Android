@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.henry.hh.R;
 import com.henry.hh.activity.ChatActivity;
-import com.henry.hh.adapter.ChattingRoomAdapter;
+import com.henry.hh.adapter.MsgAdapter;
 import com.henry.hh.entity.ChattingRoom;
 import com.henry.hh.interfaces.OnRecyclerItemClickListener;
 import com.henry.library.View.DividerItemDecoration;
@@ -34,7 +34,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 public class MsgListFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
     private RecyclerView recyclerView;
-    private ChattingRoomAdapter roomAdapter;
+    private MsgAdapter roomAdapter;
     private LinearLayoutManager mLayoutManager;
 
     private BGARefreshLayout mRefreshLayout;
@@ -76,7 +76,7 @@ public class MsgListFragment extends BaseFragment implements BGARefreshLayout.BG
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
         //创建并设置Adapter
-        roomAdapter = new ChattingRoomAdapter(getActivity());
+        roomAdapter = new MsgAdapter(getActivity());
 
         recyclerView.setAdapter(roomAdapter);
     }

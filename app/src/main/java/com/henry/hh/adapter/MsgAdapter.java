@@ -24,14 +24,14 @@ import com.henry.library.utils.TimeUtils;
  * Email: heneymark@gmail.com
  * Description: 聊天室列表的适配器
  */
-public class ChattingRoomAdapter
-        extends BaseRecyclerAdapter<ChattingRoomAdapter.ViewHolder, ChattingRoom>
+public class MsgAdapter
+        extends BaseRecyclerAdapter<MsgAdapter.ViewHolder, ChattingRoom>
         implements View.OnClickListener {
 
     //点击监听事件
     private OnRecyclerItemClickListener mOnItemClickListener = null;
 
-    public ChattingRoomAdapter(Context context) {
+    public MsgAdapter(Context context) {
         super(context);
     }
 
