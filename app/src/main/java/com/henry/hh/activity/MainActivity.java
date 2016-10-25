@@ -2,6 +2,7 @@ package com.henry.hh.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +16,9 @@ import com.henry.hh.constants.TabDatas;
 import com.henry.hh.dialog.PromptDialog;
 import com.henry.hh.interfaces.OnDialogClickListener;
 import com.henry.library.activity.BaseActivity;
-import com.henry.library.activity.TitleActivity;
 import com.henry.library.utils.ScreenUtils;
 
-public class MainActivity extends TitleActivity implements
+public class MainActivity extends BaseActivity implements
         TabHost.OnTabChangeListener, OnDialogClickListener {
     private FragmentTabHost tabHost;
     private String TAG_DIALOG = "promptDialog";
@@ -28,7 +28,7 @@ public class MainActivity extends TitleActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle(R.string.app_name);
+//        setTitle(R.string.app_name);
 
         tabHost = (FragmentTabHost) super.findViewById(android.R.id.tabhost);
         tabHost.setup(this, super.getSupportFragmentManager()
@@ -36,6 +36,7 @@ public class MainActivity extends TitleActivity implements
         tabHost.getTabWidget().setDividerDrawable(null);
         tabHost.setOnTabChangedListener(this);
         initTab();
+
         //判断对话框是否存在，若存在，则销毁重新启动
         PromptDialog fragment = (PromptDialog) getFragmentManager().findFragmentByTag(TAG_DIALOG);
         if (fragment != null) {
@@ -67,7 +68,7 @@ public class MainActivity extends TitleActivity implements
         ((TextView) view.findViewById(R.id.title_footer)).setText(TabDatas.getTabsRes()[idx]);
         if (idx == 0) {
             ((TextView) view.findViewById(R.id.title_footer)).
-                    setTextColor(getResources().getColor(R.color.colorMainStyle));
+                    setTextColor(ContextCompat.getColor(mContext, R.color.colorMainStyle));
             ((ImageView) view.findViewById(R.id.img_footer)).
                     setImageResource(TabDatas.getTabsImgLight()[idx]);
         } else {
@@ -91,10 +92,12 @@ public class MainActivity extends TitleActivity implements
             View view = tabw.getChildAt(i);
             ImageView iv = (ImageView) view.findViewById(R.id.img_footer);
             if (i == tabHost.getCurrentTab()) {
-                ((TextView) view.findViewById(R.id.title_footer)).setTextColor(getResources().getColor(R.color.colorMainStyle));
+                ((TextView) view.findViewById(R.id.title_footer)).setTextColor(
+                        ContextCompat.getColor(mContext, R.color.colorMainStyle));
                 iv.setImageResource(TabDatas.getTabsImgLight()[i]);
             } else {
-                ((TextView) view.findViewById(R.id.title_footer)).setTextColor(getResources().getColor(R.color.colorTabTextNormal));
+                ((TextView) view.findViewById(R.id.title_footer)).setTextColor(
+                        ContextCompat.getColor(mContext, R.color.colorTabTextNormal));
                 iv.setImageResource(TabDatas.getTabsImg()[i]);
             }
 

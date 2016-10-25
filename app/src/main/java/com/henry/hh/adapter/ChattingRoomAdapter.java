@@ -83,7 +83,7 @@ public class ChattingRoomAdapter
      *
      * @param listener
      */
-    public void setOnItemClickListener(OnRecyclerItemClickListener listener) {
+    public void addOnItemClickListener(OnRecyclerItemClickListener listener) {
         this.mOnItemClickListener = listener;
     }
 

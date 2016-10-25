@@ -83,7 +83,7 @@ public class EmojiPageFragment extends BaseFragment implements ViewPager.OnPageC
 
             view.setAdapter(adapter);
             adapter.refresh(itemDatas);
-            adapter.setOnItemClickListener(new OnRecyclerItemClickListener() {
+            adapter.addOnItemClickListener(new OnRecyclerItemClickListener() {
                 @Override
                 public void onItemClick(View view, List data, int position) {
                     if (listener != null) {

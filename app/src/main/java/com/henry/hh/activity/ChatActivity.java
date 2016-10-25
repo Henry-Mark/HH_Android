@@ -52,8 +52,8 @@ public class ChatActivity extends TitleActivity implements OnOperationListener, 
         initList();
         messageList = getDatas(10);
         chatAdapter.refresh(messageList);
-        chatAdapter.setOnItemClick(this);
-        chatAdapter.setOnItemLongClick(this);
+        chatAdapter.addOnItemClickListener(this);
+        chatAdapter.addOnItemLongClickListener(this);
     }
 
     /**

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="main_title_msg">消息</string>
+    <string name="main_title_friends">好友</string>
     <string name="chat_send">发送</string>
     <string name="chat_pic">图片</string>
     <string name="chat_photo">拍照</string>

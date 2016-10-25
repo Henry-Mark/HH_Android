@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="MatchMatch">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -10,4 +11,22 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">0dp</item>
     </style>
+
+    <!--标题布局-->
+    <style name="TitleBarLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/title_bar_backcolor</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+    </style>
+    <!--标题栏中的文字标题-->
+    <style name="TextTitleInBar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>

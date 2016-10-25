@@ -1,192 +1,123 @@
 package com.henry.hh.fragment;
 
 
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.henry.hh.R;
-import com.henry.hh.activity.ChatActivity;
-import com.henry.hh.adapter.ChattingRoomAdapter;
-import com.henry.hh.entity.ChattingRoom;
-import com.henry.hh.interfaces.OnRecyclerItemClickListener;
-import com.henry.library.View.DividerItemDecoration;
+import com.henry.hh.adapter.ChatOrFriendsPaperAdapter;
 import com.henry.library.fragment.BaseFragment;
-import com.henry.library.utils.TimeUtils;
-import com.henry.library.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
-import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 /**
  * A simple {@link Fragment} subclass.
- * 聊天室，用于展示聊天列表
+ * 聊天室，用于展示聊天列表和好友列表
  */
-public class ChattingroomLogFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate {
+public class ChattingroomLogFragment extends BaseFragment implements
+        View.OnClickListener, ViewPager.OnPageChangeListener {
+    private final static int PAPER_MSG = 0;
+    private final static int PAPER_FRIENDS = 1;
 
-    private RecyclerView recyclerView;
-    private ChattingRoomAdapter roomAdapter;
-    private LinearLayoutManager mLayoutManager;
-
-    private BGARefreshLayout mRefreshLayout;
+    private TextView mMsg;
+    private TextView mFriends;
+    private ViewPager viewPager;
+    private List<Fragment> list;
+    private ChatOrFriendsPaperAdapter adapter;
 
     public ChattingroomLogFragment() {
         // Required empty public constructor
     }
 
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        View view = inflater.inflate(R.layout.fragment_chattingroom, container, false);
-//        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_chatting);
-//        mRefreshLayout = (BGARefreshLayout) view.findViewById(R.id.refreshLayout);
-//        initRefresh();
-//        initList();
-//        roomAdapter.refresh(getDatas(5));
-//
-//        roomAdapter.setOnItemClickListener(new OnRecyclerItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, List data, int position) {
-//                Toast.makeText(getActivity(), "...." + position, Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(getActivity(), ChatActivity.class));
-//            }
-//        });
-//
-//        return view;
-//
-//    }
 
     @Override
     protected void doCreateView(Bundle savedInstanceState) {
         setContentView(R.layout.fragment_chattingroom);
-        recyclerView = getViewById(R.id.recycler_chatting);
-        mRefreshLayout = getViewById(R.id.refreshLayout);
-        initRefresh();
-        initList();
-        roomAdapter.refresh(getDatas(5));
-
-        roomAdapter.setOnItemClickListener(new OnRecyclerItemClickListener() {
-            @Override
-            public void onItemClick(View view, List data, int position) {
-                Toast.makeText(getActivity(), "...." + position, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getActivity(), ChatActivity.class));
-            }
-        });
+        bindView();
+        initData();
     }
 
     /**
-     * 初始化列表
+     * 绑定控件
+     */
+    private void bindView() {
+        mMsg = getViewById(R.id.tv_msg_main);
+        mFriends = getViewById(R.id.tv_friends_main);
+        viewPager = getViewById(R.id.viewPaper);
+        mMsg.setOnClickListener(this);
+        mFriends.setOnClickListener(this);
+        viewPager.addOnPageChangeListener(this);
+        setTabStrip(PAPER_MSG);
+    }
+
+    /**
+     * 设置标题上对应的页面选项
      *
-     * @return
+     * @param index
      */
-    private void initList() {
-
-        //创建默认的线性LayoutManager
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(mLayoutManager);
-        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
-        recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-
-        //创建并设置Adapter
-        roomAdapter = new ChattingRoomAdapter(getActivity());
-
-        recyclerView.setAdapter(roomAdapter);
+    private void setTabStrip(int index) {
+        switch (index) {
+            case PAPER_MSG:
+                mMsg.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorMainStyle));
+                mMsg.setBackgroundResource(R.drawable.background_choose_title_chat_pressed);
+                mFriends.setTextColor(Color.WHITE);
+                mFriends.setBackgroundResource(R.drawable.background_choose_title_friends_normal);
+                break;
+            case PAPER_FRIENDS:
+                mMsg.setTextColor(Color.WHITE);
+                mMsg.setBackgroundResource(R.drawable.background_choose_title_chat_normal);
+                mFriends.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorMainStyle));
+                mFriends.setBackgroundResource(R.drawable.background_choose_title_friends_pressed);
+                break;
+            default:
+                break;
+        }
     }
 
     /**
-     * 初始化刷新控件
+     * 初始化数据
      */
-    private void initRefresh() {
-        mRefreshLayout.setDelegate(this);
-        mRefreshLayout.setIsShowLoadingMoreView(true);
-        mRefreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getActivity().getApplicationContext(), true));
+    private void initData() {
+        list = new ArrayList<>();
+        list.add(new MsgListFragment());
+        list.add(new FriendsListFragment());
+        adapter = new ChatOrFriendsPaperAdapter(getFragmentManager(), list);
+        viewPager.setAdapter(adapter);
     }
 
-
-    private List<ChattingRoom> getDatas(int num) {
-        List<ChattingRoom> mList = new ArrayList<>();
-        for (int i = 0; i < num; i++) {
-            ChattingRoom room = new ChattingRoom();
-            room.setAmountUnread(i + 7);
-            room.setUserId("id" + i);
-            room.setContent("content" + i);
-            room.setMessageTime(TimeUtils.getSysCurrentMillis() - i * 1000000);
-            mList.add(room);
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_msg_main:
+                viewPager.setCurrentItem(PAPER_MSG);
+                setTabStrip(PAPER_MSG);
+                break;
+            case R.id.tv_friends_main:
+                viewPager.setCurrentItem(PAPER_FRIENDS);
+                setTabStrip(PAPER_FRIENDS);
+                break;
+            default:
+                break;
         }
-
-        return mList;
     }
 
     @Override
-    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-//                ToastUtils.showShort(getActivity(),"没有最新数据了");
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mRefreshLayout.endRefreshing();
-                    }
-                });
-
-                cancel();
-            }
-        }, 3000, 1000);
-
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
     }
 
     @Override
-    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-//        mMorePageNumber++;
-//        if (mMorePageNumber > 4) {
-//            mRefreshLayout.endLoadingMore();
-//            ToastUtils.showShort(getActivity(),"没有更多数据了");
-//            return false;
-//        }
-//        mEngine.loadMoreData(mMorePageNumber).enqueue(new Callback<List<RefreshModel>>() {
-//            @Override
-//            public void onResponse(Call<List<RefreshModel>> call, Response<List<RefreshModel>> response) {
-//                mRefreshLayout.endLoadingMore();
-//                mAdapter.addMoreData(response.body());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<RefreshModel>> call, Throwable t) {
-//                mRefreshLayout.endLoadingMore();
-//            }
-//        });
+    public void onPageSelected(int position) {
+        setTabStrip(position);
+    }
 
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-//                ToastUtils.showShort(getActivity(),"没有最新数据了");
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        roomAdapter.refresh(getDatas(10));
-                        ToastUtils.showShort(getActivity(), "没有最新数据了");
-                        mRefreshLayout.endLoadingMore();
-                        cancel();
-                    }
-                });
+    @Override
+    public void onPageScrollStateChanged(int state) {
 
-            }
-        }, 2000, 1000);
-        return true;
     }
 }

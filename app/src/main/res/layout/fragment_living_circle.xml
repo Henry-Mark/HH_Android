@@ -1,14 +1,14 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.henry.hh.fragment.LivingCircleLogFragment">
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="living" />
+    <RelativeLayout style="@style/TitleBarLayout">
+
+        <TextView
+            style="@style/TextTitleInBar"
+            android:text="@string/app_name" />
+    </RelativeLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -77,11 +77,11 @@
                 android:layout_marginTop="3dp"
                 app:citv_fill_color="@android:color/holo_red_light"
                 app:citv_text_padding="3dp"
-                app:citv_text_text="99"
-                app:citv_text_size="10sp"/>
+                app:citv_text_size="10sp"
+                app:citv_text_text="99" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

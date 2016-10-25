@@ -3,7 +3,7 @@
     <!-- 背景颜色设置为透明 -->
     <solid android:color="@android:color/white"/>
     <!-- 设置黑色边框 -->
-    <stroke android:width="1px"
+    <stroke android:width="2px"
         android:color="@android:color/white"/>
     <!-- 指定圆角矩形的四个圆角半径 -->
     <corners

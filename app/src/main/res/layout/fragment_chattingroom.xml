@@ -1,18 +1,50 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/MatchMatch"
-    tools:context="com.henry.hh.fragment.ChattingroomLogFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
-        android:id="@+id/refreshLayout"
-        style="@style/MatchMatch">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_chatting"
-                style="@style/MatchAuto">
+    <RelativeLayout
+        style="@style/TitleBarLayout">
 
-            </android.support.v7.widget.RecyclerView>
+        <LinearLayout
+            android:id="@+id/layout_title_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
 
-    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+            <TextView
+                android:id="@+id/tv_msg_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_choose_title_chat_pressed"
+                android:gravity="center"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="3dp"
+                android:text="@string/main_title_msg"
+                android:textSize="16sp" />
 
-</FrameLayout>
+            <TextView
+                android:id="@+id/tv_friends_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_choose_title_friends_normal"
+                android:gravity="center"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="3dp"
+                android:text="@string/main_title_friends"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </RelativeLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPaper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>
+

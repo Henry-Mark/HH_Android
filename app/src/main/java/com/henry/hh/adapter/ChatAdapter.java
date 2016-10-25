@@ -142,7 +142,7 @@ public class ChatAdapter extends BaseRecyclerAdapter<ChatAdapter.ViewHolder, Mes
      *
      * @param listener
      */
-    public void setOnItemClick(OnChatItemClickListener listener) {
+    public void addOnItemClickListener(OnChatItemClickListener listener) {
         this.clickListener = listener;
     }
 
@@ -151,7 +151,7 @@ public class ChatAdapter extends BaseRecyclerAdapter<ChatAdapter.ViewHolder, Mes
      *
      * @param listener
      */
-    public void setOnItemLongClick(OnChatItemLongClickListener listener) {
+    public void addOnItemLongClickListener(OnChatItemLongClickListener listener) {
         this.longClickListener = listener;
     }
 
