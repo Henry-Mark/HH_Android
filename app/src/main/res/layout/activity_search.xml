@@ -21,10 +21,12 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="@drawable/background_layout_search"
-            android:paddingTop="2dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:paddingBottom="2dp"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+            android:paddingRight="5dp"
+            android:paddingTop="2dp">
 
             <ImageView
                 android:id="@+id/iv_search"
@@ -34,13 +36,23 @@
 
             <EditText
                 android:id="@+id/et_search"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/friend_search"
-                android:padding="5dp"
+                android:layout_weight="1"
                 android:background="@null"
+                android:hint="@string/friend_search"
+                android:imeOptions="actionSearch"
+                android:padding="5dp"
+                android:singleLine="true"
                 android:textColorHint="@color/colorMainBackGreyLight"
                 android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iv_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_cha"
+                android:visibility="gone" />
         </LinearLayout>
     </RelativeLayout>
 
