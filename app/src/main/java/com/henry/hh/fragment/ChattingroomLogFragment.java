@@ -7,11 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.henry.hh.R;
 import com.henry.hh.adapter.ChatOrFriendsPaperAdapter;
 import com.henry.library.fragment.BaseFragment;
+import com.henry.library.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,7 @@ public class ChattingroomLogFragment extends BaseFragment implements
     private ViewPager viewPager;
     private List<Fragment> list;
     private ChatOrFriendsPaperAdapter adapter;
+    private ImageView mSearch;
 
     public ChattingroomLogFragment() {
         // Required empty public constructor
@@ -50,8 +53,10 @@ public class ChattingroomLogFragment extends BaseFragment implements
         mMsg = getViewById(R.id.tv_msg_main);
         mFriends = getViewById(R.id.tv_friends_main);
         viewPager = getViewById(R.id.viewPaper);
+        mSearch = getViewById(R.id.iv_search);
         mMsg.setOnClickListener(this);
         mFriends.setOnClickListener(this);
+        mSearch.setOnClickListener(this);
         viewPager.addOnPageChangeListener(this);
         setTabStrip(PAPER_MSG);
     }
@@ -101,6 +106,9 @@ public class ChattingroomLogFragment extends BaseFragment implements
             case R.id.tv_friends_main:
                 viewPager.setCurrentItem(PAPER_FRIENDS);
                 setTabStrip(PAPER_FRIENDS);
+                break;
+            case R.id.iv_search:
+                ToastUtils.showShort(getActivity(),"收索");
                 break;
             default:
                 break;

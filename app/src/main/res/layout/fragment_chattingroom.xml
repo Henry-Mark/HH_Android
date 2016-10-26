@@ -38,6 +38,14 @@
                 android:text="@string/main_title_friends"
                 android:textSize="16sp" />
         </LinearLayout>
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:src="@android:drawable/ic_menu_search"/>
     </RelativeLayout>
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPaper"
