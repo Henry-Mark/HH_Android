@@ -6,7 +6,7 @@ package com.henry.hh.entity;
  * Email: heneymark@gmail.com
  * Description: 聊天室相关实体类
  */
-public class ChattingRoom {
+public class Chatting {
 
     /**
      * 头像url

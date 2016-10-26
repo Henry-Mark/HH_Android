@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.henry.hh.R;
-import com.henry.hh.entity.ChattingRoom;
+import com.henry.hh.entity.Chatting;
 import com.henry.hh.interfaces.OnRecyclerItemClickListener;
 import com.henry.library.View.CircleImageView;
 import com.henry.library.View.CircleTextImageView;
@@ -25,7 +25,7 @@ import com.henry.library.utils.TimeUtils;
  * Description: 聊天室列表的适配器
  */
 public class MsgAdapter
-        extends BaseRecyclerAdapter<MsgAdapter.ViewHolder, ChattingRoom>
+        extends BaseRecyclerAdapter<MsgAdapter.ViewHolder, Chatting>
         implements View.OnClickListener {
 
     //点击监听事件
@@ -37,7 +37,7 @@ public class MsgAdapter
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.item_chatroom, parent, false);
+        View view = inflater.inflate(R.layout.item_message, parent, false);
         //将创建的View注册点击事件
         view.setOnClickListener(this);
         return new ViewHolder(view);
@@ -46,7 +46,7 @@ public class MsgAdapter
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        ChattingRoom room = datalist.get(position);
+        Chatting room = datalist.get(position);
         holder.mUser.setText(room.getUserId());
         holder.mContent.setText(room.getContent());
         holder.mTime.setText(TimeUtils.getRelativeTime(context, room.getMessageTime()));

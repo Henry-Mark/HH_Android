@@ -19,5 +19,7 @@
     <color name="divide_gray_color">#3F51B5</color>
     <!--聊天输入键盘背景颜色-->
     <color name="emoji_keyboard_bg_light">#f6f5f5</color>
+    <!--标签背景颜色-->
+    <color name="color_backgroung_label">#ed5a84</color>
 
 </resources>

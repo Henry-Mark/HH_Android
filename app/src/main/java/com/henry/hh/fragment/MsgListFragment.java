@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.henry.hh.R;
 import com.henry.hh.activity.ChatActivity;
 import com.henry.hh.adapter.MsgAdapter;
-import com.henry.hh.entity.ChattingRoom;
+import com.henry.hh.entity.Chatting;
 import com.henry.hh.interfaces.OnRecyclerItemClickListener;
 import com.henry.library.View.DividerItemDecoration;
 import com.henry.library.fragment.BaseFragment;
@@ -31,7 +31,8 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * A simple {@link Fragment} subclass.
  * 聊天消息列表
  */
-public class MsgListFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate {
+public class MsgListFragment extends BaseFragment
+        implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
     private RecyclerView recyclerView;
     private MsgAdapter roomAdapter;
@@ -91,10 +92,10 @@ public class MsgListFragment extends BaseFragment implements BGARefreshLayout.BG
     }
 
 
-    private List<ChattingRoom> getDatas(int num) {
-        List<ChattingRoom> mList = new ArrayList<>();
+    private List<Chatting> getDatas(int num) {
+        List<Chatting> mList = new ArrayList<>();
         for (int i = 0; i < num; i++) {
-            ChattingRoom room = new ChattingRoom();
+            Chatting room = new Chatting();
             room.setAmountUnread(i + 7);
             room.setUserId("id" + i);
             room.setContent("content" + i);

@@ -1,5 +1,4 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
     tools:context="com.henry.hh.fragment.ChattingroomLogFragment">
@@ -7,6 +6,7 @@
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout
         android:id="@+id/refreshLayout"
         style="@style/MatchMatch">
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_chatting"
             style="@style/MatchAuto">

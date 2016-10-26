@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.henry.hh.R;
-import com.henry.hh.entity.ChattingRoom;
+import com.henry.hh.entity.Chatting;
 import com.henry.hh.interfaces.OnRecyclerItemClickListener;
 import com.henry.library.View.CircleImageView;
 import com.henry.library.View.CircleTextImageView;
@@ -26,18 +26,18 @@ import java.util.List;
  * Email: heneymark@gmail.com
  * Description:
  */
-public class TestAdapter extends BaseRecyclerAdapter<TestAdapter.TestViewHolder, ChattingRoom> implements View.OnClickListener {
+public class TestAdapter extends BaseRecyclerAdapter<TestAdapter.TestViewHolder, Chatting> implements View.OnClickListener {
 
     //点击监听事件
     private OnRecyclerItemClickListener mOnItemClickListener = null;
 
-    public TestAdapter(Context context, List<ChattingRoom> datalist) {
+    public TestAdapter(Context context, List<Chatting> datalist) {
         super(context, datalist);
     }
 
     @Override
     public TestViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.item_chatroom, parent, false);
+        View view = inflater.inflate(R.layout.item_message, parent, false);
         //将创建的View注册点击事件
         view.setOnClickListener(this);
         return new TestViewHolder(view);
@@ -46,7 +46,7 @@ public class TestAdapter extends BaseRecyclerAdapter<TestAdapter.TestViewHolder,
     @Override
     public void onBindViewHolder(TestViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        ChattingRoom room = datalist.get(position);
+        Chatting room = datalist.get(position);
         holder.mUser.setText(room.getUserId());
         holder.mContent.setText(room.getContent());
         holder.mAmount.setText("" + room.getAmountUnread());
