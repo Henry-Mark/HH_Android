@@ -1,6 +1,7 @@
 package com.henry.hh.fragment;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.henry.hh.R;
+import com.henry.hh.activity.SearchActivity;
 import com.henry.hh.adapter.ChatOrFriendsPaperAdapter;
 import com.henry.library.fragment.BaseFragment;
 import com.henry.library.utils.ToastUtils;
@@ -108,7 +110,8 @@ public class ChattingroomLogFragment extends BaseFragment implements
                 setTabStrip(PAPER_FRIENDS);
                 break;
             case R.id.iv_search:
-                ToastUtils.showShort(getActivity(),"收索");
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;

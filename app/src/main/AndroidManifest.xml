@@ -31,7 +31,9 @@
         <service
             android:name=".service.ChatService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".activity.SearchActivity"></activity>
     </application>
 
 </manifest>
