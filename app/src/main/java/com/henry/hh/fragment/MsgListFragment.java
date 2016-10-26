@@ -3,6 +3,7 @@ package com.henry.hh.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -109,20 +110,12 @@ public class MsgListFragment extends BaseFragment
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
 
-        new Timer().schedule(new TimerTask() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-//                ToastUtils.showShort(getActivity(),"没有最新数据了");
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mRefreshLayout.endRefreshing();
-                    }
-                });
-
-                cancel();
+                mRefreshLayout.endRefreshing();
             }
-        }, 3000, 1000);
+        },3000);
 
     }
 
@@ -147,22 +140,15 @@ public class MsgListFragment extends BaseFragment
 //            }
 //        });
 
-        new Timer().schedule(new TimerTask() {
+
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-//                ToastUtils.showShort(getActivity(),"没有最新数据了");
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        roomAdapter.refresh(getDatas(10));
-                        ToastUtils.showShort(getActivity(), "没有最新数据了");
-                        mRefreshLayout.endLoadingMore();
-                        cancel();
-                    }
-                });
-
+                roomAdapter.refresh(getDatas(10));
+                ToastUtils.showShort(getActivity(), "没有最新数据了");
+                mRefreshLayout.endLoadingMore();
             }
-        }, 2000, 1000);
+        },3000);
         return true;
     }
 
