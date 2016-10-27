@@ -76,10 +76,7 @@ public class User {
      * 注册时间 ms
      */
     private long registrationTimeMillis;
-    /**
-     * 上次访问时间
-     */
-    private long lastAccessTimeMillis;
+
 
     public void setUserId(int userId) {
         this.userId = userId;
@@ -177,13 +174,6 @@ public class User {
         return registrationTimeMillis;
     }
 
-    public void setLastAccessTimeMillis(long lastAccessTimeMillis) {
-        this.lastAccessTimeMillis = lastAccessTimeMillis;
-    }
-
-    public long getLastAccessTimeMillis() {
-        return lastAccessTimeMillis;
-    }
 
     @Override
     public String toString() {
@@ -198,8 +188,7 @@ public class User {
                 + ";avatarUrl=" + avatarUrl
                 + ";signature=" + signature
                 + ";address=" + address
-                + ";registrationTimeMillis=" + registrationTimeMillis
-                + ";lastAccessTimeMillis=" + lastAccessTimeMillis;
+                + ";registrationTimeMillis=" + registrationTimeMillis;
         return string;
     }
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="string_send_message">发消息</string>
+    <string name="string_comment">评论</string>
+    <string name="string_praise">赞</string>
+</resources>
