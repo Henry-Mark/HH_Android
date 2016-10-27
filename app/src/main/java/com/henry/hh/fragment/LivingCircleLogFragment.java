@@ -1,26 +1,16 @@
 package com.henry.hh.fragment;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.henry.hh.R;
 import com.henry.hh.adapter.LivingCircleAdapter;
-import com.henry.hh.entity.Friend;
 import com.henry.hh.entity.LivingCircleDynamic;
-import com.henry.library.View.CircleTextImageView;
-import com.henry.library.View.DividerItemDecoration;
 import com.henry.library.fragment.BaseFragment;
-import com.henry.library.fragment.BaseLogFragment;
-import com.henry.library.utils.LogUtils;
 import com.henry.library.utils.TimeUtils;
 import com.henry.library.utils.ToastUtils;
 
