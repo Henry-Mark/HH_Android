@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <!--app主题风格色彩-->
     <color name="colorMainStyle">#409cff</color>
-    <color name="colorMainBackGreyLight">#f1f1ee</color>
+    <color name="colorMainBackGreyLight">#d7d7d5</color>
     <!--按钮背景-->
     <color name="color_btn_clickable">#409cff</color>
     <color name="color_btn_unclickable">#b6b6b1</color>
