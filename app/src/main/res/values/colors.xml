@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <!--app主题风格色彩-->
     <color name="colorMainStyle">#409cff</color>
-    <color name="colorMainBackGreyLight">#d6d6d2</color>
+    <color name="colorMainBackGreyLight">#f1f1ee</color>
     <!--按钮背景-->
     <color name="color_btn_clickable">#409cff</color>
     <color name="color_btn_unclickable">#b6b6b1</color>
@@ -21,5 +21,7 @@
     <color name="emoji_keyboard_bg_light">#f6f5f5</color>
     <!--标签背景颜色-->
     <color name="color_backgroung_label">#ed5a84</color>
+
+    <color name="color_search_history_title">#e9ed5a81</color>
 
 </resources>

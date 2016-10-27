@@ -33,7 +33,9 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.SearchActivity"></activity>
+        <activity
+            android:name=".activity.SearchActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
     </application>
 
 </manifest>

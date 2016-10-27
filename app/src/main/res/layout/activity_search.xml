@@ -3,6 +3,7 @@
     android:id="@+id/activity_search"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorMainBackGreyLight"
     android:orientation="vertical">
 
     <RelativeLayout style="@style/TitleBarLayout">
@@ -55,5 +56,32 @@
                 android:visibility="gone" />
         </LinearLayout>
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_list_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="8dp"
+        android:text="@string/history_of_search"
+        android:textColor="@color/color_search_history_title"
+        android:textSize="12sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/colorTabTextNormal" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>
