@@ -1,13 +1,17 @@
 package com.henry.hh.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.henry.hh.R;
+import com.henry.hh.activity.PublishActivity;
 import com.henry.hh.adapter.LivingCircleAdapter;
 import com.henry.hh.entity.LivingCircleDynamic;
 import com.henry.hh.interfaces.OnLivingDynamicItemClickListener;
@@ -26,12 +30,14 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * 生活圈，主要用于展示生活动态
  */
 public class LivingCircleLogFragment extends BaseFragment
-        implements BGARefreshLayout.BGARefreshLayoutDelegate, OnLivingDynamicItemClickListener {
+        implements BGARefreshLayout.BGARefreshLayoutDelegate,
+        OnLivingDynamicItemClickListener, View.OnClickListener {
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private LivingCircleAdapter circleAdapter;
     private BGARefreshLayout mRefreshLayout;
+    private ImageButton mAdd;
 
     public LivingCircleLogFragment() {
         // Required empty public constructor
@@ -40,10 +46,16 @@ public class LivingCircleLogFragment extends BaseFragment
     @Override
     protected void doCreateView(Bundle savedInstanceState) {
         setContentView(R.layout.fragment_living_circle);
+        bindView();
         initList();
         initRefresh();
         circleAdapter.refresh(getDatas(3));
 
+    }
+
+    private void bindView() {
+        mAdd = getViewById(R.id.ib_add);
+        mAdd.setOnClickListener(this);
     }
 
     /**
@@ -69,7 +81,8 @@ public class LivingCircleLogFragment extends BaseFragment
         mRefreshLayout = getViewById(R.id.refreshLayout);
         mRefreshLayout.setDelegate(this);
         mRefreshLayout.setIsShowLoadingMoreView(true);
-        mRefreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getActivity().getApplicationContext(), true));
+        mRefreshLayout.setRefreshViewHolder(
+                new BGANormalRefreshViewHolder(getActivity().getApplicationContext(), true));
     }
 
     private List<LivingCircleDynamic> getDatas(int num) {
@@ -186,5 +199,22 @@ public class LivingCircleLogFragment extends BaseFragment
     @Override
     public void onPraiseClick(List data, int position) {
         ToastUtils.showShort(getActivity(), "onPraiseClick" + position);
+    }
+
+    /**
+     * 点击事件
+     *
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ib_add:
+                Intent intent = new Intent(getActivity(), PublishActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 }

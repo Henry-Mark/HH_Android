@@ -10,90 +10,31 @@
             android:text="@string/app_name" />
     </RelativeLayout>
 
-    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
-        android:id="@+id/refreshLayout"
-        style="@style/MatchMatch">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+            android:id="@+id/refreshLayout"
+            style="@style/MatchMatch">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_livingcircle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_livingcircle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        </android.support.v7.widget.RecyclerView>
-    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+            </android.support.v7.widget.RecyclerView>
+        </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+        <ImageButton
+            android:id="@+id/ib_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_add"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 
-    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:paddingLeft="10dp"-->
-    <!--android:paddingRight="10dp">-->
 
-    <!--<com.henry.library.View.CircleImageView-->
-    <!--android:id="@+id/iv_avatar"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_margin="10dp"-->
-    <!--android:src="@mipmap/ic_launcher"-->
-    <!--app:civ_border_color="#FF000000"-->
-    <!--app:civ_border_width="2dp" />-->
 
-    <!--<LinearLayout-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_weight="1"-->
-    <!--android:orientation="vertical"-->
-    <!--android:paddingBottom="12dp"-->
-    <!--android:paddingTop="15dp">-->
 
-    <!--<TextView-->
-    <!--android:id="@+id/tv_user"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:maxLines="1"-->
-    <!--android:text="@string/test"-->
-    <!--android:textColor="@android:color/black"-->
-    <!--android:textSize="16sp" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tv_content"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="3dp"-->
-    <!--android:ellipsize="end"-->
-    <!--android:maxEms="8"-->
-    <!--android:maxLines="1"-->
-    <!--android:text="@string/hello_blank_fragment" />-->
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:gravity="center_horizontal"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tv_time"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:maxLines="1"-->
-    <!--android:text="@string/test_time" />-->
-
-    <!--<com.henry.library.View.CircleTextImageView-->
-    <!--android:id="@+id/text"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_marginTop="3dp"-->
-    <!--app:citv_fill_color="@android:color/holo_red_light"-->
-    <!--app:citv_text_padding="3dp"-->
-    <!--app:citv_text_size="10sp"-->
-    <!--app:citv_text_text="99" />-->
-
-    <!--</LinearLayout>-->
-
-    <!--</LinearLayout>-->
 
 </LinearLayout>
