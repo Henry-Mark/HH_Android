@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import com.henry.hh.R;
 import com.henry.hh.adapter.LivingCircleAdapter;
 import com.henry.hh.entity.LivingCircleDynamic;
+import com.henry.hh.interfaces.OnLivingDynamicItemClickListener;
 import com.henry.library.fragment.BaseFragment;
 import com.henry.library.utils.TimeUtils;
 import com.henry.library.utils.ToastUtils;
@@ -25,7 +26,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * 生活圈，主要用于展示生活动态
  */
 public class LivingCircleLogFragment extends BaseFragment
-        implements BGARefreshLayout.BGARefreshLayoutDelegate{
+        implements BGARefreshLayout.BGARefreshLayoutDelegate, OnLivingDynamicItemClickListener {
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
@@ -42,22 +43,13 @@ public class LivingCircleLogFragment extends BaseFragment
         initList();
         initRefresh();
         circleAdapter.refresh(getDatas(3));
-//        CircleTextImageView text = getViewById(R.id.text);
-//        TextView time = getViewById(R.id.tv_time);
-//        text.setTextColor(Color.WHITE);
-//
-//
-//        LogUtils.d("TAG","时间："+System.currentTimeMillis());
-//        // 返回相对于当前时间的一个时间字符串：在同一天显示时分；在不同一天，显示月日；在不同一年，显示年月日
-//        CharSequence date2 = TimeUtils.getRelativeTime(
-//                TimeUtils.getSysCurrentMillis()-10001 * 10000);
-//        time.setText(date2);
+
     }
 
     /**
      * 初始化列表
      */
-    private void initList(){
+    private void initList() {
         mRecyclerView = getViewById(R.id.recycler_livingcircle);
         //创建默认的线性LayoutManager
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -67,6 +59,7 @@ public class LivingCircleLogFragment extends BaseFragment
         //创建并设置Adapter
         circleAdapter = new LivingCircleAdapter(getActivity());
         mRecyclerView.setAdapter(circleAdapter);
+        circleAdapter.addDynamicClickListener(this);
     }
 
     /**
@@ -83,9 +76,9 @@ public class LivingCircleLogFragment extends BaseFragment
         List<LivingCircleDynamic> mList = new ArrayList<>();
         for (int i = 0; i < num; i++) {
             LivingCircleDynamic dynamic = new LivingCircleDynamic();
-            dynamic.setRemarkName("name"+i);
-            dynamic.setDeliveryTimeMillis(TimeUtils.getSysCurrentMillis()-10001 * 10000);
-            dynamic.setContent("内容"+i);
+            dynamic.setRemarkName("name" + i);
+            dynamic.setDeliveryTimeMillis(TimeUtils.getSysCurrentMillis() - 10001 * 10000);
+            dynamic.setContent("内容" + i);
             dynamic.setBackType(LivingCircleDynamic.BACK_TYPE_COLOR);
             dynamic.setPraise_count(1);
             mList.add(dynamic);
@@ -94,6 +87,11 @@ public class LivingCircleLogFragment extends BaseFragment
         return mList;
     }
 
+    /**
+     * 下拉刷新
+     *
+     * @param refreshLayout
+     */
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         new Handler().postDelayed(new Runnable() {
@@ -105,6 +103,12 @@ public class LivingCircleLogFragment extends BaseFragment
 
     }
 
+    /**
+     * 上拉加载
+     *
+     * @param refreshLayout
+     * @return
+     */
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         new Handler().postDelayed(new Runnable() {
@@ -116,5 +120,71 @@ public class LivingCircleLogFragment extends BaseFragment
             }
         }, 2000);
         return true;
+    }
+
+    /**
+     * 点击头像
+     *
+     * @param data
+     * @param position
+     */
+    @Override
+    public void onAvatarClick(List data, int position) {
+        ToastUtils.showShort(getActivity(), "avatar" + position);
+    }
+
+    /**
+     * 点击用户名
+     *
+     * @param data
+     * @param position
+     */
+    @Override
+    public void onUserClick(List data, int position) {
+        ToastUtils.showShort(getActivity(), "onUserClick" + position);
+    }
+
+    /**
+     * 点击动态内容
+     *
+     * @param data
+     * @param position
+     */
+    @Override
+    public void onContentClick(List data, int position) {
+        ToastUtils.showShort(getActivity(), "onContentClick" + position);
+    }
+
+    /**
+     * 点击聊天
+     *
+     * @param data
+     * @param position
+     */
+    @Override
+    public void onContactClick(List data, int position) {
+        ToastUtils.showShort(getActivity(), "onContactClick" + position);
+    }
+
+    /**
+     * 点击评论
+     *
+     * @param data
+     * @param position
+     */
+    @Override
+    public void onCommentClick(List data, int position) {
+        ToastUtils.showShort(getActivity(), "onCommentClick" + position);
+    }
+
+    /**
+     * 点击赞
+     *
+     * @param data
+     * @param position
+     */
+    @Override
+    public void onPraiseClick(List data, int position) {
+        ToastUtils.showShort(getActivity(), "onPraiseClick" + position);
     }
 }
