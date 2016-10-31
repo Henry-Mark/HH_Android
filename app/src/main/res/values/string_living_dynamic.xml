@@ -3,4 +3,7 @@
     <string name="string_send_message">发消息</string>
     <string name="string_comment">评论</string>
     <string name="string_praise">赞</string>
+    
+    <string name="string_please_input_your_mood">写下你此刻的心情</string>
+    <string name="string_choose_backcolor">请选择背景</string>
 </resources>

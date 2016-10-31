@@ -86,7 +86,7 @@
                     android:textColor="@color/colorMainStyle" />
             </LinearLayout>
 
-            <TextView
+            <io.github.rockerhieu.emojicon.EmojiconTextView
                 android:id="@+id/tv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
