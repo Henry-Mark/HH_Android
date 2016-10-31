@@ -1,8 +1,6 @@
 package com.henry.hh.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -11,13 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.henry.hh.R;
+import com.henry.hh.entity.GlobalData;
 import com.henry.library.activity.TitleActivity;
 import com.henry.library.utils.ControlsUtils;
 import com.henry.library.utils.ScreenUtils;
 
 import io.github.rockerhieu.emojicon.EmojiconEditText;
 
-public class PublishActivity extends TitleActivity implements TextWatcher {
+public class PublishActivity extends TitleActivity implements TextWatcher, View.OnClickListener {
 
     private int TEXT_MAX_LENGTH = 50;
     private EmojiconEditText mMoodInput;
@@ -25,26 +24,16 @@ public class PublishActivity extends TitleActivity implements TextWatcher {
     private ImageView mPic;
     private TextView mTextLeft;
     private int count_left;
-
-//    public int COLOR_WHITE = ContextCompat.getColor(this, R.color.white);
-//    public int COLOR_GREEN = ContextCompat.getColor(mContext, R.color.green);
-//    public int COLOR_RED = ContextCompat.getColor(mContext, R.color.red);
-//    public int COLOR_ORANGE = ContextCompat.getColor(mContext, R.color.orange);
-//    public int COLOR_PURPLE = ContextCompat.getColor(mContext, R.color.purple);
-//    public int COLOR_BLUE = ContextCompat.getColor(mContext, R.color.blue);
+    private GlobalData app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
+        //全局变量
+        app = (GlobalData) getApplication();
         count_left = TEXT_MAX_LENGTH;
         bindView();
-        int COLOR_WHITE = ContextCompat.getColor(this, R.color.white);
-        int COLOR_GREEN = ContextCompat.getColor(mContext, R.color.green);
-        int COLOR_RED = ContextCompat.getColor(mContext, R.color.red);
-        int COLOR_ORANGE = ContextCompat.getColor(mContext, R.color.orange);
-        int COLOR_PURPLE = ContextCompat.getColor(mContext, R.color.purple);
-        int COLOR_BLUE = ContextCompat.getColor(mContext, R.color.blue);
 
     }
 
@@ -75,6 +64,13 @@ public class PublishActivity extends TitleActivity implements TextWatcher {
                 (int) (ScreenUtils.getScreenWidth(mContext) * 0.6));
         mTextLeft.setText("还可以输入" + count_left + "个字");
         mMoodInput.addTextChangedListener(this);
+        view_white.setOnClickListener(this);
+        view_blue.setOnClickListener(this);
+        view_purple.setOnClickListener(this);
+        view_red.setOnClickListener(this);
+        view_green.setOnClickListener(this);
+        view_orange.setOnClickListener(this);
+        mPic.setOnClickListener(this);
     }
 
     @Override
@@ -92,5 +88,33 @@ public class PublishActivity extends TitleActivity implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        if (v == view_blue) {
+            setInputBackground(app.COLOR_BLUE);
+        } else if (v == view_green) {
+            setInputBackground(app.COLOR_GREEN);
+        } else if (v == view_orange) {
+            setInputBackground(app.COLOR_ORANGE);
+        } else if (v == view_purple) {
+            setInputBackground(app.COLOR_PURPLE);
+        } else if (v == view_red) {
+            setInputBackground(app.COLOR_RED);
+        } else if (v == view_white) {
+            setInputBackground(app.COLOR_WHITE);
+        } else if (v == mPic) {
+
+        }
+    }
+
+    /**
+     * 设置输入框背景颜色
+     * @param color
+     */
+    private void setInputBackground(int color){
+        mMoodInput.setBackgroundColor(color);
     }
 }
