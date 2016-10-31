@@ -19,6 +19,8 @@ public class GlobalData extends Application {
     public int COLOR_ORANGE;
     public int COLOR_PURPLE;
     public int COLOR_BLUE;
+    public int COLOR_MAIN;
+    public int COLOR_BLACK;
 
     //用户相关信息
     private User user;
@@ -48,5 +50,7 @@ public class GlobalData extends Application {
         COLOR_ORANGE = ContextCompat.getColor(this, R.color.orange);
         COLOR_PURPLE = ContextCompat.getColor(this, R.color.purple);
         COLOR_BLUE = ContextCompat.getColor(this, R.color.blue);
+        COLOR_MAIN = ContextCompat.getColor(this,R.color.colorMainStyle);
+        COLOR_BLACK = ContextCompat.getColor(this,R.color.black);
     }
 }
