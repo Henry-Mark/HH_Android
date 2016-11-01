@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.henry.hh.R;
+import com.henry.hh.dialog.ButtonMenuFragment;
 import com.henry.hh.entity.GlobalData;
 import com.henry.library.activity.TitleActivity;
 import com.henry.library.utils.ControlsUtils;
@@ -41,8 +42,18 @@ public class PublishActivity extends TitleActivity implements TextWatcher, View.
         //全局变量
         app = (GlobalData) getApplication();
         count_left = TEXT_MAX_LENGTH;
+        initTitle();
         bindView();
 
+    }
+
+    /**
+     * 初始化标题栏
+     */
+    private void initTitle() {
+        setTitle("我的心情");
+        showBackwardView("返回", true);
+        showForwardView("发布", true);
     }
 
     /**
@@ -123,7 +134,8 @@ public class PublishActivity extends TitleActivity implements TextWatcher, View.
         } else if (v == view_white) {
             setInputBackground(app.COLOR_WHITE);
         } else if (v == mPic) {
-
+            ButtonMenuFragment buttonMenuFragment = new ButtonMenuFragment();
+            buttonMenuFragment.show(getFragmentManager(),TAG);
         } else if (v == view_text_black) {
             setInputTextColor(app.COLOR_BLACK);
         } else if (v == view_text_main) {
@@ -134,6 +146,28 @@ public class PublishActivity extends TitleActivity implements TextWatcher, View.
             Intent intent_location = new Intent(this, LocationActivity.class);
             startActivityForResult(intent_location, CODE);
         }
+    }
+
+    /**
+     * 返回键
+     *
+     * @param backwardView
+     */
+    @Override
+    protected void onBackward(View backwardView) {
+        super.onBackward(backwardView);
+        finish();
+    }
+
+    /**
+     * 提交
+     *
+     * @param forwardView
+     */
+    @Override
+    protected void onForward(View forwardView) {
+        super.onForward(forwardView);
+        showToast("发布");
     }
 
     /**

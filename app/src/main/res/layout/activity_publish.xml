@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--suppress AndroidDomInspection -->
+<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidDomInspection -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -145,12 +144,11 @@
                     android:gravity="center"
                     android:weightSum="1">
 
-
                     <View
                         android:id="@+id/view_color_white"
                         android:layout_width="0dp"
                         android:layout_height="20dp"
-                        android:layout_weight="0.6"
+                        android:layout_weight="0.5"
                         android:background="@android:color/white" />
 
                 </LinearLayout>
@@ -166,7 +164,7 @@
                         android:id="@+id/view_color_orange"
                         android:layout_width="0dp"
                         android:layout_height="20dp"
-                        android:layout_weight="0.6"
+                        android:layout_weight="0.5"
                         android:background="@android:color/holo_orange_dark" />
 
                 </LinearLayout>
@@ -182,7 +180,7 @@
                         android:id="@+id/view_color_green"
                         android:layout_width="0dp"
                         android:layout_height="20dp"
-                        android:layout_weight="0.6"
+                        android:layout_weight="0.5"
                         android:background="@android:color/holo_green_dark" />
 
                 </LinearLayout>
@@ -198,7 +196,7 @@
                         android:id="@+id/view_color_red"
                         android:layout_width="0dp"
                         android:layout_height="20dp"
-                        android:layout_weight="0.6"
+                        android:layout_weight="0.5"
                         android:background="@android:color/holo_red_light" />
 
                 </LinearLayout>
@@ -221,7 +219,7 @@
                         android:id="@+id/view_color_purple"
                         android:layout_width="0dp"
                         android:layout_height="20dp"
-                        android:layout_weight="0.6"
+                        android:layout_weight="0.5"
                         android:background="@android:color/holo_purple" />
 
                 </LinearLayout>
@@ -237,7 +235,7 @@
                         android:id="@+id/view_color_blue_light"
                         android:layout_width="0dp"
                         android:layout_height="20dp"
-                        android:layout_weight="0.6"
+                        android:layout_weight="0.5"
                         android:background="@android:color/holo_blue_light" />
 
                 </LinearLayout>
@@ -253,8 +251,8 @@
                         android:id="@+id/iv_photo"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:src="@mipmap/ic_launcher" />
+                        android:layout_weight="0.5"
+                        android:src="@mipmap/ph_icon_addpic_focused" />
 
                 </LinearLayout>
 
@@ -288,38 +286,43 @@
                 android:text="@string/string_my_position"
                 android:textColor="@color/colorMainStyle"
                 android:textSize="18sp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/white"/>
+                android:background="@color/white" />
+
             <LinearLayout
                 android:id="@+id/layout_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical">
+
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@mipmap/icon_location"
-                    android:layout_margin="10dp"/>
+                    android:layout_margin="10dp"
+                    android:src="@mipmap/icon_location" />
 
                 <TextView
                     android:id="@+id/tv_location"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:hint="@string/string_please_choose_location"
-                    android:textSize="14sp"
-                    android:layout_weight="1"/>
+                    android:textSize="14sp" />
+
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@mipmap/icon_right_arrow"
-                    android:layout_margin="10dp"/>
+                    android:layout_margin="10dp"
+                    android:src="@mipmap/icon_right_arrow" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/white"/>
+                android:background="@color/white" />
         </LinearLayout>
 
     </LinearLayout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="#00000000"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <TextView
+        android:id="@+id/tv_choose_pic"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bottom_menu_btn_selector"
+        android:gravity="center"
+        android:text="@string/string_choose_photo"
+        android:textColor="@color/colorMainStyle"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_take_photo"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/bottom_menu_btn_selector"
+        android:gravity="center"
+        android:text="@string/string_take_photo"
+        android:textColor="@color/colorMainStyle"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/bottom_menu_btn_selector"
+        android:gravity="center"
+        android:text="@string/cancel"
+        android:textColor="@color/text_hint_color"
+        android:textSize="18sp" />
+
+</LinearLayout>

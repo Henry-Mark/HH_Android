@@ -9,4 +9,7 @@
     <string name="string_choose_textcolor">请选择字体颜色</string>
     <string name="string_my_position">我的位置</string>
     <string name="string_please_choose_location">请选择所在位置</string>
+
+    <string name="string_take_photo">拍照</string>
+    <string name="string_choose_photo">图片</string>
 </resources>

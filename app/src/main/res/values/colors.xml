@@ -34,5 +34,9 @@
     <color name="white">@android:color/white</color>
     <color name="black">@android:color/black</color>
 
+    <!--底部按钮背景颜色-->
+    <color name="bottom_menu_btn_bg_common_color">#FFFFFF</color>
+    <color name="bottom_menu_btn_bg_press_color">#EEEEEE</color>
+
 
 </resources>
