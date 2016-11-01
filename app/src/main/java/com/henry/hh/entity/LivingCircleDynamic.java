@@ -1,5 +1,6 @@
 package com.henry.hh.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,14 +9,31 @@ import java.util.List;
  * Email: heneymark@gmail.com
  * Description:生活圈动态
  */
-public class LivingCircleDynamic extends Friend {
+public class LivingCircleDynamic extends Friend implements Serializable {
 
     public final static int BACK_TYPE_PIC = 0;
     public final static int BACK_TYPE_COLOR = 1;
 
-    public final static int COLOR_WHITE = 10;
-    public final static int COLOR_BLACK = 11;
-    public final static int COLOR_RED = 12;
+    /**
+     * 背景颜色：
+     * 白色、黑色、红色、绿色、橙色、品红、主背景色
+     * 或者使用图片
+     */
+    public final static int BACK_COLOR_WHITE = 10;
+    public final static int BACK_COLOR_BLACK = 11;
+    public final static int BACK_COLOR_RED = 12;
+    public final static int BACK_COLOR_GREEN = 13;
+    public final static int BACK_COLOR_ORANGE = 14;
+    public final static int BACK_COLOR_PURPLE = 15;
+    public final static int BACK_COLOR_MAIN = 16;
+    public final static int BACK_COLOR_BLUE = 17;
+
+    /**
+     * 文字颜色：：黑色，白色，主背景色
+     */
+    public final static int TEXTCOLOR_BLACK = 100;
+    public final static int TEXTCOLOR_WHITE = 101;
+    public final static int TEXTCOLOR_MAIN = 102;
 
     //地点
     private String locaion;
@@ -33,14 +51,23 @@ public class LivingCircleDynamic extends Friend {
     private String picUrl;
     /**
      * 背景颜色:
-     * COLOR_WHITE:白色
-     * COLOR_BLACK:黑色
-     * COLOR_RED:红色
+     * BACK_COLOR_WHITE:白色
+     * BACK_COLOR_BLACK:黑色
+     * BACK_COLOR_RED:红色
      * ......
      */
-    private int color;
+    private int back_color;
     //内容
     private String content;
+
+    /**
+     * 文字颜色：
+     * TEXTCOLOR_BLACK：黑色
+     * TEXTCOLOR_WHITE：白色
+     * TEXTCOLOR_MAIN：主色
+     */
+    private int textcolor;
+
     //评论
     private List<Comment> comments;
     //赞的数量
@@ -78,12 +105,20 @@ public class LivingCircleDynamic extends Friend {
         return picUrl;
     }
 
-    public void setColor(int color) {
-        this.color = color;
+    public void setBack_color(int back_color) {
+        this.back_color = back_color;
     }
 
-    public int getColor() {
-        return color;
+    public int getBack_color() {
+        return back_color;
+    }
+
+    public void setTextcolor(int textcolor) {
+        this.textcolor = textcolor;
+    }
+
+    public int getTextcolor() {
+        return textcolor;
     }
 
     public void setComments(List<Comment> comments) {
@@ -115,10 +150,12 @@ public class LivingCircleDynamic extends Friend {
         String string = ";locaion=" + locaion
                 + ";deliveryTimeMillis=" + deliveryTimeMillis
                 + ";backType=" + backType
-                + ";picUrl=" + picUrl + color
+                + ";picUrl=" + picUrl
+                + ";back_color=" + back_color
+                + ";textcolor=" + textcolor
                 + ";comments=" + comments
                 + ";content=" + content
-                + ";praise_count:" + praise_count;
+                + ";praise_count=" + praise_count;
         return super.toString() + string;
     }
 }

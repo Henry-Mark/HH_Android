@@ -12,11 +12,11 @@ import android.widget.TextView;
 
 import com.henry.hh.R;
 import com.henry.hh.dialog.ButtonMenuFragment;
-import com.henry.hh.entity.GlobalData;
+import com.henry.hh.entity.LivingCircleDynamic;
 import com.henry.library.activity.TitleActivity;
 import com.henry.library.utils.ControlsUtils;
 import com.henry.library.utils.ScreenUtils;
-import com.henry.library.utils.ToastUtils;
+import com.henry.library.utils.TimeUtils;
 
 import io.github.rockerhieu.emojicon.EmojiconEditText;
 
@@ -30,17 +30,22 @@ public class PublishActivity extends TitleActivity implements TextWatcher, View.
     private TextView mTextLeft;
     private LinearLayout mlayoutLocation;
     private int count_left;
-    private GlobalData app;
+    private MyApplication app;
     private TextView mLocation;
 
+    private int back_code = LivingCircleDynamic.BACK_TYPE_COLOR;
+    private int textColor = LivingCircleDynamic.TEXTCOLOR_BLACK;
+    private int backColor = LivingCircleDynamic.BACK_COLOR_WHITE;
+
     public int CODE = 100;
+    public static final String BEAN = "bean";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
         //全局变量
-        app = (GlobalData) getApplication();
+        app = (MyApplication) getApplication();
         count_left = TEXT_MAX_LENGTH;
         initTitle();
         bindView();
@@ -99,6 +104,7 @@ public class PublishActivity extends TitleActivity implements TextWatcher, View.
         view_text_black.setOnClickListener(this);
         view_text_white.setOnClickListener(this);
         mlayoutLocation.setOnClickListener(this);
+
     }
 
     @Override
@@ -122,26 +128,26 @@ public class PublishActivity extends TitleActivity implements TextWatcher, View.
     public void onClick(View v) {
         super.onClick(v);
         if (v == view_blue) {
-            setInputBackground(app.COLOR_BLUE);
+            setInputBackground(LivingCircleDynamic.BACK_COLOR_BLUE);
         } else if (v == view_green) {
-            setInputBackground(app.COLOR_GREEN);
+            setInputBackground(LivingCircleDynamic.BACK_COLOR_GREEN);
         } else if (v == view_orange) {
-            setInputBackground(app.COLOR_ORANGE);
+            setInputBackground(LivingCircleDynamic.BACK_COLOR_ORANGE);
         } else if (v == view_purple) {
-            setInputBackground(app.COLOR_PURPLE);
+            setInputBackground(LivingCircleDynamic.BACK_COLOR_PURPLE);
         } else if (v == view_red) {
-            setInputBackground(app.COLOR_RED);
+            setInputBackground(LivingCircleDynamic.BACK_COLOR_RED);
         } else if (v == view_white) {
-            setInputBackground(app.COLOR_WHITE);
+            setInputBackground(LivingCircleDynamic.BACK_COLOR_WHITE);
         } else if (v == mPic) {
             ButtonMenuFragment buttonMenuFragment = new ButtonMenuFragment();
-            buttonMenuFragment.show(getFragmentManager(),TAG);
+            buttonMenuFragment.show(getFragmentManager(), TAG);
         } else if (v == view_text_black) {
-            setInputTextColor(app.COLOR_BLACK);
+            setInputTextColor(LivingCircleDynamic.TEXTCOLOR_BLACK);
         } else if (v == view_text_main) {
-            setInputTextColor(app.COLOR_MAIN);
+            setInputTextColor(LivingCircleDynamic.TEXTCOLOR_MAIN);
         } else if (v == view_text_white) {
-            setInputTextColor(app.COLOR_WHITE);
+            setInputTextColor(LivingCircleDynamic.TEXTCOLOR_WHITE);
         } else if (v == mlayoutLocation) {
             Intent intent_location = new Intent(this, LocationActivity.class);
             startActivityForResult(intent_location, CODE);
@@ -167,7 +173,30 @@ public class PublishActivity extends TitleActivity implements TextWatcher, View.
     @Override
     protected void onForward(View forwardView) {
         super.onForward(forwardView);
-        showToast("发布");
+        //数据是使用Intent返回
+        Intent intent = new Intent();
+        //把返回数据存入Intent
+        intent.putExtra(BEAN, getData());
+
+        //设置返回数据
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    /**
+     * 获取需要发布的数据
+     *
+     * @return
+     */
+    private LivingCircleDynamic getData() {
+        LivingCircleDynamic dynamic = new LivingCircleDynamic();
+        dynamic.setBackType(back_code);
+        dynamic.setLocaion(mLocation.getText().toString());
+        dynamic.setContent(mMoodInput.getText().toString());
+        dynamic.setBack_color(backColor);
+        dynamic.setTextcolor(textColor);
+        dynamic.setDeliveryTimeMillis(TimeUtils.getSysCurrentMillis());
+        return dynamic;
     }
 
     /**
@@ -176,21 +205,23 @@ public class PublishActivity extends TitleActivity implements TextWatcher, View.
      * @param color
      */
     private void setInputBackground(int color) {
-        mMoodInput.setBackgroundColor(color);
+        mMoodInput.setBackgroundColor(app.useColor(color));
+        backColor = color;
     }
 
     /**
      * 设置输入文字颜色
      *
-     * @param color
+     * @param colorCode
      */
-    private void setInputTextColor(int color) {
-        mMoodInput.setTextColor(color);
+    private void setInputTextColor(int colorCode) {
+        mMoodInput.setTextColor(app.useColor(colorCode));
+        textColor = colorCode;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String result = data.getExtras().getString(LocationActivity.PLACE);//得到新Activity 关闭后返回的数据
-        mLocation.setText(TextUtils.isEmpty(result) ? "保密" : result);
+        mLocation.setText(TextUtils.isEmpty(result) ? "" : result);
     }
 }

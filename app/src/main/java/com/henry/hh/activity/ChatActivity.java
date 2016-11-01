@@ -14,7 +14,6 @@ import android.view.View;
 import com.henry.hh.R;
 import com.henry.hh.adapter.ChatAdapter;
 import com.henry.hh.entity.Emojicon;
-import com.henry.hh.entity.GlobalData;
 import com.henry.hh.entity.Message;
 import com.henry.hh.entity.User;
 import com.henry.hh.interfaces.OnChatItemClickListener;
@@ -24,7 +23,6 @@ import com.henry.hh.utils.DisplayRules;
 import com.henry.hh.widget.ChatKeyboard;
 import com.henry.library.activity.TitleActivity;
 import com.henry.library.utils.FileUtils;
-import com.henry.library.utils.LogUtils;
 import com.henry.library.utils.TimeUtils;
 
 import java.io.File;
@@ -220,7 +218,7 @@ public class ChatActivity extends TitleActivity implements OnOperationListener, 
     @Override
     public void onAvatarClick(int position) {
         showToast("onAvatarClick.....");
-        GlobalData data = (GlobalData) getApplication();
+        MyApplication data = (MyApplication) getApplication();
         User user = new User();
         user.setNickname("soidhoi.........sdhfjhf");
         data.setUser(user);

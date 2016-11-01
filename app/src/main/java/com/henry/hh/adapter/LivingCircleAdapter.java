@@ -1,7 +1,6 @@
 package com.henry.hh.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.henry.hh.R;
+import com.henry.hh.activity.MyApplication;
 import com.henry.hh.entity.LivingCircleDynamic;
 import com.henry.hh.interfaces.OnLivingDynamicItemClickListener;
 import com.henry.library.View.CircleImageView;
@@ -28,9 +28,11 @@ public class LivingCircleAdapter extends
         BaseRecyclerAdapter<LivingCircleAdapter.ViewHolder, LivingCircleDynamic> {
 
     private OnLivingDynamicItemClickListener listener = null;
+    private MyApplication app;
 
     public LivingCircleAdapter(Context context) {
         super(context);
+        app = (MyApplication) context.getApplicationContext();
     }
 
     @Override
@@ -76,7 +78,12 @@ public class LivingCircleAdapter extends
         if (data.getBackType() == LivingCircleDynamic.BACK_TYPE_PIC) {
             holder.mContent.setBackgroundResource(R.mipmap.ic_launcher);
         } else if (data.getBackType() == LivingCircleDynamic.BACK_TYPE_COLOR) {
-            holder.mContent.setBackgroundColor(Color.RED);
+            holder.mContent.setBackgroundColor(app.useColor(data.getBack_color()));
+        }
+
+        //设置字体颜色
+        if (app.useColor(data.getTextcolor())!=-1){
+            holder.mContent.setTextColor(app.useColor(data.getTextcolor()));
         }
     }
 

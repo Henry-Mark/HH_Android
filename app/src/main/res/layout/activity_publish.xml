@@ -38,6 +38,7 @@
                         android:layout_alignParentTop="true"
                         android:background="@null"
                         android:gravity="center"
+                        android:textColor="@android:color/black"
                         android:hint="@string/string_please_input_your_mood"
                         android:maxLength="50"
                         android:padding="20dp"

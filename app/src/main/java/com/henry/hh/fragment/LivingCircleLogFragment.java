@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -38,6 +39,7 @@ public class LivingCircleLogFragment extends BaseFragment
     private LivingCircleAdapter circleAdapter;
     private BGARefreshLayout mRefreshLayout;
     private ImageButton mAdd;
+    public int CODE = 100;
 
     public LivingCircleLogFragment() {
         // Required empty public constructor
@@ -211,10 +213,19 @@ public class LivingCircleLogFragment extends BaseFragment
         switch (v.getId()) {
             case R.id.ib_add:
                 Intent intent = new Intent(getActivity(), PublishActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,CODE);
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        LivingCircleDynamic result = (LivingCircleDynamic) data.getSerializableExtra(PublishActivity.BEAN);
+        Log.d(TAG,"bean:"+result.getContent());
+        circleAdapter.append(0,result);
+        mRecyclerView.scrollToPosition(0);
     }
 }
