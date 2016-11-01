@@ -1,5 +1,6 @@
 package com.henry.hh.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.graphics.Color;
@@ -22,6 +23,7 @@ import com.henry.hh.interfaces.OnDialogClickListener;
  * Email: heneymark@gmail.com
  * Description:提示对话框
  */
+@SuppressLint("ValidFragment")
 public class PromptDialog extends DialogFragment implements View.OnClickListener {
     private Context context;
     //提示的信息
