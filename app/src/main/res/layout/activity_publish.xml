@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--suppress AndroidDomInspection -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -83,7 +84,7 @@
                 <View
                     android:id="@+id/view_textcolor_white"
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
+                    android:layout_height="30dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
@@ -92,7 +93,7 @@
                 <View
                     android:id="@+id/view_textcolor_black"
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
+                    android:layout_height="30dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
@@ -101,7 +102,7 @@
                 <View
                     android:id="@+id/view_textcolor_main"
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
+                    android:layout_height="30dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
@@ -287,6 +288,10 @@
                 android:text="@string/string_my_position"
                 android:textColor="@color/colorMainStyle"
                 android:textSize="18sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/white"/>
             <LinearLayout
                 android:id="@+id/layout_location"
                 android:layout_width="match_parent"
@@ -295,9 +300,11 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@mipmap/icon_location"
                     android:layout_margin="10dp"/>
+
                 <TextView
+                    android:id="@+id/tv_location"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/string_please_choose_location"
@@ -306,9 +313,13 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@mipmap/icon_right_arrow"
                     android:layout_margin="10dp"/>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/white"/>
         </LinearLayout>
 
     </LinearLayout>

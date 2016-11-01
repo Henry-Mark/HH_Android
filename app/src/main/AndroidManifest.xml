@@ -36,7 +36,8 @@
         <activity
             android:name=".activity.SearchActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.PublishActivity"></activity>
+        <activity android:name=".activity.PublishActivity" />
+        <activity android:name=".activity.LocationActivity"></activity>
     </application>
 
 </manifest>

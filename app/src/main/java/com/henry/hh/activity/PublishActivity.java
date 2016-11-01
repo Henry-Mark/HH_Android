@@ -1,5 +1,6 @@
 package com.henry.hh.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -29,6 +30,9 @@ public class PublishActivity extends TitleActivity implements TextWatcher, View.
     private LinearLayout mlayoutLocation;
     private int count_left;
     private GlobalData app;
+    private TextView mLocation;
+
+    public int CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,6 @@ public class PublishActivity extends TitleActivity implements TextWatcher, View.
         bindView();
 
     }
-
 
     /**
      * 绑定控件,进行初始化设置
@@ -59,8 +62,9 @@ public class PublishActivity extends TitleActivity implements TextWatcher, View.
         view_text_black = getViewById(R.id.view_textcolor_black);
         view_text_main = getViewById(R.id.view_textcolor_main);
         mlayoutLocation = getViewById(R.id.layout_location);
+        mLocation = getViewById(R.id.tv_location);
         //设置控件大小
-        int width = (int) (ScreenUtils.getScreenWidth(mContext) / 4 * 0.6);
+        int width = (int) (ScreenUtils.getScreenWidth(mContext) / 4 * 0.5);
         ControlsUtils.setSize(view_white, width, width);
         ControlsUtils.setSize(view_orange, width, width);
         ControlsUtils.setSize(view_green, width, width);
@@ -126,8 +130,9 @@ public class PublishActivity extends TitleActivity implements TextWatcher, View.
             setInputTextColor(app.COLOR_MAIN);
         } else if (v == view_text_white) {
             setInputTextColor(app.COLOR_WHITE);
-        }else if (v==mlayoutLocation){
-            ToastUtils.showShort(this,"Location");
+        } else if (v == mlayoutLocation) {
+            Intent intent_location = new Intent(this, LocationActivity.class);
+            startActivityForResult(intent_location, CODE);
         }
     }
 
@@ -147,5 +152,11 @@ public class PublishActivity extends TitleActivity implements TextWatcher, View.
      */
     private void setInputTextColor(int color) {
         mMoodInput.setTextColor(color);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String result = data.getExtras().getString(LocationActivity.PLACE);//得到新Activity 关闭后返回的数据
+        mLocation.setText(TextUtils.isEmpty(result) ? "保密" : result);
     }
 }
