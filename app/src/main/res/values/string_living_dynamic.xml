@@ -12,4 +12,5 @@
 
     <string name="string_take_photo">拍照</string>
     <string name="string_choose_photo">图片</string>
+    <string name="string_input_other_place">选择其他地点</string>
 </resources>

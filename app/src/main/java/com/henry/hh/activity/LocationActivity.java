@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -15,10 +17,13 @@ import com.amap.api.services.poisearch.PoiSearch;
 import com.henry.hh.R;
 import com.henry.hh.utils.LocationUtils;
 import com.henry.library.activity.TitleActivity;
+import com.henry.library.utils.ControlsUtils;
 import com.henry.library.utils.LogUtils;
+import com.henry.library.utils.ScreenUtils;
 
 
-public class LocationActivity extends TitleActivity implements PoiSearch.OnPoiSearchListener {
+public class LocationActivity extends TitleActivity
+        implements PoiSearch.OnPoiSearchListener ,View.OnClickListener{
 
     public static final String PLACE = "place";
 
@@ -29,12 +34,16 @@ public class LocationActivity extends TitleActivity implements PoiSearch.OnPoiSe
     private LatLonPoint lp ;
     private int currentPage = 0;
 
+    private EditText mEdit;
+    private ImageView mSearch;
+    private ImageView mClear;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
         initTitle();
-
+        initView();
 //        ((Button) getViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -63,6 +72,15 @@ public class LocationActivity extends TitleActivity implements PoiSearch.OnPoiSe
     private void initTitle(){
         setTitle("地点");
         showBackwardView("返回",true);
+    }
+
+    private void initView(){
+        mSearch = getViewById(R.id.iv_search);
+        mEdit = getViewById(R.id.et_search);
+        mClear = getViewById(R.id.iv_clear);
+        ControlsUtils.setHeight(mEdit, ScreenUtils.getScreenHeight(mContext)/15);
+        mSearch.setOnClickListener(this);
+        mClear.setOnClickListener(this);
     }
 
     /**
@@ -118,5 +136,10 @@ public class LocationActivity extends TitleActivity implements PoiSearch.OnPoiSe
     @Override
     public void onPoiItemSearched(PoiItem poiItem, int i) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
     }
 }
