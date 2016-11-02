@@ -26,6 +26,8 @@ import java.util.List;
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * A simple {@link Fragment} subclass.
  * 生活圈，主要用于展示生活动态
@@ -223,9 +225,15 @@ public class LivingCircleLogFragment extends BaseFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        LivingCircleDynamic result = (LivingCircleDynamic) data.getSerializableExtra(PublishActivity.BEAN);
-        Log.d(TAG,"bean:"+result.getContent());
-        circleAdapter.append(0,result);
-        mRecyclerView.scrollToPosition(0);
+        if (resultCode==RESULT_OK){
+            if (data!=null){
+                LivingCircleDynamic result = (LivingCircleDynamic) data.getSerializableExtra(PublishActivity.BEAN);
+                Log.d(TAG,"bean:"+result.getContent());
+                circleAdapter.append(0,result);
+                mRecyclerView.scrollToPosition(0);
+            }
+        }
+
+
     }
 }
