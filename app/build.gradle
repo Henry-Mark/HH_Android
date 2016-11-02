@@ -1,6 +1,23 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    signingConfigs {
+        /**
+         * 设置你的keystore相关
+         * demo中只是一个示例，使用时请根据实际情况进行配置
+         */
+        debug {
+            //keystore中key的别名
+            keyAlias 'IMU'
+            //keystore中key的密码
+            keyPassword '123456'
+            //keystore的文件路径，可以是绝对路径也可以是相对路径
+            storeFile file('D:\\develop\\sign\\imu.keystore')
+            //keystore的密码
+            storePassword '123456'
+        }
+    }
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
     defaultConfig {
@@ -35,4 +52,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
     testCompile 'junit:junit:4.12'
+    compile files('libs/AMapSearch_3.5.0_AMapLocation_3.1.0_20161027.jar')
 }

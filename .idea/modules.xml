@@ -3,16 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HH_Android.iml" filepath="$PROJECT_DIR$/HH_Android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/HH_Android.iml" filepath="$PROJECT_DIR$/HH_Android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/bgaRefreshLibrary/bgaRefreshLibrary.iml" filepath="$PROJECT_DIR$/bgaRefreshLibrary/bgaRefreshLibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/bgaRefreshLibrary/bgaRefreshLibrary.iml" filepath="$PROJECT_DIR$/bgaRefreshLibrary/bgaRefreshLibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/commonLibrary/commonLibrary.iml" filepath="$PROJECT_DIR$/commonLibrary/commonLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/commonLibrary/commonLibrary.iml" filepath="$PROJECT_DIR$/commonLibrary/commonLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/emojiconLibrary/emojiconLibrary.iml" filepath="$PROJECT_DIR$/emojiconLibrary/emojiconLibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/emojiconLibrary/emojiconLibrary.iml" filepath="$PROJECT_DIR$/emojiconLibrary/emojiconLibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/titanicLibrary/titanicLibrary.iml" filepath="$PROJECT_DIR$/titanicLibrary/titanicLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/titanicLibrary/titanicLibrary.iml" filepath="$PROJECT_DIR$/titanicLibrary/titanicLibrary.iml" />
     </modules>
   </component>

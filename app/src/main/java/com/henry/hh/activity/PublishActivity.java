@@ -221,7 +221,12 @@ public class PublishActivity extends TitleActivity implements TextWatcher, View.
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String result = data.getExtras().getString(LocationActivity.PLACE);//得到新Activity 关闭后返回的数据
-        mLocation.setText(TextUtils.isEmpty(result) ? "" : result);
+        if (resultCode==RESULT_OK){
+            if (data!=null){
+                String result = data.getExtras().getString(LocationActivity.PLACE);//得到新Activity 关闭后返回的数据
+                mLocation.setText(TextUtils.isEmpty(result) ? "" : result);
+            }
+        }
+
     }
 }
