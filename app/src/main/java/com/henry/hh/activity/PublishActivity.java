@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.henry.hh.R;
 import com.henry.hh.dialog.ButtonMenuFragment;
 import com.henry.hh.entity.LivingCircleDynamic;
+import com.henry.hh.interfaces.OnPhotoGetListener;
 import com.henry.library.activity.TitleActivity;
 import com.henry.library.utils.ControlsUtils;
 import com.henry.library.utils.ScreenUtils;
@@ -20,7 +21,8 @@ import com.henry.library.utils.TimeUtils;
 
 import io.github.rockerhieu.emojicon.EmojiconEditText;
 
-public class PublishActivity extends TitleActivity implements TextWatcher, View.OnClickListener {
+public class PublishActivity extends TitleActivity
+        implements TextWatcher, View.OnClickListener, OnPhotoGetListener {
 
     private int TEXT_MAX_LENGTH = 50;
     private EmojiconEditText mMoodInput;
@@ -142,6 +144,7 @@ public class PublishActivity extends TitleActivity implements TextWatcher, View.
         } else if (v == mPic) {
             ButtonMenuFragment buttonMenuFragment = new ButtonMenuFragment();
             buttonMenuFragment.show(getFragmentManager(), TAG);
+            buttonMenuFragment.setOnPhotoGetListener(this);
         } else if (v == view_text_black) {
             setInputTextColor(LivingCircleDynamic.TEXTCOLOR_BLACK);
         } else if (v == view_text_main) {
@@ -221,12 +224,21 @@ public class PublishActivity extends TitleActivity implements TextWatcher, View.
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode==RESULT_OK){
-            if (data!=null){
+        if (resultCode == RESULT_OK) {
+            if (data != null) {
                 String result = data.getExtras().getString(LocationActivity.PLACE);//得到新Activity 关闭后返回的数据
                 mLocation.setText(TextUtils.isEmpty(result) ? "" : result);
             }
         }
+    }
 
+    @Override
+    public void onPhotoTaken() {
+        showToast("take photo");
+    }
+
+    @Override
+    public void onPicSelected() {
+        showToast("select img");
     }
 }

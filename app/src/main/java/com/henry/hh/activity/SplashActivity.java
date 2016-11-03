@@ -3,7 +3,7 @@ package com.henry.hh.activity;
 import android.os.Bundle;
 
 import com.henry.library.activity.BaseActivity;
-import com.henry.hh.constants.Constants_SP;
+import com.henry.hh.constants.Constants;
 import com.henry.library.utils.SPUtils;
 
 /**
@@ -21,12 +21,12 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (isFirstEnter(Constants_SP.GUIDE_ISFIRST, true)) {
+        if (isFirstEnter(Constants.GUIDE_ISFIRST, true)) {
             startActivity(GuideActivity.class);
         } else
             startActivity(MainActivity.class);
         //写入文件，表示不是第一次进入
-        SPUtils.put(this, Constants_SP.GUIDE_ISFIRST, false);
+        SPUtils.put(this, Constants.GUIDE_ISFIRST, false);
         finish();
 
     }

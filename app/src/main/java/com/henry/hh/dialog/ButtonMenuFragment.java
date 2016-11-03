@@ -15,8 +15,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.henry.hh.R;
+import com.henry.hh.interfaces.OnPhotoGetListener;
 import com.henry.library.utils.ScreenUtils;
-import com.henry.library.utils.ToastUtils;
 
 /**
  * Date: 2016/11/1. 14:12
@@ -29,6 +29,7 @@ public class ButtonMenuFragment extends DialogFragment implements View.OnClickLi
     private TextView mTakePhoto;
     private TextView mChoosePic;
     private TextView mCancel;
+    private OnPhotoGetListener listener = null;
 
     @Nullable
     @Override
@@ -44,6 +45,7 @@ public class ButtonMenuFragment extends DialogFragment implements View.OnClickLi
 
     /**
      * 初始化控件
+     *
      * @param view
      */
     private void initView(View view) {
@@ -60,12 +62,18 @@ public class ButtonMenuFragment extends DialogFragment implements View.OnClickLi
         if (v == mCancel) {
             dismiss();
         } else if (v == mChoosePic) {
+            if (listener != null)
+                listener.onPicSelected();
             dismiss();
-            ToastUtils.showShort(getActivity(), "pic");
         } else if (v == mTakePhoto) {
+            if (listener != null)
+                listener.onPhotoTaken();
             dismiss();
-            ToastUtils.showShort(getActivity(), "Photo");
         }
+    }
+
+    public void setOnPhotoGetListener(OnPhotoGetListener listener) {
+        this.listener = listener;
     }
 
     @Override
