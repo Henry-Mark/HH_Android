@@ -164,12 +164,6 @@ public class SearchActivity extends BaseActivity
         return false;
     }
 
-    private void hideSoftKeyboard(){
-        // 先隐藏键盘
-        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-                .hideSoftInputFromWindow(this.getCurrentFocus()
-                        .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-    }
 
     @Override
     public void onItemClick(View view, List data, int position) {

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.henry.library.utils.ToastUtils;
 
@@ -88,5 +89,15 @@ public class BaseActivity extends BaseLogActivity {
      */
     protected void showToast(int ResStr) {
         ToastUtils.showShort(mContext, ResStr);
+    }
+
+    /**
+     * 隐藏软键盘
+     */
+    protected void hideSoftKeyboard(){
+        // 先隐藏键盘
+        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(this.getCurrentFocus()
+                        .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }
