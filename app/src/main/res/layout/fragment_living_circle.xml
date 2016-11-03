@@ -13,28 +13,26 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <cn.bingoogolapple.refreshlayout.BGARefreshLayout
             android:id="@+id/refreshLayout"
             style="@style/MatchMatch">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_livingcircle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                style="@style/MatchAuto">
 
             </android.support.v7.widget.RecyclerView>
         </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
         <ImageButton
             android:id="@+id/ib_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_input_add"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"/>
+            android:src="@android:drawable/ic_input_add" />
     </RelativeLayout>
-
-
-
 
 
 </LinearLayout>

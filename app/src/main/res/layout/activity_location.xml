@@ -7,15 +7,16 @@
     android:background="@color/colorMainBackGreyLight"
     android:orientation="vertical"
     tools:context="com.henry.hh.activity.LocationActivity">
+
     <LinearLayout
         android:id="@+id/layout_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_margin="10dp"
         android:background="@drawable/background_layout_search_location"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_margin="10dp"
         android:paddingBottom="2dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
@@ -46,21 +47,20 @@
             android:id="@+id/iv_clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_cha"
             android:layout_marginRight="10dp"
+            android:src="@mipmap/icon_cha"
             android:visibility="gone" />
     </LinearLayout>
 
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout
         android:id="@+id/refreshLayout"
-        android:layout_marginRight="10dp"
+        style="@style/MatchMatch"
         android:layout_marginLeft="10dp"
-        style="@style/MatchMatch">
+        android:layout_marginRight="10dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_location"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            style="@style/MatchAuto">
 
         </android.support.v7.widget.RecyclerView>
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>

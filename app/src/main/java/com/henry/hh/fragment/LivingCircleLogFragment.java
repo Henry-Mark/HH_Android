@@ -58,6 +58,7 @@ public class LivingCircleLogFragment extends BaseFragment
     }
 
     private void bindView() {
+        mRefreshLayout = getViewById(R.id.refreshLayout);
         mAdd = getViewById(R.id.ib_add);
         mAdd.setOnClickListener(this);
     }
@@ -82,7 +83,6 @@ public class LivingCircleLogFragment extends BaseFragment
      * 初始化刷新控件
      */
     private void initRefresh() {
-        mRefreshLayout = getViewById(R.id.refreshLayout);
         mRefreshLayout.setDelegate(this);
         mRefreshLayout.setIsShowLoadingMoreView(true);
         mRefreshLayout.setRefreshViewHolder(
@@ -215,7 +215,7 @@ public class LivingCircleLogFragment extends BaseFragment
         switch (v.getId()) {
             case R.id.ib_add:
                 Intent intent = new Intent(getActivity(), PublishActivity.class);
-                startActivityForResult(intent,CODE);
+                startActivityForResult(intent, CODE);
                 break;
             default:
                 break;
@@ -225,11 +225,11 @@ public class LivingCircleLogFragment extends BaseFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==RESULT_OK){
-            if (data!=null){
+        if (resultCode == RESULT_OK) {
+            if (data != null) {
                 LivingCircleDynamic result = (LivingCircleDynamic) data.getSerializableExtra(PublishActivity.BEAN);
-                Log.d(TAG,"bean:"+result.getContent());
-                circleAdapter.append(0,result);
+                Log.d(TAG, "bean:" + result.getContent());
+                circleAdapter.append(0, result);
                 mRecyclerView.scrollToPosition(0);
             }
         }
