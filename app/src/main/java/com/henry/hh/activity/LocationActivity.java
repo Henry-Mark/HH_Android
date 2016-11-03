@@ -2,7 +2,6 @@ package com.henry.hh.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -27,7 +26,6 @@ import com.henry.library.View.DividerItemDecoration;
 import com.henry.library.utils.ControlsUtils;
 import com.henry.library.utils.LogUtils;
 import com.henry.library.utils.ScreenUtils;
-import com.henry.library.utils.ToastUtils;
 
 import java.util.List;
 
@@ -209,7 +207,6 @@ public class LocationActivity extends CheckPermissionsActivity
                         isRefresh = false;
                     }
                     adapter.refresh(poiResult.getPois());
-
                 }
             } else {
                 LogUtils.e(TAG, "i");
@@ -267,8 +264,6 @@ public class LocationActivity extends CheckPermissionsActivity
 
     @Override
     public void onItemClick(View view, List data, int position) {
-
-
         //数据是使用Intent返回
         Intent intent = new Intent();
         //把返回数据存入Intent
@@ -279,30 +274,35 @@ public class LocationActivity extends CheckPermissionsActivity
         mEdit.setText(plcae == null ? "" : plcae);
         //关闭Activity
         finish();
-
     }
 
+    /**
+     * 下拉刷新
+     * @param refreshLayout
+     */
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         isRefresh = true;
         doSearchQuery(mEdit.getText().toString());
     }
 
+    /**
+     * 上拉加载
+     * @param refreshLayout
+     * @return
+     */
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         currentPage++;
-        if (currentPage >= pageCount) {
+        LogUtils.d(TAG, "current:" + currentPage+"\npageCount：" + pageCount);
+        if (currentPage < pageCount) {
             searchQuery(mEdit.getText().toString(), currentPage);
             isUpload = true;
         } else {
+            mRefreshLayout.endLoadingMore();
             showToast("没有更多数据了");
+            return false;
         }
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                mRefreshLayout.endLoadingMore();
-//            }
-//        }, 2000);
         return true;
     }
 }
