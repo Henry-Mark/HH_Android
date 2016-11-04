@@ -53,4 +53,5 @@ dependencies {
     compile 'com.android.support:design:24.2.1'
     testCompile 'junit:junit:4.12'
     compile files('libs/AMapSearch_3.5.0_AMapLocation_3.1.0_20161027.jar')
+    compile project(path: ':swipecardslibrary')
 }
