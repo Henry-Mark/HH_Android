@@ -33,6 +33,7 @@
     <color name="blue">@android:color/holo_blue_light</color>
     <color name="white">@android:color/white</color>
     <color name="black">@android:color/black</color>
+    <color name="pink">#f9caf9</color>
 
     <!--底部按钮背景颜色-->
     <color name="bottom_menu_btn_bg_common_color">#FFFFFF</color>

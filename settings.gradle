@@ -1,1 +1,1 @@
-include ':app', ':commonLibrary', ':titanicLibrary', ':bgaRefreshLibrary', ':emojiconLibrary', ':swipecardslibrary'
+include ':app', ':commonLibrary', ':titanicLibrary', ':bgaRefreshLibrary', ':emojiconLibrary'

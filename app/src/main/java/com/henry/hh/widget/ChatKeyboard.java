@@ -10,14 +10,13 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.henry.hh.R;
-import com.henry.hh.SoftKeyboardStateHelper;
+import com.henry.hh.utils.SoftKeyboardStateHelper;
 import com.henry.hh.adapter.FaceCategroyAdapter;
 import com.henry.hh.interfaces.OnFaceListener;
 import com.henry.hh.interfaces.OnOperationListener;

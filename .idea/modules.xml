@@ -7,7 +7,6 @@
       <module fileurl="file://$PROJECT_DIR$/bgaRefreshLibrary/bgaRefreshLibrary.iml" filepath="$PROJECT_DIR$/bgaRefreshLibrary/bgaRefreshLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/commonLibrary/commonLibrary.iml" filepath="$PROJECT_DIR$/commonLibrary/commonLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/emojiconLibrary/emojiconLibrary.iml" filepath="$PROJECT_DIR$/emojiconLibrary/emojiconLibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/swipecardslibrary/swipecardslibrary.iml" filepath="$PROJECT_DIR$/swipecardslibrary/swipecardslibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/titanicLibrary/titanicLibrary.iml" filepath="$PROJECT_DIR$/titanicLibrary/titanicLibrary.iml" />
     </modules>
   </component>

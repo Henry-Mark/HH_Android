@@ -22,4 +22,22 @@ public class Constants {
     public static final String CACHE_IMG_FOLDER = CACHE_FOLDER + File.separator + "img";
     //头像路径
     public static final String PATH_AVATAR = CACHE_IMG_FOLDER + File.separator + "head.png";
+
+    /**
+     * 星座
+     */
+    public class Zodiac{
+        public static final String ARIES = "白羊座";
+        public static final String AQUARIUS = "水瓶座";
+        public static final String TAURUS = "金牛座";
+        public static final String GEMINI = "双子座";
+        public static final String CANCER = "巨蟹座";
+        public static final String VIRGO = "处女座";
+        public static final String LION = "狮子座";
+        public static final String LIBRAS = "天秤座";
+        public static final String SCORPIO = "天蝎座";
+        public static final String SAGITTARIUS = "射手座";
+        public static final String CAPRICORN = "摩羯座";
+        public static final String PISCES = "双鱼座";
+    }
 }

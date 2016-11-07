@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.henry.hh;
+package com.henry.hh.utils;
 
 import android.graphics.Rect;
 import android.view.View;
