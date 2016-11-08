@@ -13,7 +13,7 @@ android {
             //keystore中key的密码
             keyPassword '123456'
             //keystore的文件路径，可以是绝对路径也可以是相对路径
-            storeFile file('D:\\develop\\sign\\imu.keystore')
+            storeFile file('imu.keystore')
             //keystore的密码
             storePassword '123456'
         }
