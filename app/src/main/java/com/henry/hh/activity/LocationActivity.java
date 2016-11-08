@@ -2,6 +2,7 @@ package com.henry.hh.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -26,6 +27,7 @@ import com.henry.library.View.DividerItemDecoration;
 import com.henry.library.utils.ControlsUtils;
 import com.henry.library.utils.LogUtils;
 import com.henry.library.utils.ScreenUtils;
+import com.henry.library.utils.ToastUtils;
 
 import java.util.List;
 
@@ -214,6 +216,13 @@ public class LocationActivity extends CheckPermissionsActivity
         } else if (i == 1802) {
             showToast("socket 连接超时");
         }
+
+        if (isRefresh) {
+            //结束刷新
+            mRefreshLayout.endRefreshing();
+            isRefresh = false;
+            showToast("刷新失败");
+        }
     }
 
     @Override
@@ -284,6 +293,7 @@ public class LocationActivity extends CheckPermissionsActivity
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         isRefresh = true;
         doSearchQuery(mEdit.getText().toString());
+
     }
 
     /**
@@ -298,6 +308,13 @@ public class LocationActivity extends CheckPermissionsActivity
         if (currentPage < pageCount) {
             searchQuery(mEdit.getText().toString(), currentPage);
             isUpload = true;
+            if (mRefreshLayout.isLoadingMore())
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRefreshLayout.endLoadingMore();
+                    }
+                },5000);
         } else {
             mRefreshLayout.endLoadingMore();
             showToast("没有更多数据了");
