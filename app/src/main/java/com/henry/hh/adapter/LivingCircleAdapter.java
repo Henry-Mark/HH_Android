@@ -82,9 +82,9 @@ public class LivingCircleAdapter extends
         }
 
         //设置字体颜色
-        if (app.useColor(data.getTextcolor())!=-1){
+//        if (app.useColor(data.getTextcolor())!=-1){
             holder.mContent.setTextColor(app.useColor(data.getTextcolor()));
-        }
+//        }
     }
 
     public void addDynamicClickListener(OnLivingDynamicItemClickListener listener) {
