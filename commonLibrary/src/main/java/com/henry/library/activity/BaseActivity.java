@@ -17,12 +17,27 @@ import com.henry.library.utils.ToastUtils;
  * Description: 基类，打印生命周期，以及重写启动方法
  */
 public class BaseActivity extends BaseLogActivity {
-    protected Context mContext;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = this;
+
+    }
+
+    @Override
+    protected void screenOn() {
+
+    }
+
+    @Override
+    protected void screenOff() {
+
+    }
+
+    @Override
+    protected void screenUsePresent() {
+
     }
 
     /**

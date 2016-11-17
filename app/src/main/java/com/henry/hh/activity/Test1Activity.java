@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,10 +15,12 @@ import com.henry.hh.R;
 import com.henry.hh.entity.User;
 import com.henry.hh.service.ChatService;
 import com.henry.library.activity.BaseActivity;
+import com.henry.library.activity.TitleActivity;
 import com.henry.library.utils.LogUtils;
+import com.henry.library.utils.ToastUtils;
 import com.litesuits.orm.LiteOrm;
 
-public class Test1Activity extends BaseActivity {
+public class Test1Activity extends TitleActivity {
     static LiteOrm liteOrm;
     ChatService chatService;
     ChattingMsgBroadcastReceiver rhelper;
@@ -106,5 +109,20 @@ public class Test1Activity extends BaseActivity {
         //取消广播接收器
         unregisterReceiver(rhelper);
         super.onStop();
+    }
+
+    @Override
+    protected void screenOff() {
+        showToast("off");
+    }
+
+    @Override
+    protected void screenOn() {
+        showToast("锁定亮");
+    }
+
+    @Override
+    protected void screenUsePresent() {
+        showToast("正在使用");
     }
 }
