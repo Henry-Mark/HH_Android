@@ -28,6 +28,10 @@ public class User {
     @PrimaryKey(AssignType.BY_MYSELF)
     private int userId;
     /**
+     * 账号
+     */
+    private String account;
+    /**
      * 用户昵称
      */
     private String nickname;
@@ -84,6 +88,14 @@ public class User {
 
     public int getUserId() {
         return userId;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getAccount() {
+        return account;
     }
 
     public void setNickname(String nickname) {
@@ -178,6 +190,7 @@ public class User {
     @Override
     public String toString() {
         String string = "userId=" + userId
+                + ";account=" + account
                 + ";nickname=" + nickname
                 + ";username=" + username
                 + ";password=" + password

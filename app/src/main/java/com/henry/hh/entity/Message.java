@@ -23,7 +23,7 @@ public class Message {
      * 1.图片消息；
      * more 其他
      */
-    private int type;
+    private int messageType;
     /**
      * 消息发送状态：
      * 0.正在发送
@@ -70,12 +70,12 @@ public class Message {
      */
     private String content;
 
-    public void setType(int type) {
-        this.type = type;
+    public void setMessageType(int messageType) {
+        this.messageType = messageType;
     }
 
-    public int getType() {
-        return type;
+    public int getMessageType() {
+        return messageType;
     }
 
     public void setState(int state) {
@@ -160,17 +160,17 @@ public class Message {
 
     @Override
     public String toString() {
-        String string = "type:"+type
-                +";state:"+state
-                +";fromUserId:"+fromUserId
-                +";fromUserName:"+fromUserName
-                +";fromUserAvatarUrl:"+fromUserAvatarUrl
-                +";toUserId:"+toUserId
-                +";toUserName:"+toUserName
-                +";toUserAvatarUrl:"+toUserAvatarUrl
-                +";isToUserAvatarChanged:"+isToUserAvatarChanged
-                +":timeMillis;"+timeMillis
-                +";content:"+content;
+        String string = "messageType:" + messageType
+                + ";state:" + state
+                + ";fromUserId:" + fromUserId
+                + ";fromUserName:" + fromUserName
+                + ";fromUserAvatarUrl:" + fromUserAvatarUrl
+                + ";toUserId:" + toUserId
+                + ";toUserName:" + toUserName
+                + ";toUserAvatarUrl:" + toUserAvatarUrl
+                + ";isToUserAvatarChanged:" + isToUserAvatarChanged
+                + ":timeMillis;" + timeMillis
+                + ";content:" + content;
         return super.toString();
     }
 }
