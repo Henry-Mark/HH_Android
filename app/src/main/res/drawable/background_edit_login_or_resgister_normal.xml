@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 背景颜色设置为透明 -->
+    <solid android:color="@android:color/white" />
+    <!-- 设置深色边框 -->
+    <stroke
+        android:width="2px"
+        android:color="@android:color/widget_edittext_dark" />
+    <!-- 指定圆角矩形的四个圆角半径 -->
+    <corners
+        android:bottomLeftRadius="6px"
+        android:bottomRightRadius="6px"
+        android:topLeftRadius="6px"
+        android:topRightRadius="6px" />
+</shape>

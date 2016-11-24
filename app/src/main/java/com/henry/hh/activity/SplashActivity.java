@@ -24,7 +24,8 @@ public class SplashActivity extends BaseActivity {
         if (isFirstEnter(Constants.GUIDE_ISFIRST, true)) {
             startActivity(GuideActivity.class);
         } else
-            startActivity(MainActivity.class);
+            startActivity(LoginActivity.class);
+//            startActivity(MainActivity.class);
         //写入文件，表示不是第一次进入
         SPUtils.put(this, Constants.GUIDE_ISFIRST, false);
         finish();

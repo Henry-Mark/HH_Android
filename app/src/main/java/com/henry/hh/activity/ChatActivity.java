@@ -88,7 +88,7 @@ public class ChatActivity extends TitleActivity implements OnOperationListener, 
         for (int i = 0; i < num; i++) {
             Message message = new Message();
             message.setTimeMillis(TimeUtils.getSysCurrentMillis() + i * 1000000);
-            message.setType(Message.MSG_TYPE_TEXT);
+            message.setMessageType(Message.MSG_TYPE_TEXT);
             message.setContent("content:" + i);
             if (i % 3 == 0)
                 message.setState(Message.MSG_STATE_FAIL);
@@ -123,7 +123,7 @@ public class ChatActivity extends TitleActivity implements OnOperationListener, 
     public void send(String content) {
         Message message = new Message();
         message.setTimeMillis(TimeUtils.getSysCurrentMillis());
-        message.setType(Message.MSG_TYPE_TEXT);
+        message.setMessageType(Message.MSG_TYPE_TEXT);
         message.setContent(mChatKeyboard.getEditTextBox().getText().toString());
         message.setState(Message.MSG_STATE_SUCCESS);
         sendMessage(message);
@@ -165,7 +165,7 @@ public class ChatActivity extends TitleActivity implements OnOperationListener, 
                 File file = FileUtils.uri2File(this, dataUri);
                 Message message = new Message();
                 message.setTimeMillis(TimeUtils.getSysCurrentMillis());
-                message.setType(Message.MSG_TYPE_PHOTO);
+                message.setMessageType(Message.MSG_TYPE_PHOTO);
                 message.setContent(file.getAbsolutePath());
                 message.setState(Message.MSG_STATE_SUCCESS);
                 sendMessage(message);

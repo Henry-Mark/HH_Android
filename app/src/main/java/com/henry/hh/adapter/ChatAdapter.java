@@ -66,11 +66,11 @@ public class ChatAdapter extends BaseRecyclerAdapter<ChatAdapter.ViewHolder, Mes
          * MSG_TYPE_TEXT：文字（emjo）
          * MSG_TYPE_PHOTO:图片
          */
-        if (message.getType() == Message.MSG_TYPE_TEXT) {
+        if (message.getMessageType() == Message.MSG_TYPE_TEXT) {
             holder.mChatContent.setVisibility(View.VISIBLE);
             holder.mChatContent.setText(message.getContent() == null ? "" : message.getContent());
             holder.mChatImg.setVisibility(View.GONE);
-        } else if (message.getType() == Message.MSG_TYPE_PHOTO) {
+        } else if (message.getMessageType() == Message.MSG_TYPE_PHOTO) {
             holder.mChatContent.setVisibility(View.GONE);
             holder.mChatImg.setVisibility(View.VISIBLE);
             bitmap = ImageUtils.getLoacalBitmap(message.getContent());

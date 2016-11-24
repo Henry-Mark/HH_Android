@@ -29,9 +29,9 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="48f94a1c9215e71dc15b0db6c53b3421"></meta-data>
+            android:value="48f94a1c9215e71dc15b0db6c53b3421" />
 
-        <service android:name="com.amap.api.location.APSService"></service>
+        <service android:name="com.amap.api.location.APSService" />
         <service
             android:name=".service.ChatService"
             android:enabled="true"
@@ -54,7 +54,8 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".activity.PublishActivity" />
         <activity android:name=".activity.LocationActivity" />
-        <activity android:name=".activity.SwipeCardsActivity"></activity>
+        <activity android:name=".activity.SwipeCardsActivity" />
+        <activity android:name=".activity.LoginActivity"></activity>
     </application>
 
 </manifest>
