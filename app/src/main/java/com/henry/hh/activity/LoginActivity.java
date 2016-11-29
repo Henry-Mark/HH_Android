@@ -173,7 +173,8 @@ public class LoginActivity extends BaseActivity
             LogUtils.d(TAG, "res:" + code);
         } else if (v == mLogin) {
            if (checkLoginCondition()){
-               showToast("login");
+               startActivity(MainActivity.class);
+               finish();
            }
         } else if (v == mForgetPWD) {
             startActivity(FindPasswordActivity.class);

@@ -25,21 +25,6 @@ public class BaseActivity extends BaseLogActivity {
 
     }
 
-    @Override
-    protected void screenOn() {
-
-    }
-
-    @Override
-    protected void screenOff() {
-
-    }
-
-    @Override
-    protected void screenUsePresent() {
-
-    }
-
     /**
      * 查找View
      *
@@ -109,7 +94,7 @@ public class BaseActivity extends BaseLogActivity {
     /**
      * 隐藏软键盘
      */
-    protected void hideSoftKeyboard(){
+    protected void hideSoftKeyboard() {
         // 先隐藏键盘
         ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                 .hideSoftInputFromWindow(this.getCurrentFocus()

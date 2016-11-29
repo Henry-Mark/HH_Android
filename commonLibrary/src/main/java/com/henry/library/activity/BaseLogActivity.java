@@ -15,7 +15,7 @@ import com.henry.library.broadcastReceiver.LockScreenBroadcastReceiver;
  * Email: heneymark@gmail.com
  * Description: Activity打印日志基类
  */
-public abstract class BaseLogActivity extends AppCompatActivity implements LockScreenBroadcastReceiver.LockScreenListener {
+public class BaseLogActivity extends AppCompatActivity implements LockScreenBroadcastReceiver.LockScreenListener {
 
     protected String TAG = "BaseActivity";
     private LockScreenBroadcastReceiver lockScreenBroadcastReceiver;
@@ -106,11 +106,20 @@ public abstract class BaseLogActivity extends AppCompatActivity implements LockS
     }
 
     //屏幕开启，未解锁
-    protected abstract void screenOn();
+    protected void screenOn() {
+    }
+
+    ;
 
     //屏幕锁定
-    protected abstract void screenOff();
+    protected void screenOff() {
+    }
+
+    ;
 
     //屏幕正在被使用
-    protected abstract void screenUsePresent();
+    protected void screenUsePresent() {
+    }
+
+    ;
 }
