@@ -25,6 +25,7 @@
     <color name="color_backgroung_label">#ed5a84</color>
 
     <color name="color_search_history_title">#e9ed5a81</color>
+    <color name="color_error_log">#e9cf2955</color>
 
     <color name="orange">@android:color/holo_orange_dark</color>
     <color name="green">@android:color/holo_green_dark</color>

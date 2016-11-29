@@ -28,5 +28,14 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
     </style>
+    <!--错误提示-->
+    <style name="errorText">
+        <item name="android:textSize">10sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/color_error_log</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:visibility">gone</item>
+    </style>
 
 </resources>
