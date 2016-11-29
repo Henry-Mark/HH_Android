@@ -46,7 +46,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/selector_edit_login_or_resgister"
-                    android:hint="@string/account"
+                    android:hint="@string/login_account"
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:maxLength="16"
@@ -72,6 +72,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/tv_error_account"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:textColor="@color/color_error_log"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
             android:weightSum="1">
@@ -86,8 +101,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/selector_edit_login_or_resgister"
-                    android:hint="@string/password"
-                    android:imeOptions="actionGo"
+                    android:hint="@string/login_password"
+                    android:imeOptions="actionNext"
                     android:inputType="textPassword"
                     android:maxLength="16"
                     android:maxLines="1"
@@ -105,6 +120,21 @@
                     android:src="@mipmap/icon_cha"
                     android:visibility="gone" />
             </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/tv_error_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:textColor="@color/color_error_log"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -129,9 +159,10 @@
                     android:layout_weight="5"
                     android:background="@drawable/selector_edit_login_or_resgister"
                     android:gravity="center_vertical"
-                    android:hint="@string/code"
+                    android:hint="@string/login_code"
                     android:maxLength="4"
-                    android:maxLines="1"
+                    android:imeOptions="actionGo"
+                    android:singleLine="true"
                     android:paddingLeft="10dp"
                     android:textSize="20sp" />
 
@@ -153,6 +184,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/tv_error_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:textColor="@color/color_error_log"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
             android:weightSum="1">
@@ -163,7 +209,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="0.8"
                 android:background="@drawable/selector_button_red"
-                android:text="@string/login"
+                android:text="@string/login_login"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
@@ -187,7 +233,7 @@
                     android:id="@+id/tv_forget_pwd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/forget_password"
+                    android:text="@string/login_forget_password"
                     android:textColor="@color/blue_dark"
                     android:textSize="14sp" />
 
@@ -196,7 +242,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="@string/register_account"
+                    android:text="@string/login_register_account"
                     android:textColor="@color/blue_dark"
                     android:textSize="14sp" />
             </RelativeLayout>

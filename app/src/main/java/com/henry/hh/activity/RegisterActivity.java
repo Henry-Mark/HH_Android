@@ -45,7 +45,7 @@ public class RegisterActivity extends TitleActivity
      */
     private void initViews() {
         //设置标题
-        setTitle(R.string.register_account);
+        setTitle(R.string.login_register_account);
         //返回
         showBackwardView(R.string.register_back, true);
         mAccount = getViewById(R.id.et_account_register);

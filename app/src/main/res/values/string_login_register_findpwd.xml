@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--登录-->
+    <string name="login_account">账号</string>
+    <string name="login_password">密码</string>
+    <string name="login_login">登录</string>
+    <string name="login_code">验证码</string>
+    <string name="login_forget_password">忘记密码</string>
+    <string name="login_register_account">注册账号</string>
+    <string name="login_err_account_not_null">账号不能为空</string>
+    <string name="login_err_password_not_null">密码不能为空</string>
+    <string name="login_err_account_or_password_wrong">账号或密码错误</string>
+    <string name="login_err_code_wrong">验证码错误</string>
+    <string name="login_err_input_code">请输入验证码</string>
+
+    <!--注册-->
+    <string name="register_string_account">账    号：</string>
+    <string name="register_string_input_account">请给自己设定个账号</string>
+    <string name="register_string_password">密    码：</string>
+    <string name="register_string_input_password">请输入6-16位数字字母组合</string>
+    <string name="register_string_conform_password">确认密码：</string>
+    <string name="register_string_input_conform_password">请再输入一次密码</string>
+    <string name="register_string_nickname">昵    称：</string>
+    <string name="register_string_input_nickname">请设置昵称</string>
+    <string name="register_string_register">注册</string>
+    <string name="register_account_exist">该账号已存在，请换一个账号</string>
+    <string name="register_account_only_num_or_char">账号不能包含汉字或特殊字符</string>
+    <string name="register_account_not_null">账号不能为空</string>
+    <string name="register_nick_not_null">昵称不能为空</string>
+    <string name="register_password_length_not_true">密码必须为6-16字符的数字字母组合</string>
+    <string name="register_password_not_same">密码不一致</string>
+    <string name="register_back">返回</string>
+</resources>

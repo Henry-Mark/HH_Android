@@ -22,7 +22,7 @@ import com.henry.library.utils.LogUtils;
 import com.henry.library.utils.ScreenUtils;
 
 public class LoginActivity extends BaseActivity
-        implements View.OnClickListener , TextView.OnEditorActionListener{
+        implements View.OnClickListener, TextView.OnEditorActionListener {
     //账号标识
     private static int FLAG_ACCOUNT = 10;
     //密码标识
@@ -72,6 +72,19 @@ public class LoginActivity extends BaseActivity
      * 清除密码图标
      */
     private ImageView mClearPwd;
+    /**
+     * 错误提示－－账号
+     */
+    private TextView mErrAccount;
+    /**
+     * 错误提示－－密码
+     */
+    private TextView mErrPwd;
+    /**
+     * 错误提示－－验证码
+     */
+    private TextView mErrCode;
+
     private String code;  //获取每次更新的验证码，可用于判断用户输入是否正确
     private boolean isCodeShow = false;
 
@@ -103,10 +116,10 @@ public class LoginActivity extends BaseActivity
         mCodeLL = getViewById(R.id.ll_code);
         mPasswd = getViewById(R.id.et_password);
         mPasswd.addTextChangedListener(new EditTextWatcher(FLAG_PASSWORD));
-        mPasswd.setOnEditorActionListener(this);
         mCodeCV = getViewById(R.id.cv_code);
         mCodeCV.setOnClickListener(this);
         mCodeEt = getViewById(R.id.et_code);
+        mCodeEt.setOnEditorActionListener(this);
         mLogin = getViewById(R.id.btn_login);
         mLogin.setOnClickListener(this);
         mForgetPWD = getViewById(R.id.tv_forget_pwd);
@@ -117,6 +130,9 @@ public class LoginActivity extends BaseActivity
         mClearAccount.setOnClickListener(this);
         mClearPwd = getViewById(R.id.iv_cha_pwd);
         mClearPwd.setOnClickListener(this);
+        mErrAccount = getViewById(R.id.tv_error_account);
+        mErrPwd = getViewById(R.id.tv_error_password);
+        mErrCode = getViewById(R.id.tv_error_code);
 
         refreshCode();
     }
@@ -140,31 +156,45 @@ public class LoginActivity extends BaseActivity
      * @return
      */
     private boolean checkLoginCondition() {
+        clearErrText();
         if (!isCodeShow) {
             mCodeLL.setVisibility(View.VISIBLE);
             isCodeShow = true;
-            showToast("请输入验证码");
+            mErrCode.setVisibility(View.VISIBLE);
+            mErrCode.setText(R.string.login_err_input_code);
             return false;
         }
         if (TextUtils.isEmpty(mAccount.getText().toString())) {
-            showToast("账号不能为空");
+            mErrAccount.setVisibility(View.VISIBLE);
+            mErrAccount.setText(R.string.login_err_account_not_null);
             return false;
         } else if (TextUtils.isEmpty(mPasswd.getText().toString())) {
-            showToast("密码不能为空");
+            mErrPwd.setVisibility(View.VISIBLE);
+            mErrPwd.setText(R.string.login_err_password_not_null);
             return false;
         } else if (checkCode()) {
             return true;
         } else {
-            showToast("验证码错误");
+            mErrCode.setVisibility(View.VISIBLE);
+            mErrCode.setText(R.string.login_err_code_wrong);
             return false;
         }
     }
 
     /**
+     * 清除错误提示
+     */
+    private void clearErrText() {
+        mErrCode.setVisibility(View.GONE);
+        mErrAccount.setVisibility(View.GONE);
+        mErrPwd.setVisibility(View.GONE);
+    }
+
+    /**
      * 执行登录事件
      */
-    private void dologin(){
-        if (checkLoginCondition()){
+    private void dologin() {
+        if (checkLoginCondition()) {
             startActivity(MainActivity.class);
             finish();
         }
@@ -181,7 +211,7 @@ public class LoginActivity extends BaseActivity
             refreshCode();
             LogUtils.d(TAG, "res:" + code);
         } else if (v == mLogin) {
-          dologin();
+            dologin();
         } else if (v == mForgetPWD) {
             startActivity(FindPasswordActivity.class);
         } else if (v == mRegister) {
@@ -197,7 +227,7 @@ public class LoginActivity extends BaseActivity
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         //点击软键盘的ＧＯ
         if (actionId == EditorInfo.IME_ACTION_GO) {
-           dologin();
+            dologin();
         }
         return false;
     }
