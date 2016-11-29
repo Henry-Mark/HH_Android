@@ -10,154 +10,175 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:weightSum="1">
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="0.9">
+                android:layout_weight="0.9"
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/corner_bg_white"
-                    android:padding="10dp"
-                    android:gravity="center_vertical"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="5dp">
+                    android:background="@drawable/corner_bg_white"
+                    android:gravity="center_vertical"
+                    android:padding="10dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
+                        android:gravity="center"
                         android:text="@string/register_string_account"
                         android:textColor="@color/blue"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp" />
+
                     <EditText
                         android:id="@+id/et_account_register"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:imeOptions="actionNext"
-                        android:maxLines="1"
                         android:background="@null"
+                        android:hint="@string/register_string_input_account"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
                         android:maxLength="10"
-                        android:textSize="16sp"
-                        android:hint="@string/register_string_input_account"/>
+                        android:singleLine="true"
+                        android:textSize="16sp" />
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/tv_error_account"
                     style="@style/errorText"
-                    android:text="@string/register_account_exist"/>
+                    android:text="@string/register_account_exist" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/corner_bg_white"
-                    android:padding="10dp"
-                    android:gravity="center_vertical"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp">
+                    android:background="@drawable/corner_bg_white"
+                    android:gravity="center_vertical"
+                    android:padding="10dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
+                        android:gravity="center"
                         android:text="@string/register_string_nickname"
                         android:textColor="@color/blue"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp" />
+
                     <EditText
                         android:id="@+id/et_nickname_register"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:imeOptions="actionNext"
-                        android:maxLength="10"
-                        android:textSize="16sp"
                         android:background="@null"
+                        android:hint="@string/register_string_input_nickname"
+                        android:imeOptions="actionNext"
                         android:maxEms="10"
-                        android:hint="@string/register_string_input_nickname"/>
+                        android:maxLength="10"
+                        android:singleLine="true"
+                        android:textSize="16sp" />
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/tv_error_nick"
                     style="@style/errorText"
-                    android:text="@string/register_nick_not_null"/>
+                    android:text="@string/register_nick_not_null" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/corner_bg_white"
-                    android:padding="10dp"
-                    android:gravity="center_vertical"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp">
+                    android:background="@drawable/corner_bg_white"
+                    android:gravity="center_vertical"
+                    android:padding="10dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
+                        android:gravity="center"
                         android:text="@string/register_string_password"
                         android:textColor="@color/blue"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp" />
+
                     <EditText
                         android:id="@+id/et_pwd_register"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:textSize="16sp"
-                        android:imeOptions="actionNext"
                         android:background="@null"
-                        android:maxLines="1"
-                        android:maxLength="16"
+                        android:hint="@string/register_string_input_password"
+                        android:imeOptions="actionNext"
                         android:inputType="textPassword"
-                        android:hint="@string/register_string_input_password"/>
+                        android:maxLength="16"
+                        android:singleLine="true"
+                        android:textSize="16sp" />
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/tv_error_password"
                     style="@style/errorText"
-                    android:text="@string/register_password_length_not_true"/>
+                    android:text="@string/register_password_length_not_true" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/corner_bg_white"
-                    android:padding="10dp"
-                    android:gravity="center_vertical"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp">
+                    android:background="@drawable/corner_bg_white"
+                    android:gravity="center_vertical"
+                    android:padding="10dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
+                        android:gravity="center"
                         android:text="@string/register_string_conform_password"
                         android:textColor="@color/blue"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp" />
+
                     <EditText
                         android:id="@+id/et_pwd_conform_register"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:inputType="textPassword"
-                        android:imeOptions="actionDone"
                         android:background="@null"
-                        android:maxLines="1"
+                        android:hint="@string/register_string_input_conform_password"
+                        android:imeOptions="actionGo"
+                        android:inputType="textPassword"
                         android:maxLength="16"
-                        android:textSize="16sp"
-                        android:hint="@string/register_string_input_conform_password"/>
+                        android:singleLine="true"
+                        android:textSize="16sp" />
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/tv_error_password_comform"
                     style="@style/errorText"
-                    android:text="@string/register_password_not_same"/>
+                    android:text="@string/register_password_not_same" />
+
                 <Button
                     android:id="@+id/btn_register"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="40dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
                     android:background="@drawable/selector_button_red"
                     android:text="@string/register_string_register"
                     android:textColor="@color/white"

@@ -22,7 +22,7 @@ import com.henry.library.utils.LogUtils;
 import com.henry.library.utils.ScreenUtils;
 
 public class LoginActivity extends BaseActivity
-        implements View.OnClickListener {
+        implements View.OnClickListener , TextView.OnEditorActionListener{
     //账号标识
     private static int FLAG_ACCOUNT = 10;
     //密码标识
@@ -103,6 +103,7 @@ public class LoginActivity extends BaseActivity
         mCodeLL = getViewById(R.id.ll_code);
         mPasswd = getViewById(R.id.et_password);
         mPasswd.addTextChangedListener(new EditTextWatcher(FLAG_PASSWORD));
+        mPasswd.setOnEditorActionListener(this);
         mCodeCV = getViewById(R.id.cv_code);
         mCodeCV.setOnClickListener(this);
         mCodeEt = getViewById(R.id.et_code);
@@ -116,7 +117,6 @@ public class LoginActivity extends BaseActivity
         mClearAccount.setOnClickListener(this);
         mClearPwd = getViewById(R.id.iv_cha_pwd);
         mClearPwd.setOnClickListener(this);
-
 
         refreshCode();
     }
@@ -160,6 +160,15 @@ public class LoginActivity extends BaseActivity
         }
     }
 
+    /**
+     * 执行登录事件
+     */
+    private void dologin(){
+        if (checkLoginCondition()){
+            startActivity(MainActivity.class);
+            finish();
+        }
+    }
 
     /**
      * 点击事件处理
@@ -172,10 +181,7 @@ public class LoginActivity extends BaseActivity
             refreshCode();
             LogUtils.d(TAG, "res:" + code);
         } else if (v == mLogin) {
-           if (checkLoginCondition()){
-               startActivity(MainActivity.class);
-               finish();
-           }
+          dologin();
         } else if (v == mForgetPWD) {
             startActivity(FindPasswordActivity.class);
         } else if (v == mRegister) {
@@ -185,6 +191,15 @@ public class LoginActivity extends BaseActivity
         } else if (v == mClearPwd) {
             mPasswd.setText("");
         }
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        //点击软键盘的ＧＯ
+        if (actionId == EditorInfo.IME_ACTION_GO) {
+           dologin();
+        }
+        return false;
     }
 
     /**

@@ -41,15 +41,18 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8">
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/et_account"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/selector_edit_login_or_resgister"
                     android:hint="@string/account"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
                     android:maxLength="16"
                     android:maxLines="1"
                     android:padding="10dp"
+                    android:singleLine="true"
                     android:textSize="20sp" />
 
                 <ImageView
@@ -84,10 +87,12 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/selector_edit_login_or_resgister"
                     android:hint="@string/password"
+                    android:imeOptions="actionGo"
                     android:inputType="textPassword"
                     android:maxLength="16"
                     android:maxLines="1"
                     android:padding="10dp"
+                    android:singleLine="true"
                     android:textSize="20sp" />
 
                 <ImageView
