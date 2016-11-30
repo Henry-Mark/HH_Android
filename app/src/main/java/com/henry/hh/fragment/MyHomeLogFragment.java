@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.henry.hh.R;
 import com.henry.hh.constants.Constants;
@@ -18,6 +19,7 @@ import com.henry.hh.interfaces.OnPhotoGetListener;
 import com.henry.hh.utils.FileUtils;
 import com.henry.library.fragment.BaseFragment;
 import com.henry.library.utils.ScreenUtils;
+import com.henry.library.utils.ToastUtils;
 
 import java.io.File;
 
@@ -30,6 +32,8 @@ public class MyHomeLogFragment extends BaseFragment
         implements View.OnClickListener, OnPhotoGetListener {
 
     private ImageView mAvatar;
+    private LinearLayout mSetting;
+
     private static final int IMAGE_REQUEST_CODE = 0; // 请求码 本地图片
     private static final int CAMERA_REQUEST_CODE = 1; // 拍照
     private static final int RESULT_REQUEST_CODE = 2; // 裁剪
@@ -51,6 +55,8 @@ public class MyHomeLogFragment extends BaseFragment
     private void initView() {
         mAvatar = getViewById(R.id.image_avatar);
         mAvatar.setOnClickListener(this);
+        mSetting = getViewById(R.id.ll_setting);
+        mSetting.setOnClickListener(this);
     }
 
     private void takePhoto() {
@@ -74,9 +80,19 @@ public class MyHomeLogFragment extends BaseFragment
 
     @Override
     public void onClick(View v) {
-        ButtonMenuFragment buttonMenuFragment = new ButtonMenuFragment();
-        buttonMenuFragment.show(getActivity().getFragmentManager(), TAG);
-        buttonMenuFragment.setOnPhotoGetListener(this);
+        switch (v.getId()){
+            case R.id.ll_setting:
+                ToastUtils.showShort(getActivity(),"dsd");
+                break;
+            case R.id.image_avatar:
+                ButtonMenuFragment buttonMenuFragment = new ButtonMenuFragment();
+                buttonMenuFragment.show(getActivity().getFragmentManager(), TAG);
+                buttonMenuFragment.setOnPhotoGetListener(this);
+                break;
+            default:
+                break;
+        }
+
     }
 
     @Override

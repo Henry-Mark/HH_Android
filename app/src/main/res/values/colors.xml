@@ -41,5 +41,10 @@
     <color name="bottom_menu_btn_bg_common_color">#FFFFFF</color>
     <color name="bottom_menu_btn_bg_press_color">#EEEEEE</color>
 
+    <!--半透明-->
+    <color name="translucent">#11000000</color>
+    <!--透明-->
+    <color name="transparent">#00000000</color>
+
 
 </resources>
