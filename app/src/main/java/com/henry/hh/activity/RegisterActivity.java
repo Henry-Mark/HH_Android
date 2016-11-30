@@ -14,6 +14,7 @@ import com.henry.library.activity.TitleActivity;
 
 public class RegisterActivity extends TitleActivity
         implements View.OnClickListener, TextView.OnEditorActionListener {
+    private static String charOrNum = "^[A-Za-z0-9]+$";
     //账号
     private EditText mAccount;
     //昵称
@@ -73,7 +74,7 @@ public class RegisterActivity extends TitleActivity
         if (TextUtils.isEmpty(account)) {
             mErrAccount.setVisibility(View.VISIBLE);
             mErrAccount.setText(R.string.register_account_not_null);
-        } else if (!account.matches("^[A-Za-z0-9]+$")) {
+        } else if (!account.matches(charOrNum)) {
             mErrAccount.setVisibility(View.VISIBLE);
             mErrAccount.setText(R.string.register_account_only_num_or_char);
         } else if (TextUtils.isEmpty(nickName)) {
@@ -99,7 +100,7 @@ public class RegisterActivity extends TitleActivity
     private boolean isPwdSuit(String password) {
         if (password.length() < 6 || password.length() > 16)
             return false;
-        if (!password.matches("^[A-Za-z0-9]+$"))
+        if (!password.matches(charOrNum))
             return false;
         return true;
     }
