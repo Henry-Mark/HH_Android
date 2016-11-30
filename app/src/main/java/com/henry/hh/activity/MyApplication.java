@@ -26,7 +26,7 @@ public class MyApplication extends Application {
     public int COLOR_BLACK;
 
     //用户相关信息
-    private User user;
+    private User user = new User();
 
     public void setUser(User user) {
         this.user = user;
