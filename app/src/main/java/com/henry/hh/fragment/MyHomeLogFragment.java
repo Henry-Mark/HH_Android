@@ -86,9 +86,9 @@ public class MyHomeLogFragment extends BaseFragment
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.ll_setting:
-                ToastUtils.showShort(getActivity(),"dsd");
+                ToastUtils.showShort(getActivity(), "dsd");
                 break;
             case R.id.image_avatar:
                 ButtonMenuFragment buttonMenuFragment = new ButtonMenuFragment();
@@ -171,28 +171,28 @@ public class MyHomeLogFragment extends BaseFragment
 
     }
 
-    public void postFile() throws Exception{
-        String path ="";
+    public void postFile() throws Exception {
+        String path = "";
         File file = new File(Constants.PATH_AVATAR);
-        if(file.exists() && file.length()>0){
+        if (file.exists() && file.length() > 0) {
             AsyncHttpClient client = new AsyncHttpClient();
             RequestParams params = new RequestParams();
             params.put("profile_picture", file);
-            client.post("http://192.168.1.100:8080/web/UploadFile", params,new AsyncHttpResponseHandler() {
+            client.post("http://192.168.1.100:8080/web/UploadFile", params, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                    ToastUtils.showShort(getActivity(),"成功");
+                    ToastUtils.showShort(getActivity(), "成功");
                 }
 
                 @Override
                 public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                    ToastUtils.showShort(getActivity(),"失败");
+                    ToastUtils.showShort(getActivity(), "失败");
                 }
 
 
             });
-        }else{
-            ToastUtils.showShort(getActivity(),"文件不存在");
+        } else {
+            ToastUtils.showShort(getActivity(), "文件不存在");
         }
 
     }
