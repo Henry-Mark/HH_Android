@@ -20,6 +20,12 @@ import com.henry.hh.utils.FileUtils;
 import com.henry.library.fragment.BaseFragment;
 import com.henry.library.utils.ScreenUtils;
 import com.henry.library.utils.ToastUtils;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+
+import org.apache.http.Header;
 
 import java.io.File;
 
@@ -156,6 +162,37 @@ public class MyHomeLogFragment extends BaseFragment
             FileUtils.createDir(Constants.CACHE_FOLDER);
             com.henry.library.utils.FileUtils.bitmapToFile(photo, Constants.PATH_AVATAR);
             mAvatar.setImageBitmap(photo);
+            try {
+                postFile();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public void postFile() throws Exception{
+        String path ="";
+        File file = new File(Constants.PATH_AVATAR);
+        if(file.exists() && file.length()>0){
+            AsyncHttpClient client = new AsyncHttpClient();
+            RequestParams params = new RequestParams();
+            params.put("profile_picture", file);
+            client.post("http://192.168.1.100:8080/web/UploadFile", params,new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                    ToastUtils.showShort(getActivity(),"成功");
+                }
+
+                @Override
+                public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                    ToastUtils.showShort(getActivity(),"失败");
+                }
+
+
+            });
+        }else{
+            ToastUtils.showShort(getActivity(),"文件不存在");
         }
 
     }
