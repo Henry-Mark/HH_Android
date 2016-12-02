@@ -17,6 +17,7 @@ import com.henry.hh.constants.Constants;
 import com.henry.hh.dialog.ButtonMenuFragment;
 import com.henry.hh.interfaces.OnPhotoGetListener;
 import com.henry.hh.utils.FileUtils;
+import com.henry.hh.utils.UploadUtils;
 import com.henry.library.fragment.BaseFragment;
 import com.henry.library.utils.ScreenUtils;
 import com.henry.library.utils.ToastUtils;
@@ -163,13 +164,17 @@ public class MyHomeLogFragment extends BaseFragment
             com.henry.library.utils.FileUtils.bitmapToFile(photo, Constants.PATH_AVATAR);
             mAvatar.setImageBitmap(photo);
             try {
-                postFile();
+//                postFile();
+                UploadUtils.uploadFile(new File(Constants.PATH_AVATAR),"http://172.16.50.126:9876/imu/upload");
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
     }
+
+
+
 
     public void postFile() throws Exception {
         String path = "";
@@ -178,7 +183,7 @@ public class MyHomeLogFragment extends BaseFragment
             AsyncHttpClient client = new AsyncHttpClient();
             RequestParams params = new RequestParams();
             params.put("profile_picture", file);
-            client.post("http://192.168.1.100:8080/web/UploadFile", params, new AsyncHttpResponseHandler() {
+            client.post("http://172.16.50.126:9876/imu/upload/avatar", params, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int i, Header[] headers, byte[] bytes) {
                     ToastUtils.showShort(getActivity(), "成功");
