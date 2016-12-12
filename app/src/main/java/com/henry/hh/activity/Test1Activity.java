@@ -31,14 +31,14 @@ public class Test1Activity extends TitleActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test1);
         tv = getViewById(R.id.textView);
-        MyApplication data = (MyApplication) getApplication();
-        User user = data.getUser();
-        tv.setText(user.getNickname());
-
-        if (liteOrm == null) {
-            liteOrm = LiteOrm.newSingleInstance(this, "hh.db");
-        }
-        liteOrm.setDebugged(true); // open the log
+//        MyApplication data = (MyApplication) getApplication();
+//        User user = data.getUser();
+//        tv.setText(user.getNickname());
+//
+//        if (liteOrm == null) {
+//            liteOrm = LiteOrm.newSingleInstance(this, "hh.db");
+//        }
+//        liteOrm.setDebugged(true); // open the log
 
 //        setOrm();
 
@@ -111,18 +111,4 @@ public class Test1Activity extends TitleActivity {
         super.onStop();
     }
 
-    @Override
-    protected void screenOff() {
-        showToast("off");
-    }
-
-    @Override
-    protected void screenOn() {
-        showToast("锁定亮");
-    }
-
-    @Override
-    protected void screenUsePresent() {
-        showToast("正在使用");
-    }
 }

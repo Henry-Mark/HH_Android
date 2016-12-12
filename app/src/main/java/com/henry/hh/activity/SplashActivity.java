@@ -21,13 +21,15 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (isFirstEnter(Constants.GUIDE_ISFIRST, true)) {
-            startActivity(GuideActivity.class);
-        } else
-            startActivity(LoginActivity.class);
-//            startActivity(MainActivity.class);
-        //写入文件，表示不是第一次进入
-        SPUtils.put(this, Constants.GUIDE_ISFIRST, false);
+        startActivity(Test1Activity.class);
+
+//        if (isFirstEnter(Constants.GUIDE_ISFIRST, true)) {
+//            startActivity(GuideActivity.class);
+//        } else
+//            startActivity(LoginActivity.class);
+////            startActivity(MainActivity.class);
+//        //写入文件，表示不是第一次进入
+//        SPUtils.put(this, Constants.GUIDE_ISFIRST, false);
         finish();
 
     }

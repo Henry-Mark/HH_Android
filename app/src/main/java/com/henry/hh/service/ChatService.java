@@ -66,7 +66,6 @@ public class ChatService extends Service {
                 @Override
                 public void onOpen() {
                     LogUtils.i(TAG, "Status:Connect to server " );
-                    sendUsername("Jack");
                 }
                 @Override
                 public void onTextMessage(String payload) {

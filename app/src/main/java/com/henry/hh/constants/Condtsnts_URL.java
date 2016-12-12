@@ -9,7 +9,7 @@ package com.henry.hh.constants;
 public class Condtsnts_URL {
 
     //服务器IP、端口号
-    public static final String IP_PORT = "172.16.50.126:8080/hh/";
+    public static final String IP_PORT = "172.16.50.126:9876/";
     //聊天地址
-    public static final String WEBSOCKET_CHAT = "ws://" + IP_PORT + "websocketChatting";
+    public static final String WEBSOCKET_CHAT = "ws://" + IP_PORT + "imu/message?userId=100001";
 }

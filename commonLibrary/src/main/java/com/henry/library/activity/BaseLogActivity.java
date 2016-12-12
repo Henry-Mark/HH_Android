@@ -7,18 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 
-import com.henry.library.broadcastReceiver.LockScreenBroadcastReceiver;
-
 /**
  * Date: 2016/10/13. 13:48
  * Creator: henry
  * Email: heneymark@gmail.com
  * Description: Activity打印日志基类
  */
-public class BaseLogActivity extends AppCompatActivity implements LockScreenBroadcastReceiver.LockScreenListener {
+public class BaseLogActivity extends AppCompatActivity {
 
     protected String TAG = "BaseActivity";
-    private LockScreenBroadcastReceiver lockScreenBroadcastReceiver;
     protected Context mContext;
 
     @Override
@@ -28,8 +25,6 @@ public class BaseLogActivity extends AppCompatActivity implements LockScreenBroa
         // 获取当前类名
         TAG = getClass().getName();
         Log.i(TAG, "onCreate...");
-        lockScreenBroadcastReceiver = new LockScreenBroadcastReceiver(this);
-        lockScreenBroadcastReceiver.registerScreenActionReceiver(this);
     }
 
     @Override
@@ -66,13 +61,6 @@ public class BaseLogActivity extends AppCompatActivity implements LockScreenBroa
     protected void onDestroy() {
         super.onDestroy();
         Log.i(TAG, "onDestroy...");
-        lockScreenBroadcastReceiver.unRegisterScreenActionReceiver(this);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        Log.i(TAG, "onKeyDown...");
-        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -86,40 +74,4 @@ public class BaseLogActivity extends AppCompatActivity implements LockScreenBroa
         Log.i(TAG, "onActivityResult...");
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-    @Override
-    public void onScreenOn() {
-        Log.i(TAG, "onScreenOn...");
-        screenOn();
-    }
-
-    @Override
-    public void onScreenOff() {
-        Log.i(TAG, "onScreenOff...");
-        screenOff();
-    }
-
-    @Override
-    public void onUserPresent() {
-        Log.i(TAG, "onUserPresent...");
-        screenUsePresent();
-    }
-
-    //屏幕开启，未解锁
-    protected void screenOn() {
-    }
-
-    ;
-
-    //屏幕锁定
-    protected void screenOff() {
-    }
-
-    ;
-
-    //屏幕正在被使用
-    protected void screenUsePresent() {
-    }
-
-    ;
 }
