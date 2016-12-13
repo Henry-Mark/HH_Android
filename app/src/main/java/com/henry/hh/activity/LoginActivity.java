@@ -13,13 +13,24 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.reflect.TypeToken;
 import com.henry.hh.R;
+import com.henry.hh.constants.Condtsnts_URL;
+import com.henry.hh.entity.RequestMsg;
+import com.henry.hh.entity.User;
 import com.henry.hh.widget.CheckView;
 import com.henry.library.View.CircleImageView;
 import com.henry.library.activity.BaseActivity;
 import com.henry.library.utils.DensityUtil;
 import com.henry.library.utils.LogUtils;
 import com.henry.library.utils.ScreenUtils;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class LoginActivity extends BaseActivity
         implements View.OnClickListener, TextView.OnEditorActionListener {
@@ -87,6 +98,7 @@ public class LoginActivity extends BaseActivity
 
     private String code;  //获取每次更新的验证码，可用于判断用户输入是否正确
     private boolean isCodeShow = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,8 +207,12 @@ public class LoginActivity extends BaseActivity
      */
     private void dologin() {
         if (checkLoginCondition()) {
-            startActivity(MainActivity.class);
-            finish();
+            User user = new User();
+            user.setAccount(mAccount.getText().toString());
+            user.setPassword(mPasswd.getText().toString());
+
+            requestLoginMsg(gson.toJson(user));
+
         }
     }
 
@@ -266,5 +282,31 @@ public class LoginActivity extends BaseActivity
         public void afterTextChanged(Editable s) {
 
         }
+    }
+
+
+    private void requestLoginMsg(String value) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("loginMsg", value);
+        client.post(Condtsnts_URL.LOGIN, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                String result = new String(bytes);
+                LogUtils.d(TAG, "result=" + result);
+                RequestMsg msg = gson.fromJson(result,new TypeToken<RequestMsg<?>>() {}.getType());
+                if (msg.getCode()==1){
+//                    User user = gson.fromJson(msg.getData(),User.class);
+                    LogUtils.d(TAG,"user:::"+msg.getData());
+                }
+
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                LogUtils.d(TAG, "login fail...");
+            }
+        });
+
     }
 }

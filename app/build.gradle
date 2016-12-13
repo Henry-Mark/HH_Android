@@ -56,4 +56,5 @@ dependencies {
     compile 'com.android.support:design:24.2.1'
     testCompile 'junit:junit:4.12'
     compile files('libs/android-async-http-1.4.8.jar')
+    compile 'com.google.code.gson:gson:2.2.4'
 }

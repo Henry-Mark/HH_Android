@@ -6,6 +6,8 @@ import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.annotation.Table;
 import com.litesuits.orm.db.enums.AssignType;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+
 /**
  * Date: 2016/10/20. 14:27
  * Creator: henry
@@ -13,7 +15,7 @@ import com.litesuits.orm.db.enums.AssignType;
  * Description: 关于用户信息的实体
  */
 @Table("user")
-public class User {
+public class User  {
 
     public final static int USER_COMMON = 0;
     public final static int USER_VIP = 1;
@@ -53,6 +55,11 @@ public class User {
      * 年龄
      */
     private int age;
+
+    /**
+     * 等级
+     */
+    private int level;
     /**
      * 手机号码
      */
@@ -80,6 +87,11 @@ public class User {
      * 注册时间 ms
      */
     private long registrationTimeMillis;
+
+    /**
+     * 好友列表改变时间
+     */
+    private long friendLastChangedTimeMillis;
 
 
     public void setUserId(int userId) {
@@ -186,6 +198,21 @@ public class User {
         return registrationTimeMillis;
     }
 
+    public void setFriendLastChangedTimeMillis(long friendLastChangedTimeMillis) {
+        this.friendLastChangedTimeMillis = friendLastChangedTimeMillis;
+    }
+
+    public long getFriendLastChangedTimeMillis() {
+        return friendLastChangedTimeMillis;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getLevel() {
+        return level;
+    }
 
     @Override
     public String toString() {
@@ -193,6 +220,7 @@ public class User {
                 + ";account=" + account
                 + ";nickname=" + nickname
                 + ";username=" + username
+                + ";level=" + level
                 + ";password=" + password
                 + ";type=" + type
                 + ";age=" + age
@@ -201,7 +229,8 @@ public class User {
                 + ";avatarUrl=" + avatarUrl
                 + ";signature=" + signature
                 + ";address=" + address
-                + ";registrationTimeMillis=" + registrationTimeMillis;
+                + ";registrationTimeMillis=" + registrationTimeMillis
+                + ";friendLastChangedTimeMillis=" + friendLastChangedTimeMillis;
         return string;
     }
 }
