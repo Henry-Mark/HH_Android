@@ -1,6 +1,8 @@
 package com.henry.hh.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Date: 2016/12/13. 15:55
@@ -8,11 +10,13 @@ import java.io.Serializable;
  * Email: heneymark@gmail.com
  * Description: HTTP请求，返回的数据
  */
-public class  RequestMsg<T> implements Serializable {
+public class RequestMsg<T> implements Serializable {
 
     private int code;
     //数据
-    private T  data;
+    private T data;
+
+    private List<T> datas = new ArrayList<T>();
 
     public int getCode() {
         return code;
@@ -22,7 +26,7 @@ public class  RequestMsg<T> implements Serializable {
         this.code = code;
     }
 
-    public T  getData() {
+    public T getData() {
         return data;
     }
 
@@ -30,9 +34,17 @@ public class  RequestMsg<T> implements Serializable {
         this.data = data;
     }
 
+    public void setDatas(List<T> datas) {
+        this.datas = datas;
+    }
+
+    public List<T> getDatas() {
+        return datas;
+    }
+
     @Override
     public String toString() {
-        String string = "code=" + code + ";data=" + data;
+        String string = "code=" + code + ";data=" + data + ";datas=" + datas;
         return super.toString();
     }
 }

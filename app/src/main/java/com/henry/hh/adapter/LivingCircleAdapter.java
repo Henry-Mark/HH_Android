@@ -59,12 +59,12 @@ public class LivingCircleAdapter extends
          * 设置名称：
          * 首选备注名
          * 若为null，则显示昵称
-         * 若还是null，则显示ID
+         * 若还是null，则显示账号
          */
         String name;
         if (TextUtils.isEmpty(data.getRemarkName())) {
-            name = TextUtils.isEmpty(data.getNickname())
-                    ? String.valueOf(data.getUserId()) : data.getNickname();
+            name = TextUtils.isEmpty(data.getFriendInfo().getNickname())
+                    ? String.valueOf(data.getFriendInfo().getAccount()) : data.getFriendInfo().getNickname();
         } else {
             name = data.getRemarkName();
         }
@@ -83,7 +83,7 @@ public class LivingCircleAdapter extends
 
         //设置字体颜色
 //        if (app.useColor(data.getTextcolor())!=-1){
-            holder.mContent.setTextColor(app.useColor(data.getTextcolor()));
+        holder.mContent.setTextColor(app.useColor(data.getTextcolor()));
 //        }
     }
 

@@ -110,7 +110,7 @@ public class SearchActivity extends BaseActivity
             Friend friend = new Friend();
             friend.setRemarkName("name" + i);
             friend.setLabel("label" + i);
-            friend.setUserId(1000 + i);
+            friend.getFriendInfo().setUserId(1000 + i);
             mList.add(friend);
         }
 

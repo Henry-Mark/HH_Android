@@ -14,7 +14,9 @@ public class Condtsnts_URL {
     public static final String HTTP_HEAD = "http://" + IP_PORT + "imu/";
     //聊天地址
     public static final String WEBSOCKET_CHAT = "ws://" + IP_PORT + "imu/message?userId=100002";
-
+    //登录
     public static final String LOGIN = HTTP_HEAD + "Login";
+    //好友列表
+    public static final String FRIENDLIST = HTTP_HEAD + "friendlist";
 
 }

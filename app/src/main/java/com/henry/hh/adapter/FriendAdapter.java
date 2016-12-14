@@ -51,18 +51,19 @@ public class FriendAdapter extends BaseRecyclerAdapter<FriendAdapter.ViewHolder,
          * 设置名称：
          * 首选备注名
          * 若为null，则显示昵称
-         * 若还是null，则显示ID
+         * 若还是null，则显示账号
          */
         String name;
         if (TextUtils.isEmpty(friend.getRemarkName())) {
-            name = TextUtils.isEmpty(friend.getNickname())
-                    ? String.valueOf(friend.getUserId()) : friend.getNickname();
+            name = TextUtils.isEmpty(friend.getFriendInfo().getNickname())
+                    ? String.valueOf(friend.getFriendInfo().getAccount()) : friend.getFriendInfo().getNickname();
         } else {
             name = friend.getRemarkName();
         }
         holder.mName.setText(name);
         //设置签名
-        holder.mSignature.setText(friend.getSignature() == null ? "" : friend.getSignature());
+        String signature = friend.getFriendInfo().getSignature();
+        holder.mSignature.setText(signature == null ? "" : signature);
         //设置标签
         holder.mLabel.setText(friend.getLabel() == null ? "" : friend.getLabel());
 

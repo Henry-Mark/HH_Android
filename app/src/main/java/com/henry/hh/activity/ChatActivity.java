@@ -9,13 +9,16 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.henry.hh.R;
 import com.henry.hh.adapter.ChatAdapter;
 import com.henry.hh.entity.Emojicon;
+import com.henry.hh.entity.Friend;
 import com.henry.hh.entity.Message;
 import com.henry.hh.entity.User;
+import com.henry.hh.fragment.FriendsListFragment;
 import com.henry.hh.interfaces.OnChatItemClickListener;
 import com.henry.hh.interfaces.OnChatItemLongClickListener;
 import com.henry.hh.interfaces.OnOperationListener;
@@ -30,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ChatActivity extends TitleActivity implements OnOperationListener, OnChatItemLongClickListener, OnChatItemClickListener {
+public class ChatActivity extends MyBaseActivity implements OnOperationListener, OnChatItemLongClickListener, OnChatItemClickListener {
     public static final int REQUEST_CODE_GETIMAGE_BYSDCARD = 0x1;
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
@@ -38,16 +41,17 @@ public class ChatActivity extends TitleActivity implements OnOperationListener, 
     private ChatAdapter chatAdapter;
 
     private List<Message> messageList;
+    private Friend friend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        showBackwardView("返回", true);
-        setTitle("IMU");
+
         initWidget();
         initList();
+        initData();
         messageList = getDatas(10);
         chatAdapter.refresh(messageList);
         chatAdapter.addOnItemClickListener(this);
@@ -63,6 +67,17 @@ public class ChatActivity extends TitleActivity implements OnOperationListener, 
         mChatKeyboard.setOnOperationListener(this);
     }
 
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        showBackwardView("返回", true);
+        friend = (Friend) getIntent().getSerializableExtra(FriendsListFragment.UID);
+        String name = TextUtils.isEmpty(friend.getRemarkName()) ?
+                TextUtils.isEmpty(friend.getFriendInfo().getNickname()) ? friend.getFriendInfo().getAccount()
+                        : friend.getFriendInfo().getNickname() : friend.getRemarkName();
+        setTitle(name);
+    }
 
     /**
      * 初始化列表

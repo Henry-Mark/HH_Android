@@ -48,20 +48,20 @@ public class SearchAdapter extends BaseRecyclerAdapter<SearchAdapter.ViewHolder,
         super.onBindViewHolder(holder, position);
         Friend friend = datalist.get(position);
         //备注名称（账号）
-        holder.mRemarkName.setText(friend.getRemarkName() + "  (" + friend.getUserId() + ")");
-        //
-        if (isSearched) {
-            holder.mNickName.setVisibility(View.VISIBLE);
-            holder.mLabel.setVisibility(View.GONE);
-            holder.mNickName.setText("昵称："
-                    + (friend.getNickname() == null ? "" : friend.getNickname()));
-        } else {
-            holder.mNickName.setVisibility(View.GONE);
-            holder.mLabel.setVisibility(View.VISIBLE);
-            if (TextUtils.isEmpty(friend.getLabel()))
-                holder.mLabel.setVisibility(View.INVISIBLE);
-            holder.mLabel.setText(friend.getLabel());
-        }
+//        holder.mRemarkName.setText(friend.getRemarkName() + "  (" + friend.getUserId() + ")");
+//        //
+//        if (isSearched) {
+//            holder.mNickName.setVisibility(View.VISIBLE);
+//            holder.mLabel.setVisibility(View.GONE);
+//            holder.mNickName.setText("昵称："
+//                    + (friend.getNickname() == null ? "" : friend.getNickname()));
+//        } else {
+//            holder.mNickName.setVisibility(View.GONE);
+//            holder.mLabel.setVisibility(View.VISIBLE);
+//            if (TextUtils.isEmpty(friend.getLabel()))
+//                holder.mLabel.setVisibility(View.INVISIBLE);
+//            holder.mLabel.setText(friend.getLabel());
+//        }
 
         holder.itemView.setTag(position);
     }

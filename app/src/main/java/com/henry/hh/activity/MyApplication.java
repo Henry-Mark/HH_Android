@@ -5,8 +5,12 @@ import android.support.v4.content.ContextCompat;
 
 import com.henry.hh.R;
 import com.henry.hh.adapter.LivingCircleAdapter;
+import com.henry.hh.entity.Friend;
 import com.henry.hh.entity.LivingCircleDynamic;
 import com.henry.hh.entity.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Date: 2016/10/24. 16:39
@@ -27,6 +31,8 @@ public class MyApplication extends Application {
 
     //用户相关信息
     private User user = new User();
+    //好友列表
+    private List<Friend> friends = new ArrayList<>();
 
     public void setUser(User user) {
         this.user = user;
@@ -36,6 +42,13 @@ public class MyApplication extends Application {
         return user;
     }
 
+    public void setFriends(List<Friend> friends) {
+        this.friends = friends;
+    }
+
+    public List<Friend> getFriends() {
+        return friends;
+    }
 
     @Override
     public void onCreate() {

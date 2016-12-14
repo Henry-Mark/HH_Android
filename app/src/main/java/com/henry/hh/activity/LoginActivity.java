@@ -31,11 +31,6 @@ import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
-
 public class LoginActivity extends BaseActivity
         implements View.OnClickListener, TextView.OnEditorActionListener {
     //账号标识
@@ -307,7 +302,11 @@ public class LoginActivity extends BaseActivity
         }
     }
 
-
+    /**
+     * 请求登录
+     *
+     * @param value
+     */
     private void requestLoginMsg(String value) {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
@@ -316,7 +315,7 @@ public class LoginActivity extends BaseActivity
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 String result = new String(bytes);
-                LogUtils.d(TAG, "result=" + result);
+                LogUtils.d(TAG, "login result=" + result);
                 RequestMsg msg = gson.fromJson(result, new TypeToken<RequestMsg<User>>() {
                 }.getType());
                 User user = (User) msg.getData();
@@ -325,13 +324,9 @@ public class LoginActivity extends BaseActivity
                     ((MyApplication) getApplication()).setUser(user);
                     startActivity(MainActivity.class);
                 } else {
-
                     showErrlog(user.getMessage());
-
                 }
-
             }
-
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
                 LogUtils.d(TAG, "login fail...");
@@ -339,6 +334,11 @@ public class LoginActivity extends BaseActivity
         });
     }
 
+    /**
+     * 显示顶部错误信息
+     *
+     * @param log
+     */
     private void showErrlog(final String log) {
         //显示错误信息
         mErrlogLL.setVisibility(View.VISIBLE);
