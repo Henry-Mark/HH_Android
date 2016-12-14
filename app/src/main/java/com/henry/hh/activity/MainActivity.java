@@ -15,21 +15,22 @@ import com.henry.hh.R;
 import com.henry.hh.constants.TabDatas;
 import com.henry.hh.dialog.PromptDialog;
 import com.henry.hh.interfaces.OnDialogClickListener;
+import com.henry.hh.service.ChatService;
 import com.henry.library.activity.BaseActivity;
 import com.henry.library.utils.ScreenUtils;
 
-public class MainActivity extends BaseActivity implements
+public class MainActivity extends MyBaseActivity implements
         TabHost.OnTabChangeListener, OnDialogClickListener {
     private FragmentTabHost tabHost;
     private String TAG_DIALOG = "promptDialog";
+
+    ChatService chatService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        setTitle(R.string.app_name);
-
+        hideTitle();
         tabHost = (FragmentTabHost) super.findViewById(android.R.id.tabhost);
         tabHost.setup(this, super.getSupportFragmentManager()
                 , R.id.contentLayout);

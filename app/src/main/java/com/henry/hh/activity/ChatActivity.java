@@ -18,6 +18,7 @@ import com.henry.hh.entity.Emojicon;
 import com.henry.hh.entity.Friend;
 import com.henry.hh.entity.Message;
 import com.henry.hh.entity.User;
+import com.henry.hh.entity.base.BaseSendMsg;
 import com.henry.hh.fragment.FriendsListFragment;
 import com.henry.hh.interfaces.OnChatItemClickListener;
 import com.henry.hh.interfaces.OnChatItemLongClickListener;
@@ -102,7 +103,7 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
         List<Message> mList = new ArrayList<>();
         for (int i = 0; i < num; i++) {
             Message message = new Message();
-            message.setTimeMillis(TimeUtils.getSysCurrentMillis() + i * 1000000);
+            message.setSendTimeMillis(TimeUtils.getSysCurrentMillis() + i * 1000000);
             message.setMessageType(Message.MSG_TYPE_TEXT);
             message.setContent("content:" + i);
             if (i % 3 == 0)
@@ -137,8 +138,11 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
     @Override
     public void send(String content) {
         Message message = new Message();
-        message.setTimeMillis(TimeUtils.getSysCurrentMillis());
+        message.setSendTimeMillis(TimeUtils.getSysCurrentMillis());
+        message.setFromUserId(friend.getUserUid());
+        message.setToUserId(friend.getFriendUid());
         message.setMessageType(Message.MSG_TYPE_TEXT);
+        message.setType(BaseSendMsg.CHAT);
         message.setContent(mChatKeyboard.getEditTextBox().getText().toString());
         message.setState(Message.MSG_STATE_SUCCESS);
         sendMessage(message);
@@ -179,7 +183,7 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
             if (dataUri != null) {
                 File file = FileUtils.uri2File(this, dataUri);
                 Message message = new Message();
-                message.setTimeMillis(TimeUtils.getSysCurrentMillis());
+                message.setSendTimeMillis(TimeUtils.getSysCurrentMillis());
                 message.setMessageType(Message.MSG_TYPE_PHOTO);
                 message.setContent(file.getAbsolutePath());
                 message.setState(Message.MSG_STATE_SUCCESS);
@@ -194,6 +198,7 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
      * @param message
      */
     private void sendMessage(Message message) {
+        sendChatMsg(gson.toJson(message));
         chatAdapter.append(message);
         //显示最后一个item
         recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);

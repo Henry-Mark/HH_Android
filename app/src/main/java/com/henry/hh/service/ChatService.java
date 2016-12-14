@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.henry.hh.broadcastreceiver.ChattingMsgBroadcastReceiver;
 import com.henry.hh.constants.Condtsnts_URL;
@@ -18,40 +17,43 @@ import de.tavendo.autobahn.WebSocketHandler;
 public class ChatService extends Service {
     private final String TAG = "ChatService";
     private WebSocketConnection mConnect = new WebSocketConnection();
+
     public ChatService() {
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(TAG,"onCreate...");
+        Log.d(TAG, "onCreate...");
         connect();
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        Log.d(TAG,"onBind...");
+        Log.d(TAG, "onBind...");
         return new MyBinder();
     }
+
     // 已取代onStart方法--onStart方法是在Android2.0之前的平台使用的.
     // 在2.0及其之后，则需重写onStartCommand方法，同时，旧的onStart方法则不会再被直接调用
     // （外部调用onStartCommand，而onStartCommand里会再调用 onStart。在2.0之后，
     // 推荐覆盖onStartCommand方法，而为了向前兼容，在onStartCommand依然会调用onStart方法。
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG,"onStartCommand...");
+        Log.d(TAG, "onStartCommand...");
+//        connect();
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
-        Log.d(TAG,"onUnbind...");
+        Log.d(TAG, "onUnbind...");
         return super.onUnbind(intent);
     }
 
     @Override
     public void onDestroy() {
-        Log.d(TAG,"onDestroy...");
+        Log.d(TAG, "onDestroy...");
         mConnect.disconnect();
         super.onDestroy();
     }
@@ -65,13 +67,14 @@ public class ChatService extends Service {
             mConnect.connect(Condtsnts_URL.WEBSOCKET_CHAT, new WebSocketHandler() {
                 @Override
                 public void onOpen() {
-                    LogUtils.i(TAG, "Status:Connect to server " );
+                    LogUtils.i(TAG, "Status:Connect to server ");
                 }
+
                 @Override
                 public void onTextMessage(String payload) {
-                    Log.i(TAG, payload);
+                    Log.i(TAG, "payload=" + payload);
                     Intent intent = new Intent(ChattingMsgBroadcastReceiver.RECEIVE_MSG);
-                    intent.putExtra(ChattingMsgBroadcastReceiver.MSG,payload);
+                    intent.putExtra(ChattingMsgBroadcastReceiver.MSG, payload);
                     sendBroadcast(intent);
                 }
 
@@ -86,23 +89,12 @@ public class ChatService extends Service {
     }
 
     /**
-     * 发送用户名给服务器
-     * @param user
-     */
-    private void sendUsername(String user) {
-
-        if (user != null && user.length() != 0)
-            mConnect.sendTextMessage(user);
-        else
-            Toast.makeText(getApplicationContext(), "不能为空", Toast.LENGTH_SHORT).show();
-    }
-
-    /**
      * 发送消息
      *
      * @param msg
      */
     public void sendMessage(String msg) {
+        Log.i(TAG, "sendmsg=" + msg);
         if (mConnect.isConnected()) {
             mConnect.sendTextMessage(msg);
         } else {
@@ -118,9 +110,10 @@ public class ChatService extends Service {
     public class MyBinder extends Binder {
         /**
          * 获取Service的方法
+         *
          * @return 返回ChatService
          */
-        public  ChatService getService(){
+        public ChatService getService() {
             return ChatService.this;
         }
     }

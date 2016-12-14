@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,8 @@ public class TitleActivity extends BaseActivity implements View.OnClickListener 
     private TextView mForwardButton;
     private FrameLayout mContentLayout;
     private LinearLayout mBackwardLayout;
+    private RelativeLayout mTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,13 +37,22 @@ public class TitleActivity extends BaseActivity implements View.OnClickListener 
         mContentLayout = (FrameLayout) findViewById(R.id.layout_content);
         mBackwardbButton = (TextView) findViewById(R.id.text_backward);
         mForwardButton = (TextView) findViewById(R.id.text_forward);
-        mBackwardLayout = (LinearLayout)findViewById(R.id.ll_backward);
+        mBackwardLayout = (LinearLayout) findViewById(R.id.ll_backward);
+        mTitle = (RelativeLayout) findViewById(R.id.title);
+    }
+
+    /**
+     * 隐藏标题栏
+     */
+    protected void hideTitle() {
+        mTitle.setVisibility(View.GONE);
     }
 
     /**
      * 是否显示返回按钮
-     * @param string  文字
-     * @param show  true则显示
+     *
+     * @param string 文字
+     * @param show   true则显示
      */
     protected void showBackwardView(String string, boolean show) {
         if (mBackwardbButton != null) {
@@ -55,8 +67,9 @@ public class TitleActivity extends BaseActivity implements View.OnClickListener 
 
     /**
      * 提供是否显示提交按钮
+     *
      * @param forward 文字
-     * @param show true则显示
+     * @param show    true则显示
      */
     protected void showForwardView(String forward, boolean show) {
         if (mForwardButton != null) {
@@ -71,8 +84,9 @@ public class TitleActivity extends BaseActivity implements View.OnClickListener 
 
     /**
      * 是否显示返回按钮
+     *
      * @param string 文字
-     * @param show true则显示
+     * @param show   true则显示
      */
     protected void showBackwardView(int string, boolean show) {
         if (mBackwardbButton != null) {
@@ -87,8 +101,9 @@ public class TitleActivity extends BaseActivity implements View.OnClickListener 
 
     /**
      * 提供是否显示提交按钮
-     * @param forwardResId  文字
-     * @param show  true则显示
+     *
+     * @param forwardResId 文字
+     * @param show         true则显示
      */
     protected void showForwardView(int forwardResId, boolean show) {
         if (mForwardButton != null) {
@@ -103,6 +118,7 @@ public class TitleActivity extends BaseActivity implements View.OnClickListener 
 
     /**
      * 返回按钮点击后触发
+     *
      * @param backwardView
      */
     protected void onBackward(View backwardView) {
@@ -112,6 +128,7 @@ public class TitleActivity extends BaseActivity implements View.OnClickListener 
 
     /**
      * 提交按钮点击后触发
+     *
      * @param forwardView
      */
     protected void onForward(View forwardView) {

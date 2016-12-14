@@ -60,7 +60,7 @@ public class ChatAdapter extends BaseRecyclerAdapter<ChatAdapter.ViewHolder, Mes
         super.onBindViewHolder(holder, position);
         final Message message = datalist.get(position);
         //设置时间
-        holder.mTime.setText(TimeUtils.getRelativeTime(context, message.getTimeMillis()));
+        holder.mTime.setText(TimeUtils.getRelativeTime(context, message.getSendTimeMillis()));
         /**
          * 根据消息类型显示消息内容：
          * MSG_TYPE_TEXT：文字（emjo）

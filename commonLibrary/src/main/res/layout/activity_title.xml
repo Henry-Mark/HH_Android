@@ -8,7 +8,8 @@
     tools:context="com.henry.library.activity.TitleActivity">
 
     <!--标题栏-->
-    <include layout="@layout/layout_titlebar" />
+    <include layout="@layout/layout_titlebar"
+        android:id="@+id/title"/>
     <!--内容-->
     <FrameLayout
         android:id="@+id/layout_content"

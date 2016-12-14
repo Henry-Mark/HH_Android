@@ -1,4 +1,4 @@
-package com.henry.hh.entity;
+package com.henry.hh.entity.base;
 
 /**
  * Date: 2016/12/14. 10:06

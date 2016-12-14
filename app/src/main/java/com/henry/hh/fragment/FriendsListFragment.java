@@ -48,7 +48,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 public class FriendsListFragment extends MyBaseFragment
         implements BGARefreshLayout.BGARefreshLayoutDelegate, OnRecyclerItemClickListener {
 
-    public static final String  UID = "friendUid";
+    public static final String UID = "friendUid";
 
     private RecyclerView mRecyclerView;
     private FriendAdapter friendAdapter;
@@ -120,10 +120,9 @@ public class FriendsListFragment extends MyBaseFragment
 
     @Override
     public void onItemClick(View view, List data, int position) {
-        ToastUtils.showShort(getActivity(), position + "....");
         Intent intent = new Intent(getActivity(), ChatActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(UID,friends.get(position));
+        bundle.putSerializable(UID, friends.get(position));
         intent.putExtras(bundle);
         startActivity(intent);
     }

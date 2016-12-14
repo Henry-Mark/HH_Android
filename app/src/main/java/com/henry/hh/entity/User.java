@@ -1,14 +1,11 @@
 package com.henry.hh.entity;
 
-import android.app.Application;
-
+import com.henry.hh.entity.base.BaseMsgBean;
 import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.annotation.Table;
 import com.litesuits.orm.db.enums.AssignType;
 
 import java.io.Serializable;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Date: 2016/10/20. 14:27

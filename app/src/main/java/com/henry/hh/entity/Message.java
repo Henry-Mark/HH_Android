@@ -1,12 +1,14 @@
 package com.henry.hh.entity;
 
+import com.henry.hh.entity.base.BaseSendMsg;
+
 /**
  * Date: 2016/10/14. 11:21
  * Creator: henry
  * Email: heneymark@gmail.com
  * Description:聊天消息内容
  */
-public class Message {
+public class Message extends BaseSendMsg {
     public final static int MSG_TYPE_TEXT = 0;
     public final static int MSG_TYPE_PHOTO = 1;
 
@@ -31,44 +33,24 @@ public class Message {
      * 2.发送失败
      */
     private int state;
-    /**
-     * 发送者Id
-     */
-    private String fromUserId;
-    /**
-     * 接收者Id
-     */
-    private String toUserId;
-    /**
-     * 发送者名字
-     */
-    private String fromUserName;
-    /**
-     * 接收者名字
-     */
-    private String toUserName;
+    /*消息发送者ID*/
+    private int fromUserId;
+    /*消息接收者ID*/
+    private int toUserId;
     /**
      * 发送者头像url
      */
-    private String fromUserAvatarUrl;
+    private String fromUserAvatarUrl = "";
     /**
      * 接收者头像Url
      */
-    private String toUserAvatarUrl;
+    private String toUserAvatarUrl = "";
     /**
      * 接收者头像是否改变
      * 0.未改变
      * 1.已改变
      */
     private int isToUserAvatarChanged;
-    /**
-     * 时间
-     */
-    private long timeMillis;
-    /**
-     * 消息内容
-     */
-    private String content;
 
     public void setMessageType(int messageType) {
         this.messageType = messageType;
@@ -86,44 +68,29 @@ public class Message {
         return state;
     }
 
-    public void setFromUserId(String fromUserId) {
+    public void setFromUserId(int fromUserId) {
         this.fromUserId = fromUserId;
     }
 
-    public String getFromUserId() {
+    public int getFromUserId() {
         return fromUserId;
     }
 
-    public void setFromUserName(String fromUserName) {
-        this.fromUserName = fromUserName;
+    public void setToUserId(int toUserId) {
+        this.toUserId = toUserId;
     }
 
-    public String getFromUserName() {
-        return fromUserName;
-    }
 
     public void setFromUserAvatarUrl(String fromUserAvatarUrl) {
         this.fromUserAvatarUrl = fromUserAvatarUrl;
     }
 
-    public String getFromUserAvatarUrl() {
-        return fromUserAvatarUrl;
-    }
-
-    public void setToUserId(String toUserId) {
-        this.toUserId = toUserId;
-    }
-
-    public String getToUserId() {
+    public int getToUserId() {
         return toUserId;
     }
 
-    public void setToUserName(String toUserName) {
-        this.toUserName = toUserName;
-    }
-
-    public String getToUserName() {
-        return toUserName;
+    public String getFromUserAvatarUrl() {
+        return fromUserAvatarUrl;
     }
 
     public void setToUserAvatarUrl(String toUserAvatarUrl) {
@@ -142,35 +109,16 @@ public class Message {
         return isToUserAvatarChanged;
     }
 
-    public void setTimeMillis(long timeMillis) {
-        this.timeMillis = timeMillis;
-    }
-
-    public long getTimeMillis() {
-        return timeMillis;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
     @Override
     public String toString() {
-        String string = "messageType:" + messageType
+        String string = super.toString()
+                + ";messageType:" + messageType
                 + ";state:" + state
                 + ";fromUserId:" + fromUserId
-                + ";fromUserName:" + fromUserName
                 + ";fromUserAvatarUrl:" + fromUserAvatarUrl
                 + ";toUserId:" + toUserId
-                + ";toUserName:" + toUserName
                 + ";toUserAvatarUrl:" + toUserAvatarUrl
-                + ";isToUserAvatarChanged:" + isToUserAvatarChanged
-                + ":timeMillis;" + timeMillis
-                + ";content:" + content;
+                + ";isToUserAvatarChanged:" + isToUserAvatarChanged;
         return super.toString();
     }
 }
