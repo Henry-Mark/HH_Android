@@ -15,7 +15,7 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
  * Description: 关于用户信息的实体
  */
 @Table("user")
-public class User  {
+public class User extends BaseMsgBean {
 
     public final static int USER_COMMON = 0;
     public final static int USER_VIP = 1;

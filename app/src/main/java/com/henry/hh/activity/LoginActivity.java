@@ -1,6 +1,7 @@
 package com.henry.hh.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -29,6 +30,9 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
@@ -95,6 +99,14 @@ public class LoginActivity extends BaseActivity
      * 错误提示－－验证码
      */
     private TextView mErrCode;
+    /**
+     * 错误提示顶部布局
+     */
+    private LinearLayout mErrlogLL;
+    /**
+     * 错误提示--顶部文字
+     */
+    private TextView mErrlog;
 
     private String code;  //获取每次更新的验证码，可用于判断用户输入是否正确
     private boolean isCodeShow = false;
@@ -145,6 +157,8 @@ public class LoginActivity extends BaseActivity
         mErrAccount = getViewById(R.id.tv_error_account);
         mErrPwd = getViewById(R.id.tv_error_password);
         mErrCode = getViewById(R.id.tv_error_code);
+        mErrlogLL = getViewById(R.id.ll_errlog);
+        mErrlog = getViewById(R.id.tv_errlog);
 
         refreshCode();
     }
@@ -228,6 +242,15 @@ public class LoginActivity extends BaseActivity
             LogUtils.d(TAG, "res:" + code);
         } else if (v == mLogin) {
             dologin();
+            //600ms内不能再次点击
+            mLogin.setEnabled(false);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mLogin.setEnabled(true);
+                }
+            }, 600);
+
         } else if (v == mForgetPWD) {
             startActivity(FindPasswordActivity.class);
         } else if (v == mRegister) {
@@ -294,10 +317,17 @@ public class LoginActivity extends BaseActivity
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 String result = new String(bytes);
                 LogUtils.d(TAG, "result=" + result);
-                RequestMsg msg = gson.fromJson(result,new TypeToken<RequestMsg<?>>() {}.getType());
-                if (msg.getCode()==1){
-//                    User user = gson.fromJson(msg.getData(),User.class);
-                    LogUtils.d(TAG,"user:::"+msg.getData());
+                RequestMsg msg = gson.fromJson(result, new TypeToken<RequestMsg<User>>() {
+                }.getType());
+                User user = (User) msg.getData();
+                if (msg.getCode() == 1) {
+                    //设置为全局变量
+                    ((MyApplication) getApplication()).setUser(user);
+                    startActivity(MainActivity.class);
+                } else {
+
+                    showErrlog(user.getMessage());
+
                 }
 
             }
@@ -307,6 +337,16 @@ public class LoginActivity extends BaseActivity
                 LogUtils.d(TAG, "login fail...");
             }
         });
+    }
 
+    private void showErrlog(final String log) {
+        //显示错误信息
+        mErrlogLL.setVisibility(View.VISIBLE);
+        mErrlog.setText(log);
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                mErrlogLL.setVisibility(View.INVISIBLE);
+            }
+        }, 3000);
     }
 }
