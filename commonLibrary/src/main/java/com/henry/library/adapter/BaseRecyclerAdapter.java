@@ -20,7 +20,7 @@ public class BaseRecyclerAdapter<Holder extends RecyclerHolder, T> extends Recyc
     /**
      * adapter 数据集
      */
-    public List<T> datalist;
+    protected List<T> datalist;
     /**
      * Context
      */
@@ -73,6 +73,10 @@ public class BaseRecyclerAdapter<Holder extends RecyclerHolder, T> extends Recyc
     @Override
     public void onBindViewHolder(Holder holder, int position) {
 
+    }
+
+    public List<T> getDatalist(){
+        return datalist;
     }
 
     /**

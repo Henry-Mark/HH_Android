@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.henry.hh.R;
+import com.henry.hh.activity.ChatActivity;
 import com.henry.hh.entity.Message;
 import com.henry.hh.interfaces.OnChatItemClickListener;
 import com.henry.hh.interfaces.OnChatItemLongClickListener;
@@ -46,8 +47,12 @@ public class ChatAdapter extends BaseRecyclerAdapter<ChatAdapter.ViewHolder, Mes
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
-        //加载Item View的时候根据不同TYPE加载不同的布局
-        if (viewType == ITEM_TYPE.ITEM1.ordinal()) {
+        /**
+         *  加载Item View的时候根据不同TYPE加载不同的布局
+         *  ITEM_TYPE.ITEM1.ordinal 用户本人
+         *  ITEM_TYPE.ITEM2.ordinal 好友
+         */
+        if (viewType == ITEM_TYPE.ITEM2.ordinal()) {
             view = inflater.inflate(R.layout.item_chat_left, parent, false);
         } else {
             view = inflater.inflate(R.layout.item_chat_right, parent, false);
@@ -78,7 +83,7 @@ public class ChatAdapter extends BaseRecyclerAdapter<ChatAdapter.ViewHolder, Mes
         }
 
 
-        if (position % 2 == 0)
+        if (getItemViewType(position) == 0)
             holder.mLayoutContent.setBackgroundResource(R.drawable.chat_from_bg_selector);
         else
             holder.mLayoutContent.setBackgroundResource(R.drawable.chat_to_bg_selector);
@@ -164,7 +169,9 @@ public class ChatAdapter extends BaseRecyclerAdapter<ChatAdapter.ViewHolder, Mes
     @Override
     public int getItemViewType(int position) {
         //Enum类提供了一个ordinal()方法，返回枚举类型的序数，这里ITEM_TYPE.ITEM1.ordinal()代表0， ITEM_TYPE.ITEM2.ordinal()代表1
-        int type = position % 2 == 0 ? ITEM_TYPE.ITEM1.ordinal() : ITEM_TYPE.ITEM2.ordinal();
+        int type = datalist.get(position).getFromUserId() == ((ChatActivity) context).getMyApplication().getUser().getUserId()
+                ? ITEM_TYPE.ITEM1.ordinal()
+                : ITEM_TYPE.ITEM2.ordinal();
         return type;
     }
 

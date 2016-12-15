@@ -9,6 +9,7 @@ package com.henry.hh.entity.base;
 public class BaseSendMsg {
 
     public static final String CHAT = "chat";                           //聊天
+    public static final String CHAT_BACK = "chat_back";                   //聊天返回确认，表示发送成功
     public static final String ADDFRIEND = "addfriend";                 // 添加好友
     public static final String ONLINE_REMINDER = "onlineReminder";    //好友上线提醒
     public static final String OFFLINE_REMINDER = "offlineReminder";    //好友下线提醒
@@ -18,9 +19,11 @@ public class BaseSendMsg {
      * chat：聊天消息
      * addfriend:添加好友
      */
-    private String type;
+    private String type = "";
     /*消息内容*/
-    private String content;
+    private String content = "";
+    /*用于识别消息*/
+    private long uid;
 
     /**
      * 发送时间（发送成功的时间）（ms）
@@ -51,9 +54,17 @@ public class BaseSendMsg {
         return SendTimeMillis;
     }
 
+    public void setUid(long uid) {
+        this.uid = uid;
+    }
+
+    public long getUid() {
+        return uid;
+    }
+
     @Override
     public String toString() {
-        String string = "type=" + type + ";content=" + content + ";getSendTimeMillis=" + getSendTimeMillis();
+        String string = "type=" + type + ";uid=" + uid + ";content=" + content + ";getSendTimeMillis=" + getSendTimeMillis();
         return string;
     }
 }

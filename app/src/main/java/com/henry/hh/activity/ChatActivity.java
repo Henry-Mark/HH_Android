@@ -27,11 +27,15 @@ import com.henry.hh.utils.DisplayRules;
 import com.henry.hh.widget.ChatKeyboard;
 import com.henry.library.activity.TitleActivity;
 import com.henry.library.utils.FileUtils;
+import com.henry.library.utils.LogUtils;
 import com.henry.library.utils.TimeUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class ChatActivity extends MyBaseActivity implements OnOperationListener, OnChatItemLongClickListener, OnChatItemClickListener {
@@ -44,12 +48,12 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
     private List<Message> messageList;
     private Friend friend;
 
+    HashMap map = new HashMap();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
-
         initWidget();
         initList();
         initData();
@@ -104,6 +108,8 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
         for (int i = 0; i < num; i++) {
             Message message = new Message();
             message.setSendTimeMillis(TimeUtils.getSysCurrentMillis() + i * 1000000);
+            message.setToUserId(user.getUserId());
+            message.setFromUserId(friend.getFriendUid());
             message.setMessageType(Message.MSG_TYPE_TEXT);
             message.setContent("content:" + i);
             if (i % 3 == 0)
@@ -139,12 +145,12 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
     public void send(String content) {
         Message message = new Message();
         message.setSendTimeMillis(TimeUtils.getSysCurrentMillis());
-        message.setFromUserId(friend.getUserUid());
+        message.setFromUserId(user.getUserId());
         message.setToUserId(friend.getFriendUid());
         message.setMessageType(Message.MSG_TYPE_TEXT);
         message.setType(BaseSendMsg.CHAT);
         message.setContent(mChatKeyboard.getEditTextBox().getText().toString());
-        message.setState(Message.MSG_STATE_SUCCESS);
+        message.setState(Message.MSG_STATE_SENDING);
         sendMessage(message);
     }
 
@@ -187,6 +193,7 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
                 message.setMessageType(Message.MSG_TYPE_PHOTO);
                 message.setContent(file.getAbsolutePath());
                 message.setState(Message.MSG_STATE_SUCCESS);
+                message.setUid(TimeUtils.getSysCurrentMillis());
                 sendMessage(message);
             }
         }
@@ -202,6 +209,13 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
         chatAdapter.append(message);
         //显示最后一个item
         recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
+        HashMap map = new HashMap();
+        if (message.getState() == Message.MSG_STATE_SENDING) {
+            Timer timer = new Timer();
+            timer.schedule(new MyTimerTask(message.getUid()), 5000, 5000);
+            map.put(message.getUid(), timer);
+        }
+
     }
 
     /**
@@ -248,5 +262,35 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
     @Override
     public void onContentLongClick(int position) {
         showToast("onContentLongClick.....");
+    }
+
+    @Override
+    protected void onReceive(Message message) {
+        super.onReceive(message);
+        if (BaseSendMsg.CHAT_BACK.equals(message.getType())) {
+            LogUtils.d(TAG, "send success...");
+        }
+    }
+
+    class MyTimerTask extends TimerTask {
+        long uid;
+
+        MyTimerTask(long id) {
+            uid = id;
+        }
+
+        @Override
+        public void run() {
+
+//            List<Message> messages = chatAdapter.getDatalist();
+//            for (Message msg : messages) {
+//                if (uid == msg.getUid()) {
+//                    msg.setState(Message.MSG_STATE_SUCCESS);
+//                }
+//            }
+//            map.remove(uid);
+//            cancel();
+//            chatAdapter.refresh(messages);
+        }
     }
 }

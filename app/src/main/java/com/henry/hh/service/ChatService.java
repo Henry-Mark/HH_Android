@@ -25,12 +25,13 @@ public class ChatService extends Service {
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "onCreate...");
-        connect();
+//        connect();
     }
 
     @Override
     public IBinder onBind(Intent intent) {
         Log.d(TAG, "onBind...");
+        connect();
         return new MyBinder();
     }
 
@@ -41,7 +42,7 @@ public class ChatService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand...");
-//        connect();
+        connect();
         return super.onStartCommand(intent, flags, startId);
     }
 

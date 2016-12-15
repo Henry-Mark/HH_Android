@@ -16,8 +16,6 @@ public class Message extends BaseSendMsg {
     public final static int MSG_STATE_SUCCESS = 1;
     public final static int MSG_STATE_FAIL = 2;
 
-    public final static int FROM_USER_AVATAR_NOT_CHANGED = 0;
-    public final static int FROM_USER_AVATAR_CHANGED = 1;
 
     /**
      * 消息类型
@@ -40,17 +38,13 @@ public class Message extends BaseSendMsg {
     /**
      * 发送者头像url
      */
-    private String fromUserAvatarUrl = "";
+    private String fromUserAvatarUrl;
     /**
      * 接收者头像Url
      */
-    private String toUserAvatarUrl = "";
-    /**
-     * 接收者头像是否改变
-     * 0.未改变
-     * 1.已改变
-     */
-    private int isToUserAvatarChanged;
+    private String toUserAvatarUrl;
+    /*缩略图Url*/
+    private String thumbnailUrl;
 
     public void setMessageType(int messageType) {
         this.messageType = messageType;
@@ -101,12 +95,12 @@ public class Message extends BaseSendMsg {
         return toUserAvatarUrl;
     }
 
-    public void setIsToUserAvatarChanged(int isToUserAvatarChanged) {
-        this.isToUserAvatarChanged = isToUserAvatarChanged;
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
     }
 
-    public int getIsToUserAvatarChanged() {
-        return isToUserAvatarChanged;
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
     }
 
     @Override
@@ -118,7 +112,7 @@ public class Message extends BaseSendMsg {
                 + ";fromUserAvatarUrl:" + fromUserAvatarUrl
                 + ";toUserId:" + toUserId
                 + ";toUserAvatarUrl:" + toUserAvatarUrl
-                + ";isToUserAvatarChanged:" + isToUserAvatarChanged;
+                + ";thumbnailUrl:" + thumbnailUrl;
         return super.toString();
     }
 }
