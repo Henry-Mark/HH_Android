@@ -64,8 +64,15 @@ public class ChatAdapter extends BaseRecyclerAdapter<ChatAdapter.ViewHolder, Mes
     public void onBindViewHolder(ViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
         final Message message = datalist.get(position);
-        //设置时间
-        holder.mTime.setText(TimeUtils.getRelativeTime(context, message.getSendTimeMillis()));
+        /**
+         * 时间差相隔2s内，则不显示时间
+         * 大于2s显示时间
+         */
+        if (position == 0 || datalist.get(position).getSendTimeMillis() - datalist.get(position - 1).getSendTimeMillis() >= 1000 * 2)
+            //设置时间
+            holder.mTime.setText(TimeUtils.getRelativeTime(context, message.getSendTimeMillis()));
+        else
+            holder.mTime.setVisibility(View.GONE);
         /**
          * 根据消息类型显示消息内容：
          * MSG_TYPE_TEXT：文字（emjo）

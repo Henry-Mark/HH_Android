@@ -85,6 +85,7 @@ public class ChatService extends Service {
                 @Override
                 public void onClose(int code, String reason) {
                     LogUtils.i(TAG, "Connection lost..");
+                    connect();
                 }
             });
         } catch (WebSocketException e) {
