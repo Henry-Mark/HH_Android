@@ -31,7 +31,8 @@ public class ChatService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         Log.d(TAG, "onBind...");
-        connect();
+        if (!mConnect.isConnected())
+            connect();
         return new MyBinder();
     }
 
@@ -42,7 +43,8 @@ public class ChatService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand...");
-        connect();
+        if (!mConnect.isConnected())
+            connect();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -55,7 +57,8 @@ public class ChatService extends Service {
     @Override
     public void onDestroy() {
         Log.d(TAG, "onDestroy...");
-        mConnect.disconnect();
+        if (mConnect.isConnected())
+            mConnect.disconnect();
         super.onDestroy();
     }
 

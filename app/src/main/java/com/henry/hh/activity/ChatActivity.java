@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,21 +26,18 @@ import com.henry.hh.interfaces.OnChatItemLongClickListener;
 import com.henry.hh.interfaces.OnOperationListener;
 import com.henry.hh.utils.DisplayRules;
 import com.henry.hh.widget.ChatKeyboard;
-import com.henry.library.activity.TitleActivity;
 import com.henry.library.utils.FileUtils;
-import com.henry.library.utils.LogUtils;
 import com.henry.library.utils.TimeUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class ChatActivity extends MyBaseActivity implements OnOperationListener, OnChatItemLongClickListener, OnChatItemClickListener {
     public static final int REQUEST_CODE_GETIMAGE_BYSDCARD = 0x1;
+
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
     private ChatKeyboard mChatKeyboard;
@@ -107,7 +105,8 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
         List<Message> mList = new ArrayList<>();
         for (int i = 0; i < num; i++) {
             Message message = new Message();
-            message.setSendTimeMillis(TimeUtils.getSysCurrentMillis() + i * 1000000);
+            message.setSendTimeMillis(System.currentTimeMillis() + i * 1000000);
+            message.setUid(System.currentTimeMillis() + i * 1000000);
             message.setToUserId(user.getUserId());
             message.setFromUserId(friend.getFriendUid());
             message.setMessageType(Message.MSG_TYPE_TEXT);
@@ -144,7 +143,8 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
     @Override
     public void send(String content) {
         Message message = new Message();
-        message.setSendTimeMillis(TimeUtils.getSysCurrentMillis());
+        message.setSendTimeMillis(System.currentTimeMillis());
+        message.setUid(System.currentTimeMillis());
         message.setFromUserId(user.getUserId());
         message.setToUserId(friend.getFriendUid());
         message.setMessageType(Message.MSG_TYPE_TEXT);
@@ -207,15 +207,21 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
     private void sendMessage(Message message) {
         sendChatMsg(gson.toJson(message));
         chatAdapter.append(message);
-        //显示最后一个item
-        recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
-        HashMap map = new HashMap();
+        showLastItem();
         if (message.getState() == Message.MSG_STATE_SENDING) {
-            Timer timer = new Timer();
-            timer.schedule(new MyTimerTask(message.getUid()), 5000, 5000);
-            map.put(message.getUid(), timer);
+            map.put(message.getUid(), false);
+            //5m则发送失败
+            new Handler().postDelayed(new myRunnable(message.getUid()),5000);
         }
 
+    }
+
+    /**
+     * 显示最新一条消息
+     */
+    private void showLastItem() {
+        //显示最后一个item
+        recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
     }
 
     /**
@@ -268,29 +274,52 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
     protected void onReceive(Message message) {
         super.onReceive(message);
         if (BaseSendMsg.CHAT_BACK.equals(message.getType())) {
-            LogUtils.d(TAG, "send success...");
+            long uid = message.getUid();
+            setItemState(uid, Message.MSG_STATE_SUCCESS);
+            map.put(uid,true);
+
         }
     }
 
-    class MyTimerTask extends TimerTask {
-        long uid;
-
-        MyTimerTask(long id) {
-            uid = id;
+    /**
+     * 设置item作态
+     * @param uid
+     * @param state
+     */
+    private void setItemState(long uid, int state) {
+        final List<Message> messages = chatAdapter.getDatalist();
+        for (int i = 0; i < messages.size(); i++) {
+            if (uid == messages.get(i).getUid()) {
+                final Message msg = messages.get(i);
+                msg.setState(state);
+                final int finalI = i;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        chatAdapter.notifyItemChanged(finalI, msg);
+                        showLastItem();
+                    }
+                });
+            }
         }
+    }
 
+    /**
+     * 延时操作时，操作
+     */
+    class myRunnable implements Runnable{
+
+        long uid ;
+
+        myRunnable(long id){
+            uid =id;
+        }
         @Override
         public void run() {
+            boolean isSendSuccess = (boolean) map.get(uid);
+            if(!isSendSuccess)
+                setItemState(uid, Message.MSG_STATE_FAIL);
 
-//            List<Message> messages = chatAdapter.getDatalist();
-//            for (Message msg : messages) {
-//                if (uid == msg.getUid()) {
-//                    msg.setState(Message.MSG_STATE_SUCCESS);
-//                }
-//            }
-//            map.remove(uid);
-//            cancel();
-//            chatAdapter.refresh(messages);
         }
     }
 }
