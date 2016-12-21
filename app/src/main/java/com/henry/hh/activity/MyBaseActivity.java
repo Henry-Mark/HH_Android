@@ -35,6 +35,7 @@ public class MyBaseActivity extends TitleActivity {
 
         Intent intent = new Intent(this, ChatService.class);
         startService(intent);// 启动服务
+
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);//绑定目标Service
         rhelper = new ChattingMsgBroadcastReceiver(this);
         rhelper.registerAction(ChattingMsgBroadcastReceiver.RECEIVE_MSG);

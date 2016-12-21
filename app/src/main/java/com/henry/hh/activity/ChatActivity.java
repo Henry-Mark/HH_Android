@@ -211,7 +211,7 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
         if (message.getState() == Message.MSG_STATE_SENDING) {
             map.put(message.getUid(), false);
             //5m则发送失败
-            new Handler().postDelayed(new myRunnable(message.getUid()),5000);
+            new Handler().postDelayed(new myRunnable(message.getUid()), 5000);
         }
 
     }
@@ -273,16 +273,22 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
     @Override
     protected void onReceive(Message message) {
         super.onReceive(message);
+        //返回发送成功的确认信息
         if (BaseSendMsg.CHAT_BACK.equals(message.getType())) {
             long uid = message.getUid();
             setItemState(uid, Message.MSG_STATE_SUCCESS);
-            map.put(uid,true);
+            map.put(uid, true);
+            //获取聊天消息
+        } else if (BaseSendMsg.CHAT.equals(message.getType())) {
+            chatAdapter.append(message);
+            showLastItem();
 
         }
     }
 
     /**
      * 设置item作态
+     *
      * @param uid
      * @param state
      */
@@ -307,17 +313,18 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
     /**
      * 延时操作时，操作
      */
-    class myRunnable implements Runnable{
+    class myRunnable implements Runnable {
 
-        long uid ;
+        long uid;
 
-        myRunnable(long id){
-            uid =id;
+        myRunnable(long id) {
+            uid = id;
         }
+
         @Override
         public void run() {
             boolean isSendSuccess = (boolean) map.get(uid);
-            if(!isSendSuccess)
+            if (!isSendSuccess)
                 setItemState(uid, Message.MSG_STATE_FAIL);
 
         }

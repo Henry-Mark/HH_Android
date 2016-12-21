@@ -6,6 +6,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.henry.hh.activity.MyApplication;
 import com.henry.hh.broadcastreceiver.ChattingMsgBroadcastReceiver;
 import com.henry.hh.constants.Condtsnts_URL;
 import com.henry.library.utils.LogUtils;
@@ -17,6 +18,8 @@ import de.tavendo.autobahn.WebSocketHandler;
 public class ChatService extends Service {
     private final String TAG = "ChatService";
     private WebSocketConnection mConnect = new WebSocketConnection();
+    //用户id
+    private long userId;
 
     public ChatService() {
     }
@@ -25,6 +28,7 @@ public class ChatService extends Service {
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "onCreate...");
+
 //        connect();
     }
 
@@ -57,8 +61,7 @@ public class ChatService extends Service {
     @Override
     public void onDestroy() {
         Log.d(TAG, "onDestroy...");
-        if (mConnect.isConnected())
-            mConnect.disconnect();
+        disconnect();
         super.onDestroy();
     }
 
@@ -67,8 +70,10 @@ public class ChatService extends Service {
      */
     private void connect() {
         Log.i(TAG, "ws connect....");
+        userId = ((MyApplication)getApplication()).getUser().getUserId();
+        Log.d(TAG,"userId="+userId);
         try {
-            mConnect.connect(Condtsnts_URL.WEBSOCKET_CHAT, new WebSocketHandler() {
+            mConnect.connect(Condtsnts_URL.WEBSOCKET_CHAT + userId, new WebSocketHandler() {
                 @Override
                 public void onOpen() {
                     LogUtils.i(TAG, "Status:Connect to server ");
@@ -105,6 +110,14 @@ public class ChatService extends Service {
         } else {
             LogUtils.i(TAG, "no connection!!");
         }
+    }
+
+    /**
+     * websocket断开连接
+     */
+    public void disconnect() {
+        if (mConnect.isConnected())
+            mConnect.disconnect();
     }
 
 
