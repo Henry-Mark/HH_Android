@@ -56,11 +56,11 @@ public class LoginActivity extends BaseActivity
     /**
      * 验证码控件
      */
-    private CheckView mCodeCV;
+//    private CheckView mCodeCV;
     /**
      * EditText，输入验证码
      */
-    private EditText mCodeEt;
+//    private EditText mCodeEt;
     /**
      * 登录按钮
      */
@@ -90,10 +90,10 @@ public class LoginActivity extends BaseActivity
      * 错误提示－－密码
      */
     private TextView mErrPwd;
-    /**
-     * 错误提示－－验证码
-     */
-    private TextView mErrCode;
+//    /**
+//     * 错误提示－－验证码
+//     */
+//    private TextView mErrCode;
     /**
      * 错误提示顶部布局
      */
@@ -103,8 +103,8 @@ public class LoginActivity extends BaseActivity
      */
     private TextView mErrlog;
 
-    private String code;  //获取每次更新的验证码，可用于判断用户输入是否正确
-    private boolean isCodeShow = false;
+//    private String code;  //获取每次更新的验证码，可用于判断用户输入是否正确
+//    private boolean isCodeShow = false;
 
 
     @Override
@@ -119,11 +119,11 @@ public class LoginActivity extends BaseActivity
     /**
      * 刷新验证码
      */
-    private void refreshCode() {
-        int width = ScreenUtils.getScreenWidth(mContext) * 4 / 15;
-        int height = DensityUtil.dip2px(mContext, 40);
-        code = mCodeCV.getValidataAndSetImage(width, height);
-    }
+//    private void refreshCode() {
+//        int width = ScreenUtils.getScreenWidth(mContext) * 4 / 15;
+//        int height = DensityUtil.dip2px(mContext, 40);
+//        code = mCodeCV.getValidataAndSetImage(width, height);
+//    }
 
     /**
      * 初始化控件
@@ -132,13 +132,14 @@ public class LoginActivity extends BaseActivity
         mAvatar = getViewById(R.id.civ_avatar);
         mAccount = getViewById(R.id.et_account);
         mAccount.addTextChangedListener(new EditTextWatcher(FLAG_ACCOUNT));
-        mCodeLL = getViewById(R.id.ll_code);
+//        mCodeLL = getViewById(R.id.ll_code);
         mPasswd = getViewById(R.id.et_password);
+        mPasswd.setOnEditorActionListener(this);
         mPasswd.addTextChangedListener(new EditTextWatcher(FLAG_PASSWORD));
-        mCodeCV = getViewById(R.id.cv_code);
-        mCodeCV.setOnClickListener(this);
-        mCodeEt = getViewById(R.id.et_code);
-        mCodeEt.setOnEditorActionListener(this);
+//        mCodeCV = getViewById(R.id.cv_code);
+//        mCodeCV.setOnClickListener(this);
+//        mCodeEt = getViewById(R.id.et_code);
+//        mCodeEt.setOnEditorActionListener(this);
         mLogin = getViewById(R.id.btn_login);
         mLogin.setOnClickListener(this);
         mForgetPWD = getViewById(R.id.tv_forget_pwd);
@@ -151,11 +152,11 @@ public class LoginActivity extends BaseActivity
         mClearPwd.setOnClickListener(this);
         mErrAccount = getViewById(R.id.tv_error_account);
         mErrPwd = getViewById(R.id.tv_error_password);
-        mErrCode = getViewById(R.id.tv_error_code);
+//        mErrCode = getViewById(R.id.tv_error_code);
         mErrlogLL = getViewById(R.id.ll_errlog);
         mErrlog = getViewById(R.id.tv_errlog);
 
-        refreshCode();
+//        refreshCode();
     }
 
     /**
@@ -163,13 +164,13 @@ public class LoginActivity extends BaseActivity
      *
      * @return
      */
-    private boolean checkCode() {
-        String codeInput = mCodeEt.getText().toString();
-        if (!TextUtils.isEmpty(code) && !TextUtils.isEmpty(codeInput) && code.equalsIgnoreCase(codeInput)) {
-            return true;
-        }
-        return false;
-    }
+//    private boolean checkCode() {
+//        String codeInput = mCodeEt.getText().toString();
+//        if (!TextUtils.isEmpty(code) && !TextUtils.isEmpty(codeInput) && code.equalsIgnoreCase(codeInput)) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     /**
      * 本地验证登录条件
@@ -178,13 +179,13 @@ public class LoginActivity extends BaseActivity
      */
     private boolean checkLoginCondition() {
         clearErrText();
-        if (!isCodeShow) {
-            mCodeLL.setVisibility(View.VISIBLE);
-            isCodeShow = true;
-            mErrCode.setVisibility(View.VISIBLE);
-            mErrCode.setText(R.string.login_err_input_code);
-            return false;
-        }
+//        if (!isCodeShow) {
+//            mCodeLL.setVisibility(View.VISIBLE);
+//            isCodeShow = true;
+//            mErrCode.setVisibility(View.VISIBLE);
+//            mErrCode.setText(R.string.login_err_input_code);
+//            return false;
+//        }
         if (TextUtils.isEmpty(mAccount.getText().toString())) {
             mErrAccount.setVisibility(View.VISIBLE);
             mErrAccount.setText(R.string.login_err_account_not_null);
@@ -193,20 +194,24 @@ public class LoginActivity extends BaseActivity
             mErrPwd.setVisibility(View.VISIBLE);
             mErrPwd.setText(R.string.login_err_password_not_null);
             return false;
-        } else if (checkCode()) {
+        } else{
             return true;
-        } else {
-            mErrCode.setVisibility(View.VISIBLE);
-            mErrCode.setText(R.string.login_err_code_wrong);
-            return false;
         }
+
+//        else if (checkCode()) {
+//            return true;
+//        } else {
+//            mErrCode.setVisibility(View.VISIBLE);
+//            mErrCode.setText(R.string.login_err_code_wrong);
+//            return false;
+//        }
     }
 
     /**
      * 清除错误提示
      */
     private void clearErrText() {
-        mErrCode.setVisibility(View.GONE);
+//        mErrCode.setVisibility(View.GONE);
         mErrAccount.setVisibility(View.GONE);
         mErrPwd.setVisibility(View.GONE);
     }
@@ -232,10 +237,7 @@ public class LoginActivity extends BaseActivity
      */
     @Override
     public void onClick(View v) {
-        if (v == mCodeCV) {
-            refreshCode();
-            LogUtils.d(TAG, "res:" + code);
-        } else if (v == mLogin) {
+        if (v == mLogin) {
             dologin();
             //600ms内不能再次点击
             mLogin.setEnabled(false);

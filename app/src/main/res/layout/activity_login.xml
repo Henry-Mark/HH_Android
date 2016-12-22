@@ -131,7 +131,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/selector_edit_login_or_resgister"
                         android:hint="@string/login_password"
-                        android:imeOptions="actionNext"
+                        android:imeOptions="actionGo"
                         android:inputType="textPassword"
                         android:maxLength="16"
                         android:maxLines="1"
@@ -166,63 +166,62 @@
                     android:visibility="gone" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_code"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:visibility="gone"
-                android:weightSum="1">
+            <!--<LinearLayout-->
+                <!--android:id="@+id/ll_code"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center_horizontal"-->
+                <!--android:paddingBottom="5dp"-->
+                <!--android:paddingTop="5dp"-->
+                <!--android:visibility="gone"-->
+                <!--android:weightSum="1">-->
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:layout_weight="0.8">-->
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="0.8">
+                    <!--<EditText-->
+                        <!--android:id="@+id/et_code"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_weight="5"-->
+                        <!--android:background="@drawable/selector_edit_login_or_resgister"-->
+                        <!--android:gravity="center_vertical"-->
+                        <!--android:hint="@string/login_code"-->
+                        <!--android:imeOptions="actionGo"-->
+                        <!--android:maxLength="4"-->
+                        <!--android:paddingLeft="10dp"-->
+                        <!--android:singleLine="true"-->
+                        <!--android:textSize="20sp" />-->
 
-                    <EditText
-                        android:id="@+id/et_code"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="5"
-                        android:background="@drawable/selector_edit_login_or_resgister"
-                        android:gravity="center_vertical"
-                        android:hint="@string/login_code"
-                        android:imeOptions="actionGo"
-                        android:maxLength="4"
-                        android:paddingLeft="10dp"
-                        android:singleLine="true"
-                        android:textSize="20sp" />
+                    <!--<View-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_weight="1" />-->
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
+                    <!--<com.henry.hh.widget.CheckView-->
+                        <!--android:id="@+id/cv_code"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_weight="3"-->
+                        <!--android:background="@drawable/background_edit_login_or_resgister_normal" />-->
+                <!--</LinearLayout>-->
+            <!--</LinearLayout>-->
 
-                    <com.henry.hh.widget.CheckView
-                        android:id="@+id/cv_code"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="3"
-                        android:background="@drawable/background_edit_login_or_resgister_normal" />
-                </LinearLayout>
-            </LinearLayout>
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center_horizontal"-->
+                <!--android:weightSum="1">-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    android:id="@+id/tv_error_code"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
-                    android:textColor="@color/color_error_log"
-                    android:visibility="gone" />
-            </LinearLayout>
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_error_code"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="0.8"-->
+                    <!--android:textColor="@color/color_error_log"-->
+                    <!--android:visibility="gone" />-->
+            <!--</LinearLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"

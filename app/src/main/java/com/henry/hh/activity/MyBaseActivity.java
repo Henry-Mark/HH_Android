@@ -13,6 +13,7 @@ import com.henry.hh.entity.User;
 import com.henry.hh.service.ChatService;
 import com.henry.library.activity.TitleActivity;
 import com.henry.library.utils.LogUtils;
+import com.litesuits.orm.LiteOrm;
 
 /**
  * Date: 2016/11/30. 16:28
@@ -24,6 +25,8 @@ public class MyBaseActivity extends TitleActivity {
 
     private ChatService chatService;
     private ChattingMsgBroadcastReceiver rhelper;
+
+    private static LiteOrm liteOrm;
     //用户信息
     protected User user = new User();
 
@@ -32,6 +35,11 @@ public class MyBaseActivity extends TitleActivity {
         super.onCreate(savedInstanceState);
 
         user = getMyApplication().getUser();
+        //初始化数据库
+        if (liteOrm!=null){
+            liteOrm = LiteOrm.newCascadeInstance(this,"hh.db");
+        }
+        liteOrm.setDebugged(true); // open the log
 
         Intent intent = new Intent(this, ChatService.class);
         startService(intent);// 启动服务
