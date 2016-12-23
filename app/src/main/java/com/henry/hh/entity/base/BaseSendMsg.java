@@ -10,9 +10,15 @@ public class BaseSendMsg {
 
     public static final String CHAT = "chat";                           //聊天
     public static final String CHAT_BACK = "chat_back";                   //聊天返回确认，表示发送成功
-    public static final String ADDFRIEND = "addfriend";                 // 添加好友
+    public static final String ADDFRIEND = "addfriend";                 // 好友申请
+    public static final String ADDFRIEND_CONFORM = "addfriend_conform";                 // 好友申请确认
+    public static final String ADDFRIEND_BACK = "addfriend_back";                 // 好友申请消息返回
     public static final String ONLINE_REMINDER = "onlineReminder";    //好友上线提醒
     public static final String OFFLINE_REMINDER = "offlineReminder";    //好友下线提醒
+
+    public static final String APPLY_AGREE = "agree";   //同意添加好友
+    public static final String APPLY_DISAGREE = "disagree";   //同意添加好友
+
 
     /**
      * 消息类型：
@@ -29,6 +35,23 @@ public class BaseSendMsg {
      * 发送时间（发送成功的时间）（ms）
      */
     private long SendTimeMillis;
+
+    public BaseSendMsg() {
+
+    }
+
+    /**
+     * @param type
+     * @param content
+     * @param uid
+     * @param sendTimeMillis
+     */
+    public BaseSendMsg(String type, String content, long uid, long sendTimeMillis) {
+        this.type = type;
+        this.content = content;
+        this.uid = uid;
+        this.SendTimeMillis = sendTimeMillis;
+    }
 
     public void setType(String type) {
         this.type = type;
