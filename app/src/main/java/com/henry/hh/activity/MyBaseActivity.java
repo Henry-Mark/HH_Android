@@ -41,6 +41,7 @@ public class MyBaseActivity extends TitleActivity {
         }
         liteOrm.setDebugged(true); // open the log
 
+
         Intent intent = new Intent(this, ChatService.class);
         startService(intent);// 启动服务
 
