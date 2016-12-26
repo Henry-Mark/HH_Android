@@ -35,14 +35,7 @@ public class Message extends BaseSendMsg {
     private int fromUserId;
     /*消息接收者ID*/
     private int toUserId;
-    /**
-     * 发送者头像url
-     */
-    private String fromUserAvatarUrl;
-    /**
-     * 接收者头像Url
-     */
-    private String toUserAvatarUrl;
+
     /*缩略图Url*/
     private String thumbnailUrl;
 
@@ -75,25 +68,10 @@ public class Message extends BaseSendMsg {
     }
 
 
-    public void setFromUserAvatarUrl(String fromUserAvatarUrl) {
-        this.fromUserAvatarUrl = fromUserAvatarUrl;
-    }
-
     public int getToUserId() {
         return toUserId;
     }
 
-    public String getFromUserAvatarUrl() {
-        return fromUserAvatarUrl;
-    }
-
-    public void setToUserAvatarUrl(String toUserAvatarUrl) {
-        this.toUserAvatarUrl = toUserAvatarUrl;
-    }
-
-    public String getToUserAvatarUrl() {
-        return toUserAvatarUrl;
-    }
 
     public void setThumbnailUrl(String thumbnailUrl) {
         this.thumbnailUrl = thumbnailUrl;
@@ -109,9 +87,7 @@ public class Message extends BaseSendMsg {
                 + ";messageType:" + messageType
                 + ";state:" + state
                 + ";fromUserId:" + fromUserId
-                + ";fromUserAvatarUrl:" + fromUserAvatarUrl
                 + ";toUserId:" + toUserId
-                + ";toUserAvatarUrl:" + toUserAvatarUrl
                 + ";thumbnailUrl:" + thumbnailUrl;
         return super.toString();
     }
