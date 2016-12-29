@@ -331,7 +331,6 @@ public class LoginActivity extends BaseActivity
             }
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                LogUtils.d(TAG, "login fail...");
             }
         });
     }

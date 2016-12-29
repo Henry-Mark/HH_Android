@@ -73,7 +73,7 @@ public class User extends BaseMsgBean implements Serializable {
     /**
      * 头像url
      */
-    private String avatarUrl;
+    private String avatar;
     /**
      * 签名
      */
@@ -165,12 +165,12 @@ public class User extends BaseMsgBean implements Serializable {
         return sex;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
+    public String getAvatar() {
+        return avatar;
     }
 
     public void setSignature(String signature) {
@@ -225,7 +225,7 @@ public class User extends BaseMsgBean implements Serializable {
                 + ";age=" + age
                 + "phone;=" + phone
                 + ";sex=" + sex
-                + ";avatarUrl=" + avatarUrl
+                + ";avatarUrl=" + avatar
                 + ";signature=" + signature
                 + ";address=" + address
                 + ";registrationTimeMillis=" + registrationTimeMillis

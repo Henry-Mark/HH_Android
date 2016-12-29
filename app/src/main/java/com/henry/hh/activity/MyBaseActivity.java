@@ -36,7 +36,7 @@ public class MyBaseActivity extends TitleActivity {
 
         user = getMyApplication().getUser();
         //初始化数据库
-        if (liteOrm!=null){
+        if (liteOrm==null){
             liteOrm = LiteOrm.newCascadeInstance(this,"hh.db");
         }
         liteOrm.setDebugged(true); // open the log

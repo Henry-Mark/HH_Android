@@ -19,8 +19,20 @@ import com.henry.hh.interfaces.OnPhotoGetListener;
 import com.henry.hh.utils.FileUtils;
 import com.henry.hh.utils.UploadUtils;
 import com.henry.library.fragment.BaseFragment;
+import com.henry.library.utils.LogUtils;
 import com.henry.library.utils.ScreenUtils;
 import com.henry.library.utils.ToastUtils;
+import com.litesuits.http.LiteHttp;
+import com.litesuits.http.data.GsonImpl;
+import com.litesuits.http.exception.HttpException;
+import com.litesuits.http.impl.huc.HttpUrlClient;
+import com.litesuits.http.listener.HttpListener;
+import com.litesuits.http.request.AbstractRequest;
+import com.litesuits.http.request.StringRequest;
+import com.litesuits.http.request.content.FileBody;
+import com.litesuits.http.request.content.InputStreamBody;
+import com.litesuits.http.request.param.HttpMethods;
+import com.litesuits.http.response.Response;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -29,6 +41,7 @@ import com.loopj.android.http.RequestParams;
 import org.apache.http.Header;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 import static android.app.Activity.RESULT_CANCELED;
 
@@ -54,6 +67,7 @@ public class MyHomeLogFragment extends BaseFragment
     protected void doCreateView(Bundle savedInstanceState) {
         setContentView(R.layout.fragment_my_home);
         initView();
+        initLiteHttp();
     }
 
     /**
@@ -164,8 +178,9 @@ public class MyHomeLogFragment extends BaseFragment
             com.henry.library.utils.FileUtils.bitmapToFile(photo, Constants.PATH_AVATAR);
             mAvatar.setImageBitmap(photo);
             try {
+                post("http://172.16.50.126:9876/imu/uploadAvatar",new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator +"11.jpg"));
 //                postFile();
-                UploadUtils.uploadFile(new File(Constants.PATH_AVATAR),"http://172.16.50.126:9876/imu/upload");
+//                UploadUtils.uploadFile(new File(Constants.PATH_AVATAR),"http://172.16.50.126:9876/imu/upload");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -173,32 +188,62 @@ public class MyHomeLogFragment extends BaseFragment
 
     }
 
-
-
-
-    public void postFile() throws Exception {
-        String path = "";
-        File file = new File(Constants.PATH_AVATAR);
-        if (file.exists() && file.length() > 0) {
-            AsyncHttpClient client = new AsyncHttpClient();
-            RequestParams params = new RequestParams();
-            params.put("profile_picture", file);
-            client.post("http://172.16.50.126:9876/imu/upload/avatar", params, new AsyncHttpResponseHandler() {
-                @Override
-                public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                    ToastUtils.showShort(getActivity(), "成功");
-                }
-
-                @Override
-                public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                    ToastUtils.showShort(getActivity(), "失败");
-                }
-
-
-            });
+    protected static LiteHttp liteHttp;
+    /* 单例 keep an singleton instance of litehttp
+    */
+    private void initLiteHttp() {
+        if (liteHttp == null) {
+            liteHttp = LiteHttp.build(getActivity())
+                    .setHttpClient(new HttpUrlClient())       // http client
+                    .setJsonConvertor(new GsonImpl())        // json convertor
+                    .setDebugged(true)                     // log output when debugged
+                    .setDoStatistics(true)                // statistics of time and traffic
+                    .setDetectNetwork(true)              // detect network before connect
+                    .setUserAgent("Mozilla/5.0 (...)")  // set custom User-Agent
+                    .setSocketTimeout(10000)           // socket timeout: 10s
+                    .setConnectTimeout(10000)         // connect timeout: 10s
+                    .create();
         } else {
-            ToastUtils.showShort(getActivity(), "文件不存在");
+
+            liteHttp.getConfig()                   // configuration directly
+                    .setSocketTimeout(5000)       // socket timeout: 5s
+                    .setConnectTimeout(5000);    // connect timeout: 5s
+        }
+    }
+
+
+    private void post(String uploadUrl,File file){
+//        public static final String uploadUrl = "http://192.168.0.0:8080/upload";
+        HttpListener uploadListener = new HttpListener<String>(true, false, true) {
+            @Override
+            public void onSuccess(String s, Response<String> response) {
+                response.printInfo();
+                LogUtils.d(TAG,"success....");
+            }
+            @Override
+            public void onFailure(HttpException e, Response<String> response) {
+                response.printInfo();
+                LogUtils.d(TAG,"onFailure....");
+            }
+            @Override
+            public void onUploading(AbstractRequest<String> request, long total, long len) {
+            }
+        };
+
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
+        final StringRequest upload = (StringRequest) new StringRequest(uploadUrl)
+                .setMethod(HttpMethods.Post)
+                .setHttpListener(uploadListener)
+                .setHttpBody(new InputStreamBody(fis));
+        liteHttp.executeAsync(upload);
     }
+
+
+
 }
