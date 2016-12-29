@@ -14,6 +14,7 @@ import com.henry.hh.R;
 import com.henry.hh.activity.ChatActivity;
 import com.henry.hh.adapter.MsgAdapter;
 import com.henry.hh.entity.Chatting;
+import com.henry.hh.entity.Friend;
 import com.henry.hh.interfaces.OnRecyclerItemClickListener;
 import com.henry.library.View.DividerItemDecoration;
 import com.henry.library.fragment.BaseFragment;
@@ -52,7 +53,7 @@ public class MsgListFragment extends BaseFragment
         mRefreshLayout = getViewById(R.id.refreshLayout);
         initRefresh();
         initList();
-        roomAdapter.refresh(getDatas(5));
+        roomAdapter.refresh(getDatas(6));
 
         roomAdapter.addOnItemClickListener(new OnRecyclerItemClickListener() {
             @Override
@@ -93,14 +94,14 @@ public class MsgListFragment extends BaseFragment
     }
 
 
-    private List<Chatting> getDatas(int num) {
-        List<Chatting> mList = new ArrayList<>();
+    private List<Friend> getDatas(int num) {
+        List<Friend> mList = new ArrayList<>();
         for (int i = 0; i < num; i++) {
-            Chatting room = new Chatting();
+            Friend room = new Friend();
             room.setAmountUnread(i + 7);
-            room.setUserId("id" + i);
-            room.setContent("content" + i);
-            room.setMessageTime(TimeUtils.getSysCurrentMillis() - i * 1000000);
+            room.setFriendUid(i);
+            room.setLastContent("content" + i);
+            room.setLastChatTimeMillis(TimeUtils.getSysCurrentMillis() - i * 1000000);
             mList.add(room);
         }
 

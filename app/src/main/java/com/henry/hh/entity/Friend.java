@@ -41,6 +41,19 @@ public class Friend implements Serializable {
      * 好友信息
      */
     private User friendInfo = new User();
+    /**
+     * 最后聊天时间
+     */
+    private long lastChatTimeMillis;
+
+    /**
+     * 最后消息内容
+     */
+    private String lastContent;
+    /**
+     * 未读消息条数
+     */
+    private int amountUnread;
 
     @Override
     public String toString() {
@@ -49,7 +62,10 @@ public class Friend implements Serializable {
                 + ",remarkName=" + remarkName
                 + ",beFriendTimeMillis=" + beFriendTimeMillis
                 + ",splitTimeMillis=" + splitTimeMillis
+                + ",lastChatTimeMillis=" + lastChatTimeMillis
                 + ",intimacy=" + intimacy
+                + ",amountUnread=" + amountUnread
+                + ",lastContent=" + lastContent
                 + ",label=" + label;
         return string;
     }
@@ -86,6 +102,22 @@ public class Friend implements Serializable {
         return beFriendTimeMillis;
     }
 
+    public void setLastChatTimeMillis(long lastChatTimeMillis) {
+        this.lastChatTimeMillis = lastChatTimeMillis;
+    }
+
+    public long getLastChatTimeMillis() {
+        return lastChatTimeMillis;
+    }
+
+    public void setLastContent(String lastContent) {
+        this.lastContent = lastContent;
+    }
+
+    public String getLastContent() {
+        return lastContent;
+    }
+
     public void setSplitTimeMillis(long splitTimeMillis) {
         this.splitTimeMillis = splitTimeMillis;
     }
@@ -116,5 +148,13 @@ public class Friend implements Serializable {
 
     public User getFriendInfo() {
         return friendInfo;
+    }
+
+    public void setAmountUnread(int amountUnread) {
+        this.amountUnread = amountUnread;
+    }
+
+    public int getAmountUnread() {
+        return amountUnread;
     }
 }

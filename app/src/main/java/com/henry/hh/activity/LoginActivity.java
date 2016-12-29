@@ -194,7 +194,7 @@ public class LoginActivity extends BaseActivity
             mErrPwd.setVisibility(View.VISIBLE);
             mErrPwd.setText(R.string.login_err_password_not_null);
             return false;
-        } else{
+        } else {
             return true;
         }
 
@@ -230,6 +230,8 @@ public class LoginActivity extends BaseActivity
         }
     }
 
+    private long firstClickMillis = System.currentTimeMillis();
+
     /**
      * 点击事件处理
      *
@@ -238,15 +240,12 @@ public class LoginActivity extends BaseActivity
     @Override
     public void onClick(View v) {
         if (v == mLogin) {
-            dologin();
             //600ms内不能再次点击
-            mLogin.setEnabled(false);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mLogin.setEnabled(true);
-                }
-            }, 600);
+            long secondClickMillis = System.currentTimeMillis();
+            if (secondClickMillis - firstClickMillis >= 600) {
+                dologin();
+                firstClickMillis = secondClickMillis;
+            }
 
         } else if (v == mForgetPWD) {
             startActivity(FindPasswordActivity.class);
@@ -329,6 +328,7 @@ public class LoginActivity extends BaseActivity
                     showErrlog(user.getMessage());
                 }
             }
+
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
             }

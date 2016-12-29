@@ -33,6 +33,8 @@ public class BaseSendMsg {
     private String content = "";
     /*用于识别消息*/
     private long uid;
+    /*是否已读，0为未读，1为已读*/
+    private int isRead;
 
     /**
      * 发送时间（发送成功的时间）（ms）
@@ -86,6 +88,14 @@ public class BaseSendMsg {
 
     public long getUid() {
         return uid;
+    }
+
+    public void setIsRead(int isRead) {
+        this.isRead = isRead;
+    }
+
+    public int getIsRead() {
+        return isRead;
     }
 
     @Override

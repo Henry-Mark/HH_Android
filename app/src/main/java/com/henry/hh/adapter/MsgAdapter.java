@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.henry.hh.R;
 import com.henry.hh.entity.Chatting;
+import com.henry.hh.entity.Friend;
 import com.henry.hh.interfaces.OnRecyclerItemClickListener;
 import com.henry.library.View.CircleImageView;
 import com.henry.library.View.CircleTextImageView;
@@ -25,7 +26,7 @@ import com.henry.library.utils.TimeUtils;
  * Description: 聊天室列表的适配器
  */
 public class MsgAdapter
-        extends BaseRecyclerAdapter<MsgAdapter.ViewHolder, Chatting>
+        extends BaseRecyclerAdapter<MsgAdapter.ViewHolder, Friend>
         implements View.OnClickListener {
 
     //点击监听事件
@@ -46,10 +47,10 @@ public class MsgAdapter
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        Chatting room = datalist.get(position);
-        holder.mUser.setText(room.getUserId());
-        holder.mContent.setText(room.getContent());
-        holder.mTime.setText(TimeUtils.getRelativeTime(context, room.getMessageTime()));
+        Friend friend = datalist.get(position);
+        holder.mUser.setText(friend.getFriendUid()+"");
+        holder.mContent.setText(friend.getLastContent());
+        holder.mTime.setText(TimeUtils.getRelativeTime(context, friend.getLastChatTimeMillis()));
 
         /**
          * 设置未读消息条数
@@ -57,7 +58,7 @@ public class MsgAdapter
          * 2.10 - 99 条，显示具体条数；
          * 3.大于100条时，只显示99条；
          */
-        int amount = room.getAmountUnread();
+        int amount = friend.getAmountUnread();
         if (amount < 10) {
             holder.mAmount.setText(" " + amount + " ");
         } else if (amount < 100)
