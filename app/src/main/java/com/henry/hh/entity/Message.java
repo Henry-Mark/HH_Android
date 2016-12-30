@@ -1,6 +1,9 @@
 package com.henry.hh.entity;
 
 import com.henry.hh.entity.base.BaseSendMsg;
+import com.litesuits.orm.db.annotation.PrimaryKey;
+import com.litesuits.orm.db.annotation.Table;
+import com.litesuits.orm.db.enums.AssignType;
 
 /**
  * Date: 2016/10/14. 11:21
@@ -8,6 +11,7 @@ import com.henry.hh.entity.base.BaseSendMsg;
  * Email: heneymark@gmail.com
  * Description:聊天消息内容
  */
+@Table("message")
 public class Message extends BaseSendMsg {
     public final static int MSG_TYPE_TEXT = 0;
     public final static int MSG_TYPE_PHOTO = 1;
@@ -89,6 +93,6 @@ public class Message extends BaseSendMsg {
                 + ";fromUserId:" + fromUserId
                 + ";toUserId:" + toUserId
                 + ";thumbnailUrl:" + thumbnailUrl;
-        return super.toString();
+        return string;
     }
 }

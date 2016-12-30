@@ -1,12 +1,17 @@
 package com.henry.hh.entity.base;
 
+import com.litesuits.orm.db.annotation.PrimaryKey;
+import com.litesuits.orm.db.enums.AssignType;
+
+import java.io.Serializable;
+
 /**
  * Date: 2016/12/14. 16:44
  * Creator: henry
  * Email: heneymark@gmail.com
  * Description: 发送的基本消息
  */
-public class BaseSendMsg {
+public class BaseSendMsg implements Serializable {
 
     public static final String CHAT = "chat";                           //聊天
     public static final String CHAT_BACK = "chat_back";                   //聊天返回确认，表示发送成功

@@ -9,11 +9,13 @@ import android.os.IBinder;
 
 import com.henry.hh.broadcastreceiver.ChattingMsgBroadcastReceiver;
 import com.henry.hh.entity.Message;
+import com.henry.hh.entity.OrmMessage;
 import com.henry.hh.entity.User;
 import com.henry.hh.service.ChatService;
 import com.henry.library.activity.TitleActivity;
 import com.henry.library.utils.LogUtils;
 import com.litesuits.orm.LiteOrm;
+import com.litesuits.orm.db.model.ConflictAlgorithm;
 
 /**
  * Date: 2016/11/30. 16:28
@@ -26,7 +28,7 @@ public class MyBaseActivity extends TitleActivity {
     private ChatService chatService;
     private ChattingMsgBroadcastReceiver rhelper;
 
-    private static LiteOrm liteOrm;
+    protected static LiteOrm liteOrm;
     //用户信息
     protected User user = new User();
 
@@ -36,8 +38,8 @@ public class MyBaseActivity extends TitleActivity {
 
         user = getMyApplication().getUser();
         //初始化数据库
-        if (liteOrm==null){
-            liteOrm = LiteOrm.newCascadeInstance(this,"hh.db");
+        if (liteOrm == null) {
+            liteOrm = LiteOrm.newSingleInstance(this, "hh.db");
         }
         liteOrm.setDebugged(true); // open the log
 
@@ -53,8 +55,11 @@ public class MyBaseActivity extends TitleActivity {
             public void onReceiveMsg(Intent intent) {
                 if (intent.getAction().equals(ChattingMsgBroadcastReceiver.RECEIVE_MSG)) {
                     String string = intent.getStringExtra(ChattingMsgBroadcastReceiver.MSG);
-                    Message message = gson.fromJson(string, Message.class);
-                    onReceive(message);
+                    OrmMessage ormMessage = gson.fromJson(string, OrmMessage.class);
+
+                    onReceive(ormMessage);
+                    onOrmReceive(ormMessage);
+
                 }
             }
         });
@@ -109,5 +114,13 @@ public class MyBaseActivity extends TitleActivity {
      */
     protected void onReceive(Message message) {
         LogUtils.d(TAG, "onReceive....");
+    }
+
+    /**
+     * 接收消息，用于保存到数据库
+     * @param ormMessage
+     */
+    protected void onOrmReceive(OrmMessage ormMessage){
+        LogUtils.d(TAG, "onOrmReceive....");
     }
 }

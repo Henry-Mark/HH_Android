@@ -36,7 +36,7 @@ public class GuideActivity extends BaseActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                startActivity(mContext, MainActivity.class);
+                startActivity(mContext, LoginActivity.class);
             }
         }, 5000, 1000);
 

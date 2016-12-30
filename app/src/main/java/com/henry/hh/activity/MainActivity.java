@@ -14,10 +14,13 @@ import android.widget.TextView;
 import com.henry.hh.R;
 import com.henry.hh.constants.TabDatas;
 import com.henry.hh.dialog.PromptDialog;
+import com.henry.hh.entity.Message;
+import com.henry.hh.entity.OrmMessage;
 import com.henry.hh.interfaces.OnDialogClickListener;
 import com.henry.hh.service.ChatService;
 import com.henry.library.activity.BaseActivity;
 import com.henry.library.utils.ScreenUtils;
+import com.litesuits.orm.db.model.ConflictAlgorithm;
 
 public class MainActivity extends MyBaseActivity implements
         TabHost.OnTabChangeListener, OnDialogClickListener {
@@ -131,5 +134,19 @@ public class MainActivity extends MyBaseActivity implements
     @Override
     public void onCancel() {
 
+    }
+
+    @Override
+    protected void onReceive(Message message) {
+        super.onReceive(message);
+        //保存到数据库
+        liteOrm.insert(message, ConflictAlgorithm.Abort);
+    }
+
+    @Override
+    protected void onOrmReceive(OrmMessage ormMessage) {
+        super.onOrmReceive(ormMessage);
+//        //保存到数据库
+//        liteOrm.insert(ormMessage);
     }
 }
