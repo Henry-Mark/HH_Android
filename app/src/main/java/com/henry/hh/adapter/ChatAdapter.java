@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.henry.hh.R;
 import com.henry.hh.activity.ChatActivity;
+import com.henry.hh.activity.LoginActivity;
 import com.henry.hh.entity.Message;
 import com.henry.hh.interfaces.OnChatItemClickListener;
 import com.henry.hh.interfaces.OnChatItemLongClickListener;
@@ -18,6 +19,7 @@ import com.henry.hh.utils.ImageUtils;
 import com.henry.library.View.CircleImageView;
 import com.henry.library.adapter.BaseRecyclerAdapter;
 import com.henry.library.adapter.RecyclerHolder;
+import com.henry.library.utils.LogUtils;
 import com.henry.library.utils.TimeUtils;
 
 import io.github.rockerhieu.emojicon.EmojiconTextView;
@@ -68,11 +70,12 @@ public class ChatAdapter extends BaseRecyclerAdapter<ChatAdapter.ViewHolder, Mes
          * 时间差相隔2s内，则不显示时间
          * 大于2s显示时间
          */
-        if (position == 0 || datalist.get(position).getSendTimeMillis() - datalist.get(position - 1).getSendTimeMillis() >= 1000 * 2)
+        if (position == 0 || (datalist.get(position).getSendTimeMillis() - datalist.get(position - 1).getSendTimeMillis() >= 1000 * 60 * 2)) {
             //设置时间
             holder.mTime.setText(TimeUtils.getRelativeTime(context, message.getSendTimeMillis()));
-        else
+        } else {
             holder.mTime.setVisibility(View.GONE);
+        }
         /**
          * 根据消息类型显示消息内容：
          * MSG_TYPE_TEXT：文字（emjo）

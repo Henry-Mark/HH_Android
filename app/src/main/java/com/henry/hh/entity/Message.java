@@ -42,6 +42,8 @@ public class Message extends BaseSendMsg {
 
     /*缩略图Url*/
     private String thumbnailUrl;
+    @PrimaryKey(AssignType.BY_MYSELF)
+    private String messageId = null;
 
     public void setMessageType(int messageType) {
         this.messageType = messageType;
@@ -85,6 +87,19 @@ public class Message extends BaseSendMsg {
         return thumbnailUrl;
     }
 
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
+    }
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    @Override
+    public void setUid(long uid) {
+        super.setUid(uid);
+    }
+
     @Override
     public String toString() {
         String string = super.toString()
@@ -92,6 +107,7 @@ public class Message extends BaseSendMsg {
                 + ";state:" + state
                 + ";fromUserId:" + fromUserId
                 + ";toUserId:" + toUserId
+                + ";messageId:" + messageId
                 + ";thumbnailUrl:" + thumbnailUrl;
         return string;
     }

@@ -9,13 +9,11 @@ import android.os.IBinder;
 
 import com.henry.hh.broadcastreceiver.ChattingMsgBroadcastReceiver;
 import com.henry.hh.entity.Message;
-import com.henry.hh.entity.OrmMessage;
 import com.henry.hh.entity.User;
 import com.henry.hh.service.ChatService;
 import com.henry.library.activity.TitleActivity;
 import com.henry.library.utils.LogUtils;
 import com.litesuits.orm.LiteOrm;
-import com.litesuits.orm.db.model.ConflictAlgorithm;
 
 /**
  * Date: 2016/11/30. 16:28
@@ -55,10 +53,10 @@ public class MyBaseActivity extends TitleActivity {
             public void onReceiveMsg(Intent intent) {
                 if (intent.getAction().equals(ChattingMsgBroadcastReceiver.RECEIVE_MSG)) {
                     String string = intent.getStringExtra(ChattingMsgBroadcastReceiver.MSG);
-                    OrmMessage ormMessage = gson.fromJson(string, OrmMessage.class);
-
-                    onReceive(ormMessage);
-                    onOrmReceive(ormMessage);
+                    Message message = gson.fromJson(string, Message.class);
+                    //设置状态为发送成功
+                    message.setState(Message.MSG_STATE_SUCCESS);
+                    onReceive(message);
 
                 }
             }
@@ -116,11 +114,4 @@ public class MyBaseActivity extends TitleActivity {
         LogUtils.d(TAG, "onReceive....");
     }
 
-    /**
-     * 接收消息，用于保存到数据库
-     * @param ormMessage
-     */
-    protected void onOrmReceive(OrmMessage ormMessage){
-        LogUtils.d(TAG, "onOrmReceive....");
-    }
 }

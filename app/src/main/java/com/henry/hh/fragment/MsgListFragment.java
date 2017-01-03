@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.henry.hh.R;
 import com.henry.hh.activity.ChatActivity;
 import com.henry.hh.adapter.MsgAdapter;
-import com.henry.hh.entity.Chatting;
 import com.henry.hh.entity.Friend;
 import com.henry.hh.interfaces.OnRecyclerItemClickListener;
 import com.henry.library.View.DividerItemDecoration;
@@ -23,8 +22,6 @@ import com.henry.library.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;

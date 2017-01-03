@@ -1,5 +1,6 @@
 package com.henry.hh.entity.base;
 
+import com.litesuits.orm.db.annotation.Collate;
 import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.enums.AssignType;
 
@@ -33,13 +34,13 @@ public class BaseSendMsg implements Serializable {
      * chat：聊天消息
      * addfriend:添加好友
      */
-    private String type = "";
+    public String type = "";
     /*消息内容*/
-    private String content = "";
+    public String content = "";
     /*用于识别消息*/
-    private long uid;
+    public long uid;
     /*是否已读，0为未读，1为已读*/
-    private int isRead;
+    public int isRead;
 
     /**
      * 发送时间（发送成功的时间）（ms）

@@ -11,7 +11,6 @@ import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.henry.hh.R;
@@ -19,7 +18,6 @@ import com.henry.hh.adapter.ChatAdapter;
 import com.henry.hh.entity.Emojicon;
 import com.henry.hh.entity.Friend;
 import com.henry.hh.entity.Message;
-import com.henry.hh.entity.OrmMessage;
 import com.henry.hh.entity.User;
 import com.henry.hh.entity.base.BaseSendMsg;
 import com.henry.hh.fragment.FriendsListFragment;
@@ -32,10 +30,11 @@ import com.henry.library.utils.FileUtils;
 import com.henry.library.utils.LogUtils;
 import com.henry.library.utils.TimeUtils;
 import com.litesuits.orm.db.assit.QueryBuilder;
+import com.litesuits.orm.db.assit.WhereBuilder;
+import com.litesuits.orm.db.model.ColumnsValue;
 import com.litesuits.orm.db.model.ConflictAlgorithm;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -60,7 +59,13 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
         initWidget();
         initList();
         initData();
-        messageList = getDatas(10);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        messageList = getDatas();
         chatAdapter.refresh(messageList);
         chatAdapter.addOnItemClickListener(this);
         chatAdapter.addOnItemLongClickListener(this);
@@ -106,28 +111,19 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
         recyclerView.setAdapter(chatAdapter);
     }
 
-    private List<Message> getDatas(int num) {
-        List<Message> mList = new ArrayList<>();
-        for (int i = 0; i < num; i++) {
-            Message message = new Message();
-            message.setSendTimeMillis(System.currentTimeMillis() + i * 1000000);
-            message.setUid(System.currentTimeMillis() + i * 1000000);
-            message.setToUserId(user.getUserId());
-            message.setFromUserId(friend.getFriendUid());
-            message.setMessageType(Message.MSG_TYPE_TEXT);
-            message.setContent("content:" + i);
-            if (i % 3 == 0)
-                message.setState(Message.MSG_STATE_FAIL);
-            else if (i % 3 == 1)
-                message.setState(Message.MSG_STATE_SUCCESS);
-            else
-                message.setState(Message.MSG_STATE_SENDING);
-            mList.add(message);
-        }
-//        List<Message> ormMessages = liteOrm.<Message>query(new QueryBuilder<Message>(Message.class).where("type=? and fromUserId=? and toUserId=?","chat",user.getUserId(),friend.getFriendUid()));
-//        Log.d(TAG,"list>>> "+ormMessages.toString());
+    /**
+     * 获取数据库中消息列表
+     *
+     * @return
+     */
+    private List<Message> getDatas() {
+        //升序查找消息列表
+        List<Message> messages = liteOrm.<Message>query(new QueryBuilder<Message>(Message.class).
+                appendOrderAscBy("SendTimeMillis")
+                .where("type=? and fromUserId=? or toUserId=?", "chat", friend.getFriendUid(), friend.getFriendUid()));
+        LogUtils.d(TAG, "list>>> " + messages.toString());
 
-        return mList;
+        return messages;
     }
 
     @Override
@@ -149,7 +145,7 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
 
     @Override
     public void send(String content) {
-        OrmMessage message = new OrmMessage();
+        Message message = new Message();
         message.setSendTimeMillis(System.currentTimeMillis());
         message.setUid(System.currentTimeMillis());
         message.setFromUserId(user.getUserId());
@@ -195,7 +191,7 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
             Uri dataUri = data.getData();
             if (dataUri != null) {
                 File file = FileUtils.uri2File(this, dataUri);
-                OrmMessage message = new OrmMessage();
+                Message message = new Message();
                 message.setSendTimeMillis(TimeUtils.getSysCurrentMillis());
                 message.setMessageType(Message.MSG_TYPE_PHOTO);
                 message.setContent(file.getAbsolutePath());
@@ -209,19 +205,17 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
     /**
      * 发送消息
      *
-     * @param ormMessage
+     * @param message
      */
-    private void sendMessage(OrmMessage ormMessage) {
+    private void sendMessage(Message message) {
 
-        Message message = ormMessage;
-        LogUtils.d(TAG, "message=" + message.toString());
         sendChatMsg(gson.toJson(message));
         chatAdapter.append(message);
         showLastItem();
         if (message.getState() == Message.MSG_STATE_SENDING) {
             map.put(message.getUid(), false);
-            liteOrm.insert(message,ConflictAlgorithm.Abort);
-        LogUtils.d(TAG, "list=" + liteOrm.query(OrmMessage.class));
+            liteOrm.insert(message, ConflictAlgorithm.Abort);
+            LogUtils.d(TAG, "list=" + liteOrm.query(Message.class));
             //5m则发送失败
             new Handler().postDelayed(new myRunnable(message.getUid()), 5000);
         }
@@ -290,6 +284,7 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
             long uid = message.getUid();
             setItemState(uid, Message.MSG_STATE_SUCCESS);
             map.put(uid, true);
+
             //获取聊天消息
         } else if (BaseSendMsg.CHAT.equals(message.getType())) {
             chatAdapter.append(message);
@@ -310,7 +305,9 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
             if (uid == messages.get(i).getUid()) {
                 final Message msg = messages.get(i);
                 msg.setState(state);
+
                 final int finalI = i;
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -318,6 +315,8 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
                         showLastItem();
                     }
                 });
+                //修改数据库中消息状态
+                updateState(msg.getUid(), Message.MSG_STATE_SUCCESS);
             }
         }
     }
@@ -336,9 +335,29 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
         @Override
         public void run() {
             boolean isSendSuccess = (boolean) map.get(uid);
-            if (!isSendSuccess)
+            if (!isSendSuccess) {
                 setItemState(uid, Message.MSG_STATE_FAIL);
+                //更新数据库》发送状态
+                updateState(uid, Message.MSG_STATE_FAIL);
+            }
 
         }
+    }
+
+
+    /**
+     * 修改数据库中发送状态
+     *
+     * @param uid
+     * @param state
+     */
+    private void updateState(long uid, int state) {
+
+        //更新数据库》发送状态
+        liteOrm.update(new WhereBuilder(Message.class).where("uid=?", uid),
+                new ColumnsValue(new String[]{"state"}, new Object[]{state}),
+                ConflictAlgorithm.Fail);
+        LogUtils.d(TAG, "list=" + liteOrm.query(Message.class));
+
     }
 }
