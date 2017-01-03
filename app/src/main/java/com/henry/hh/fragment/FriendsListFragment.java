@@ -68,9 +68,24 @@ public class FriendsListFragment extends MyBaseFragment
 
         initList();
         initRefresh();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         friends = getMyApplication().getFriends();
         friendAdapter.refresh(friends);
-//        queryFriendList();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        LogUtils.i(TAG, "onHiddenChanged>> hidden=" + hidden);
+        if (!hidden) {
+            friends = getMyApplication().getFriends();
+            friendAdapter.refresh(friends);
+        }
     }
 
     /**

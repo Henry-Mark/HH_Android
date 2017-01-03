@@ -48,18 +48,20 @@ public class MsgAdapter
     public void onBindViewHolder(ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         Friend friend = datalist.get(position);
-        holder.mUser.setText(friend.getFriendUid()+"");
+        holder.mUser.setText(friend.getFriendUid() + "");
         holder.mContent.setText(friend.getLastContent());
         holder.mTime.setText(TimeUtils.getRelativeTime(context, friend.getLastChatTimeMillis()));
 
         /**
-         * 设置未读消息条数
+         * 设置未读消息条数,0条则隐藏
          * 1.0 - 9 条，显示具体条数，前后各加一个空格，已保证大小长度与两个数字相同
          * 2.10 - 99 条，显示具体条数；
          * 3.大于100条时，只显示99条；
          */
         int amount = friend.getAmountUnread();
-        if (amount < 10) {
+        if (amount <= 0) {
+            holder.mAmount.setVisibility(View.INVISIBLE);
+        } else if (amount < 10) {
             holder.mAmount.setText(" " + amount + " ");
         } else if (amount < 100)
             holder.mAmount.setText("" + amount);

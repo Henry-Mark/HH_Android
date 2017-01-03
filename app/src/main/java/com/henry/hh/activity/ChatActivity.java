@@ -65,10 +65,13 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
     @Override
     protected void onResume() {
         super.onResume();
+
         messageList = getDatas();
         chatAdapter.refresh(messageList);
         chatAdapter.addOnItemClickListener(this);
         chatAdapter.addOnItemLongClickListener(this);
+
+        setMsgReaded();
     }
 
     /**
@@ -117,14 +120,15 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
      * @return
      */
     private List<Message> getDatas() {
-            //升序查找消息列表
-            List<Message> messages = liteOrm.<Message>query(new QueryBuilder<Message>(Message.class).
-                    appendOrderAscBy("SendTimeMillis")
-                    .where("type=? and fromUserId=? or toUserId=?", "chat", friend.getFriendUid(), friend.getFriendUid()));
-            LogUtils.d(TAG, "list>>> " + messages.toString());
+        //升序查找消息列表
+        List<Message> messages = liteOrm.<Message>query(new QueryBuilder<Message>(Message.class).
+                appendOrderAscBy("SendTimeMillis")
+                .where("type=? and fromUserId=? or toUserId=?", "chat", friend.getFriendUid(), friend.getFriendUid()));
+        LogUtils.d(TAG, "list>>> " + messages.toString());
 
-            return messages;
+        return messages;
     }
+
 
     @Override
     protected void onBackward(View backwardView) {
@@ -359,5 +363,16 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
                 ConflictAlgorithm.Fail);
         LogUtils.d(TAG, "list=" + liteOrm.query(Message.class));
 
+    }
+
+    /**
+     * 更新数据库》设置该联系人的消息为已读
+     */
+    private void setMsgReaded() {
+
+        liteOrm.update(new WhereBuilder(Message.class).
+                        where("type=? and fromUserId=? or toUserId=?", "chat", friend.getFriendUid(), friend.getFriendUid()),
+                new ColumnsValue(new String[]{"amountUnread"}, new Object[]{0}),
+                ConflictAlgorithm.Fail);
     }
 }

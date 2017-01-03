@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.henry.hh.R;
@@ -20,9 +19,7 @@ import com.henry.hh.entity.Message;
 import com.henry.hh.entity.User;
 import com.henry.hh.interfaces.OnRecyclerItemClickListener;
 import com.henry.library.View.DividerItemDecoration;
-import com.henry.library.fragment.BaseFragment;
 import com.henry.library.utils.LogUtils;
-import com.henry.library.utils.TimeUtils;
 import com.henry.library.utils.ToastUtils;
 import com.litesuits.orm.db.assit.QueryBuilder;
 import com.loopj.android.http.AsyncHttpClient;
@@ -56,6 +53,7 @@ public class MsgListFragment extends MyBaseFragment
     private List<Friend> friends;
 
     private User user;
+
     public MsgListFragment() {
         // Required empty public constructor
     }
@@ -69,14 +67,16 @@ public class MsgListFragment extends MyBaseFragment
         mRefreshLayout = getViewById(R.id.refreshLayout);
         initRefresh();
         initList();
-//        roomAdapter.refresh(getDatas(6));
         queryFriendList();
 
         roomAdapter.addOnItemClickListener(new OnRecyclerItemClickListener() {
             @Override
             public void onItemClick(View view, List data, int position) {
-                Toast.makeText(getActivity(), "...." + position, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getActivity(), ChatActivity.class));
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(FriendsListFragment.UID, friends.get(position));
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }
@@ -110,20 +110,6 @@ public class MsgListFragment extends MyBaseFragment
         mRefreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getActivity().getApplicationContext(), true));
     }
 
-//
-//    private List<Friend> getDatas(int num) {
-//        List<Friend> mList = new ArrayList<>();
-//        for (int i = 0; i < num; i++) {
-//            Friend room = new Friend();
-//            room.setAmountUnread(i + 7);
-//            room.setFriendUid(i);
-//            room.setLastContent("content" + i);
-//            room.setLastChatTimeMillis(TimeUtils.getSysCurrentMillis() - i * 1000000);
-//            mList.add(room);
-//        }
-//
-//        return mList;
-//    }
 
     /**
      * 获取好友列表
@@ -139,23 +125,8 @@ public class MsgListFragment extends MyBaseFragment
                 LogUtils.d(TAG, "friends result=");
                 //解析json
                 getlistFromJson(result);
-                for (Friend friend : friends) {
-                    List<Message> messages = getMsg();
-                    int count = 0;
-                    for (Message message : messages) {
-                        if (message.getFromUserId() == friend.getFriendUid() || message.getToUserId() == friend.getFriendUid()){
-                            friend.setLastContent(message.getContent());
-                            friend.setLastChatTimeMillis(message.getSendTimeMillis());
-                            count++;
-                        }
-                    }
-                  if(count==0){
-                      friends.remove(messages);
-                  }
-                }
-
                 mRefreshLayout.endRefreshing();
-                roomAdapter.refresh(friends);
+                freshList();
             }
 
             @Override
@@ -165,8 +136,39 @@ public class MsgListFragment extends MyBaseFragment
         });
     }
 
+    /**
+     * 刷新列表
+     */
+    private void freshList(){
+        for (Friend friend : friends) {
+            List<Message> messages = getMsg();
+            int count = 0;
+            int unReadcount = 0;
+            for (Message message : messages) {
+                if (message.getFromUserId() == friend.getFriendUid() || message.getToUserId() == friend.getFriendUid()) {
+                    friend.setLastContent(message.getContent());
+                    friend.setLastChatTimeMillis(message.getSendTimeMillis());
+                    count++;
+                    if (message.getIsRead()==0){
+                        unReadcount++;
+                    }
+                }
+            }
+            if (count == 0) {
+                friends.remove(friend);
+            }
+            friend.setAmountUnread(unReadcount);
+        }
 
 
+        roomAdapter.refresh(friends);
+    }
+
+
+    /**
+     * 获取数据库中的消息列表
+     * @return
+     */
     private List<Message> getMsg() {
         //升序查找消息列表
         List<Message> messages = liteOrm.<Message>query(new QueryBuilder<Message>(Message.class)
@@ -180,13 +182,7 @@ public class MsgListFragment extends MyBaseFragment
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mRefreshLayout.endRefreshing();
-            }
-        },3000);
+        queryFriendList();
 
     }
 
@@ -216,11 +212,11 @@ public class MsgListFragment extends MyBaseFragment
             @Override
             public void run() {
 //                roomAdapter.refresh(getDatas(10));
-                queryFriendList();
+//                queryFriendList();
                 ToastUtils.showShort(getActivity(), "没有最新数据了");
                 mRefreshLayout.endLoadingMore();
             }
-        },3000);
+        }, 3000);
         return true;
     }
 
