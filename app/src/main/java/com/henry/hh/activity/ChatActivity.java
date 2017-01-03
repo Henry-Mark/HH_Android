@@ -117,13 +117,13 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
      * @return
      */
     private List<Message> getDatas() {
-        //升序查找消息列表
-        List<Message> messages = liteOrm.<Message>query(new QueryBuilder<Message>(Message.class).
-                appendOrderAscBy("SendTimeMillis")
-                .where("type=? and fromUserId=? or toUserId=?", "chat", friend.getFriendUid(), friend.getFriendUid()));
-        LogUtils.d(TAG, "list>>> " + messages.toString());
+            //升序查找消息列表
+            List<Message> messages = liteOrm.<Message>query(new QueryBuilder<Message>(Message.class).
+                    appendOrderAscBy("SendTimeMillis")
+                    .where("type=? and fromUserId=? or toUserId=?", "chat", friend.getFriendUid(), friend.getFriendUid()));
+            LogUtils.d(TAG, "list>>> " + messages.toString());
 
-        return messages;
+            return messages;
     }
 
     @Override

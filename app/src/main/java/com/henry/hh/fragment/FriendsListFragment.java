@@ -68,7 +68,9 @@ public class FriendsListFragment extends MyBaseFragment
 
         initList();
         initRefresh();
-        queryFriendList();
+        friends = getMyApplication().getFriends();
+        friendAdapter.refresh(friends);
+//        queryFriendList();
     }
 
     /**
@@ -102,12 +104,7 @@ public class FriendsListFragment extends MyBaseFragment
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         queryFriendList();
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                mRefreshLayout.endRefreshing();
-//            }
-//        }, 3000);
+        mRefreshLayout.endRefreshing();
 
     }
 
