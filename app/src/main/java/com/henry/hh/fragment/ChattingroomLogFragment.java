@@ -11,11 +11,23 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.reflect.TypeToken;
 import com.henry.hh.R;
 import com.henry.hh.activity.SearchActivity;
 import com.henry.hh.adapter.ChatOrFriendsPaperAdapter;
+import com.henry.hh.constants.Condtsnts_URL;
+import com.henry.hh.entity.Friend;
 import com.henry.library.fragment.BaseFragment;
+import com.henry.library.utils.LogUtils;
 import com.henry.library.utils.ToastUtils;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +36,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  * 聊天室，用于展示聊天列表和好友列表
  */
-public class ChattingroomLogFragment extends BaseFragment implements
+public class ChattingroomLogFragment extends MyBaseFragment implements
         View.OnClickListener, ViewPager.OnPageChangeListener {
     private final static int PAPER_MSG = 0;
     private final static int PAPER_FRIENDS = 1;
@@ -45,6 +57,12 @@ public class ChattingroomLogFragment extends BaseFragment implements
     protected void doCreateView(Bundle savedInstanceState) {
         setContentView(R.layout.fragment_chattingroom);
         bindView();
+//        queryFriendList();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         initData();
     }
 
@@ -94,9 +112,62 @@ public class ChattingroomLogFragment extends BaseFragment implements
         list = new ArrayList<>();
         list.add(new MsgListFragment());
         list.add(new FriendsListFragment());
-        adapter = new ChatOrFriendsPaperAdapter(getFragmentManager(), list);
+        adapter = new ChatOrFriendsPaperAdapter(getChildFragmentManager(), list);
         viewPager.setAdapter(adapter);
     }
+
+//    /**
+//     * 获取好友列表
+//     */
+//    private void queryFriendList() {
+//        AsyncHttpClient client = new AsyncHttpClient();
+//        RequestParams params = new RequestParams();
+//        params.put("id", getMyApplication().getUser().getUserId());
+//        client.post(Condtsnts_URL.FRIENDLIST, params, new AsyncHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+//                String result = new String(bytes);
+//                LogUtils.d(TAG, "friends result=");
+//                //解析json
+//                getlistFromJson(result);
+//            }
+//
+//            @Override
+//            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+//                LogUtils.d(TAG, "queryFriendList fail...");
+//            }
+//        });
+//    }
+//
+//    /**
+//     * 解析出好友列表
+//     *
+//     * @param result
+//     */
+//    private void getlistFromJson(String result) {
+//        List<Friend> friends;
+//        if (result != null) {
+//            friends = new ArrayList<Friend>();
+//            try {
+//                JSONObject jsonObject = new JSONObject(result);
+//                JSONArray jsonArray = jsonObject.getJSONArray("datas");
+//                int length = jsonArray.length();
+//                if (length != 0) {
+//                    for (int j = 0; j < length; j++) {
+//                        JSONObject friendObject = jsonArray.getJSONObject(j);
+//                        LogUtils.d(TAG, "friendObject=" + friendObject.toString());
+//                        Friend friend = gson.fromJson(friendObject.toString(), new TypeToken<Friend>() {
+//                        }.getType());
+//                        friends.add(friend);
+//                        //设置为全局变量
+//                        getMyApplication().setFriends(friends);
+//                    }
+//                }
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     @Override
     public void onClick(View v) {

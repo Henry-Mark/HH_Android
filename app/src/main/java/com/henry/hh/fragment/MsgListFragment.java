@@ -67,7 +67,7 @@ public class MsgListFragment extends MyBaseFragment
         mRefreshLayout = getViewById(R.id.refreshLayout);
         initRefresh();
         initList();
-        queryFriendList();
+//        queryFriendList();
 
         roomAdapter.addOnItemClickListener(new OnRecyclerItemClickListener() {
             @Override
@@ -110,6 +110,14 @@ public class MsgListFragment extends MyBaseFragment
         mRefreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getActivity().getApplicationContext(), true));
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        friends = getMyApplication().getFriends();
+        freshList();
+        queryFriendList();
+    }
+
 
     /**
      * 获取好友列表
@@ -142,7 +150,9 @@ public class MsgListFragment extends MyBaseFragment
     private void freshList(){
         for (Friend friend : friends) {
             List<Message> messages = getMsg();
+            //消息条数
             int count = 0;
+            //未读消息条数
             int unReadcount = 0;
             for (Message message : messages) {
                 if (message.getFromUserId() == friend.getFriendUid() || message.getToUserId() == friend.getFriendUid()) {
@@ -174,7 +184,7 @@ public class MsgListFragment extends MyBaseFragment
         List<Message> messages = liteOrm.<Message>query(new QueryBuilder<Message>(Message.class)
                 .appendOrderAscBy("SendTimeMillis")
                 .where("type=? and fromUserId=? or toUserId=?", "chat", user.getUserId(), user.getUserId()));
-        LogUtils.d(TAG, "list>>> " + messages.toString());
+//        LogUtils.d(TAG, "list>>> " + messages.toString());
 
         return messages;
     }
@@ -183,29 +193,12 @@ public class MsgListFragment extends MyBaseFragment
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         queryFriendList();
-
+//        freshList();
+        mRefreshLayout.endRefreshing();
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-//        mMorePageNumber++;
-//        if (mMorePageNumber > 4) {
-//            mRefreshLayout.endLoadingMore();
-//            ToastUtils.showShort(getActivity(),"没有更多数据了");
-//            return false;
-//        }
-//        mEngine.loadMoreData(mMorePageNumber).enqueue(new Callback<List<RefreshModel>>() {
-//            @Override
-//            public void onResponse(Call<List<RefreshModel>> call, Response<List<RefreshModel>> response) {
-//                mRefreshLayout.endLoadingMore();
-//                mAdapter.addMoreData(response.body());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<RefreshModel>> call, Throwable t) {
-//                mRefreshLayout.endLoadingMore();
-//            }
-//        });
 
 
         new Handler().postDelayed(new Runnable() {

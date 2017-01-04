@@ -21,68 +21,69 @@ public class BaseLogFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(TAG,"onCreate...");
+        Log.i(TAG, "onCreate...");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i(TAG,"onCreateView...");
+        Log.i(TAG, "onCreateView...");
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.i(TAG,"onResume...");
+        Log.i(TAG, "onResume...");
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Log.i(TAG,"onAttach...");
+        Log.i(TAG, "onAttach...");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.i(TAG,"onStart...");
+        Log.i(TAG, "onStart...");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.i(TAG,"onStop...");
+        Log.i(TAG, "onStop...");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.i(TAG,"onPause...");
+        Log.i(TAG, "onPause...");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.i(TAG,"onDetach...");
+        Log.i(TAG, "onDetach...");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.i(TAG,"onDestroyView...");
+        Log.i(TAG, "onDestroyView...");
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        Log.i(TAG,"onHiddenChanged...");
+        Log.i(TAG, "onHiddenChanged...hidden>> " + hidden);
 
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(TAG,"onDestroy...");
+        Log.i(TAG, "onDestroy...");
     }
+
 }

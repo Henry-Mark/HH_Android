@@ -71,6 +71,11 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
         chatAdapter.addOnItemClickListener(this);
         chatAdapter.addOnItemLongClickListener(this);
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         setMsgReaded();
     }
 
@@ -124,7 +129,7 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
         List<Message> messages = liteOrm.<Message>query(new QueryBuilder<Message>(Message.class).
                 appendOrderAscBy("SendTimeMillis")
                 .where("type=? and fromUserId=? or toUserId=?", "chat", friend.getFriendUid(), friend.getFriendUid()));
-        LogUtils.d(TAG, "list>>> " + messages.toString());
+//        LogUtils.d(TAG, "list>>> " + messages.toString());
 
         return messages;
     }
@@ -361,7 +366,7 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
         liteOrm.update(new WhereBuilder(Message.class).where("uid=?", uid),
                 new ColumnsValue(new String[]{"state"}, new Object[]{state}),
                 ConflictAlgorithm.Fail);
-        LogUtils.d(TAG, "list=" + liteOrm.query(Message.class));
+//        LogUtils.d(TAG, "list=" + liteOrm.query(Message.class));
 
     }
 
@@ -372,7 +377,7 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
 
         liteOrm.update(new WhereBuilder(Message.class).
                         where("type=? and fromUserId=? or toUserId=?", "chat", friend.getFriendUid(), friend.getFriendUid()),
-                new ColumnsValue(new String[]{"amountUnread"}, new Object[]{0}),
+                new ColumnsValue(new String[]{"isRead"}, new Object[]{1}),
                 ConflictAlgorithm.Fail);
     }
 }

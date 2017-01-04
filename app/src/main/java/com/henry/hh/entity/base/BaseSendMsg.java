@@ -106,7 +106,7 @@ public class BaseSendMsg implements Serializable {
 
     @Override
     public String toString() {
-        String string = "type=" + type + ";uid=" + uid + ";content=" + content + ";getSendTimeMillis=" + getSendTimeMillis();
+        String string = "type=" + type + ";uid=" + uid + ";content=" + content + ";getSendTimeMillis=" + getSendTimeMillis() + ";isRead=" + isRead;
         return string;
     }
 }

@@ -125,8 +125,8 @@ public class FriendsListFragment extends MyBaseFragment
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-
-        return true;
+        mRefreshLayout.endLoadingMore();
+        return false;
 
     }
 
