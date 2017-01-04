@@ -24,8 +24,8 @@ public class MainActivity extends MyBaseActivity implements
         TabHost.OnTabChangeListener, OnDialogClickListener {
     private FragmentTabHost tabHost;
     private String TAG_DIALOG = "promptDialog";
-
-    ChatService chatService;
+    //判断是否正在展示FriendsListFragment
+    private boolean isShowFriendlist = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
