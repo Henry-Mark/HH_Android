@@ -62,6 +62,14 @@ public class Friend implements Serializable {
      * 未读消息条数
      */
     private int amountUnread;
+    /**
+     * 0为没有搜索，１为已搜索
+     */
+    private int isSearched;
+    /**
+     * 搜索时间
+     */
+    private long searchTimeMillis;
 
     @Override
     public String toString() {
@@ -74,6 +82,8 @@ public class Friend implements Serializable {
                 + ",intimacy=" + intimacy
                 + ",amountUnread=" + amountUnread
                 + ",lastContent=" + lastContent
+                + ",isSearched=" + isSearched
+                + ",searchTimeMillis=" + searchTimeMillis
                 + ",label=" + label;
         return string;
     }
@@ -164,5 +174,21 @@ public class Friend implements Serializable {
 
     public int getAmountUnread() {
         return amountUnread;
+    }
+
+    public void setIsSearched(int isSearched) {
+        this.isSearched = isSearched;
+    }
+
+    public int getIsSearched() {
+        return isSearched;
+    }
+
+    public void setSearchTimeMillis(long searchTimeMillis) {
+        this.searchTimeMillis = searchTimeMillis;
+    }
+
+    public long getSearchTimeMillis() {
+        return searchTimeMillis;
     }
 }

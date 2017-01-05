@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -29,6 +28,10 @@ import com.henry.library.utils.ScreenUtils;
 import com.litesuits.orm.db.model.ConflictAlgorithm;
 
 public class MainActivity extends MyBaseActivity implements View.OnClickListener {
+
+    public static final String ADDFRIEND = "addFriend";
+    public static final String FINDFRIEND = "findFriend";
+    public static final String KEY = "key";
 
     //存放Fragment
     private FrameLayout mFragment;
@@ -93,7 +96,9 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
                 break;
             //收索
             case R.id.iv_search:
-                startActivity(SearchActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(KEY,FINDFRIEND);
+                startActivity(SearchActivity.class,bundle);
                 break;
             //切换到消息列表
             case R.id.tv_msg_main:
@@ -107,10 +112,18 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
                 //切换Tab，及Fragment显示
                 switchTab(TabChating);
                 break;
+            //添加图标
             case R.id.iv_add:
                 mPopup.showAsDropDown(mRlTitle, ScreenUtils.getScreenWidth(mContext) - mPopup.getWidth(), 0);
                 break;
+            //添加好友
             case R.id.ll_addfriend:
+                Bundle bundle1 = new Bundle();
+                bundle1.putString(KEY, ADDFRIEND);
+                startActivity(SearchActivity.class, bundle1);
+                mPopup.dismiss();
+                //扫描二维码添加好友
+            case R.id.ll_scan:
                 mPopup.dismiss();
                 break;
             default:
@@ -126,7 +139,8 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         View popView = getLayoutInflater().inflate(R.layout.layout_popupwindow_add, null);
         mAddFreinds = (LinearLayout) popView.findViewById(R.id.ll_addfriend);
         mAddFreinds.setOnClickListener(this);
-//        mScan = (LinearLayout) popView.findViewById(R.id.ll_addfriend);
+        mScan = (LinearLayout) popView.findViewById(R.id.ll_scan);
+        mScan.setOnClickListener(this);
         mPopup = new PopupWindow(popView, FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, true);
         mPopup.setTouchable(true);
         mPopup.setOutsideTouchable(true);

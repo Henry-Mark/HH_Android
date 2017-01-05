@@ -125,6 +125,17 @@ public class MyBaseActivity extends TitleActivity {
      */
     public List<Friend> getFriendFromOrm() {
         List<Friend> friends = liteOrm.query(Friend.class);
+
+        return getFriendInfo(friends);
+    }
+
+    /**
+     * 从User表中读取好友具体信息
+     *
+     * @param friends
+     * @return
+     */
+    protected List<Friend> getFriendInfo(List<Friend> friends) {
         for (Friend friend : friends) {
             List<User> friendinfos = liteOrm.<User>query(new QueryBuilder<User>(User.class)
                     .where("userId=?", friend.getFriendUid()));
@@ -133,7 +144,6 @@ public class MyBaseActivity extends TitleActivity {
         }
         return friends;
     }
-
 
     /**
      * 将好友列表保存到数据库中

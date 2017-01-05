@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.henry.hh.R;
@@ -25,6 +26,7 @@ public class SearchAdapter extends BaseRecyclerAdapter<SearchAdapter.ViewHolder,
         implements View.OnClickListener {
     //点击监听事件
     private OnRecyclerItemClickListener mOnItemClickListener = null;
+    private OnClearClickListener onClearClickListener = null;
     private boolean isSearched = false;
 
     public SearchAdapter(Context context) {
@@ -44,24 +46,29 @@ public class SearchAdapter extends BaseRecyclerAdapter<SearchAdapter.ViewHolder,
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
         Friend friend = datalist.get(position);
+
         //备注名称（账号）
-//        holder.mRemarkName.setText(friend.getRemarkName() + "  (" + friend.getUserId() + ")");
-//        //
-//        if (isSearched) {
-//            holder.mNickName.setVisibility(View.VISIBLE);
-//            holder.mLabel.setVisibility(View.GONE);
-//            holder.mNickName.setText("昵称："
-//                    + (friend.getNickname() == null ? "" : friend.getNickname()));
-//        } else {
-//            holder.mNickName.setVisibility(View.GONE);
-//            holder.mLabel.setVisibility(View.VISIBLE);
-//            if (TextUtils.isEmpty(friend.getLabel()))
-//                holder.mLabel.setVisibility(View.INVISIBLE);
-//            holder.mLabel.setText(friend.getLabel());
-//        }
+        holder.mRemarkName.setText(friend.getRemarkName() + "  (" + friend.getFriendUid() + ")");
+        if (isSearched) {   //搜索结果
+            holder.mNickName.setVisibility(View.VISIBLE);
+            String nickname = friend.getFriendInfo().getNickname();
+            holder.mNickName.setText("昵称："
+                    + (nickname == null ? "" : nickname));
+            holder.mClear.setVisibility(View.GONE);
+        } else {    //历史搜索
+            holder.mNickName.setVisibility(View.GONE);
+            holder.mClear.setVisibility(View.VISIBLE);
+            holder.mClear.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onClearClickListener != null)
+                        onClearClickListener.onClearClick(position,datalist);
+                }
+            });
+        }
 
         holder.itemView.setTag(position);
     }
@@ -93,6 +100,10 @@ public class SearchAdapter extends BaseRecyclerAdapter<SearchAdapter.ViewHolder,
         this.mOnItemClickListener = listener;
     }
 
+    public void addOnClearListener(OnClearClickListener listener) {
+        this.onClearClickListener = listener;
+    }
+
     class ViewHolder extends RecyclerHolder {
         //头像
         public CircleImageView mAvatar;
@@ -100,15 +111,23 @@ public class SearchAdapter extends BaseRecyclerAdapter<SearchAdapter.ViewHolder,
         public TextView mRemarkName;
         //昵称
         public TextView mNickName;
-        //标签
-        public TextView mLabel;
+        //x
+        public ImageView mClear;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mAvatar = getViewById(R.id.civ_avatar);
             mRemarkName = getViewById(R.id.tv_name);
             mNickName = getViewById(R.id.tv_nickname);
-            mLabel = getViewById(R.id.tv_label);
+            mClear = getViewById(R.id.iv_clear);
         }
+    }
+
+    /**
+     * 清除图标监听事件
+     */
+    public interface OnClearClickListener {
+        //点击清除
+        void onClearClick(int position,List data);
     }
 }

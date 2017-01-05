@@ -5,4 +5,7 @@
     <string name="chat_send">发送</string>
     <string name="chat_pic">图片</string>
     <string name="chat_photo">拍照</string>
+
+    <string name="search_hint_add_freind">mm号/账号/手机号</string>
+    <string name="search_hint_find_freind"> </string>
 </resources>

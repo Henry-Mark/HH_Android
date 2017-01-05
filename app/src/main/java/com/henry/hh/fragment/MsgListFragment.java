@@ -28,6 +28,7 @@ import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
@@ -108,7 +109,12 @@ public class MsgListFragment extends MyBaseFragment
     public void onResume() {
         super.onResume();
         friends = getFriendFromOrm();
-        freshList();
+        if (friends != null && friends.size() != 0) {
+            freshList(friends);
+        } else {
+            queryFriendList();
+        }
+
     }
 
     @Override
@@ -135,7 +141,7 @@ public class MsgListFragment extends MyBaseFragment
                 friends = JsonUtils.getFriendlistFromJson(result);
                 //保存到数据库中
                 writeFriendToOrm(friends);
-                freshList();
+                freshList(friends);
                 mRefreshLayout.endRefreshing();
             }
 
@@ -149,7 +155,8 @@ public class MsgListFragment extends MyBaseFragment
     /**
      * 刷新列表
      */
-    private void freshList() {
+    private void freshList(List<Friend> friends) {
+        List<Friend> friendList = new ArrayList<>();
         for (Friend friend : friends) {
             List<Message> messages = getMsg();
             //消息条数
@@ -166,12 +173,12 @@ public class MsgListFragment extends MyBaseFragment
                     }
                 }
             }
-            if (count == 0) {
-                friends.remove(friend);
+            if (count != 0) {
+                friendList.add(friend);
             }
             friend.setAmountUnread(unReadcount);
         }
-        msgAdapter.refresh(friends);
+        msgAdapter.refresh(friendList);
     }
 
 
