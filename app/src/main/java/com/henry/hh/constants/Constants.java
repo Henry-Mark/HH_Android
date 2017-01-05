@@ -26,7 +26,7 @@ public class Constants {
     /**
      * 星座
      */
-    public class Zodiac{
+    public class Zodiac {
         public static final String ARIES = "白羊座";
         public static final String AQUARIUS = "水瓶座";
         public static final String TAURUS = "金牛座";
@@ -39,5 +39,21 @@ public class Constants {
         public static final String SAGITTARIUS = "射手座";
         public static final String CAPRICORN = "摩羯座";
         public static final String PISCES = "双鱼座";
+    }
+
+    /**
+     * Tab索引
+     */
+    public class TabIndex {
+        /* 消息列表 */
+        public static final int MESSAGE = 10;
+        /* 朋友列表 */
+        public static final int FRIEND = 11;
+        /* 生活圈 */
+        public static final int LIVINGCIRCLE = 12;
+        /* 探索园 */
+        public static final int EXPLORATION = 13;
+        /* 我的家 */
+        public static final int MYHOME = 14;
     }
 }

@@ -4,21 +4,171 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!--标题栏-->
+    <RelativeLayout
+        android:id="@+id/titlelayout"
+        style="@style/TitleBarLayout">
+
+        <LinearLayout
+            android:id="@+id/layout_title_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:id="@+id/tv_msg_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_choose_title_chat_pressed"
+                android:gravity="center"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="3dp"
+                android:text="@string/main_title_msg"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_friends_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_choose_title_friends_normal"
+                android:gravity="center"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="3dp"
+                android:text="@string/main_title_friends"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@android:drawable/ic_menu_search" />
+    </RelativeLayout>
+    <!--存放Fragment容器-->
     <FrameLayout
-        android:id="@+id/contentLayout"
+        android:id="@+id/main_fragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"></FrameLayout>
-
-    <android.support.v4.app.FragmentTabHost
-        android:id="@android:id/tabhost"
+    <!--底部导航栏-->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#F6F6F6">
+        android:layout_height="wrap_content">
+        <!--聊天室-->
+        <RelativeLayout
+            android:id="@+id/rl_footer_chatting"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp">
 
-        <FrameLayout
-            android:id="@android:id/tabcontent"
-            android:layout_width="0dp"
-            android:layout_height="0dp" />
-    </android.support.v4.app.FragmentTabHost>
+            <ImageView
+                android:id="@+id/img_footer_chatting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/title_footer_chatting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img_footer_chatting"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="@string/tab_chattingroom"
+                android:textColor="@color/colorTabTextNormal" />
+        </RelativeLayout>
+        <!--生活圈-->
+        <RelativeLayout
+            android:id="@+id/rl_footer_livingcicle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/img_footer_livingcicle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/title_footer_livingcicle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img_footer_livingcicle"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="@string/tab_livingcircle"
+                android:textColor="@color/colorTabTextNormal" />
+        </RelativeLayout>
+        <!--探索园-->
+        <RelativeLayout
+            android:id="@+id/rl_footer_explorationpark"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/img_footer_explorationpark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/title_footer_explorationpark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img_footer_explorationpark"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="@string/tab_explorations"
+                android:textColor="@color/colorTabTextNormal" />
+        </RelativeLayout>
+        <!--我的家-->
+        <RelativeLayout
+            android:id="@+id/rl_footer_myhome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/img_footer_myhome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/title_footer_myhome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img_footer_myhome"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="@string/tab_myhome"
+                android:textColor="@color/colorTabTextNormal" />
+        </RelativeLayout>
+    </LinearLayout>
+
 </LinearLayout>

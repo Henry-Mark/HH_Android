@@ -75,15 +75,16 @@ public class FriendsListFragment extends MyBaseFragment
     public void onResume() {
         super.onResume();
         friends = getMyApplication().getFriends();
+        LogUtils.d(TAG, "friends=>" + friends.toString());
         friendAdapter.refresh(friends);
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        LogUtils.i(TAG, "onHiddenChanged>> hidden=" + hidden);
         if (!hidden) {
             friends = getMyApplication().getFriends();
+            LogUtils.d(TAG, "friends=>" + friends.toString());
             friendAdapter.refresh(friends);
         }
     }

@@ -42,7 +42,6 @@ public class Test1Activity extends TitleActivity {
 
 //        setOrm();
 
-//        startActivity(Test2Activity.class);
         Intent intent = new Intent(this, ChatService.class);
         startService(intent);// 启动服务
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);//绑定目标Service

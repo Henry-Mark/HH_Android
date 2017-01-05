@@ -113,8 +113,8 @@ public class MsgListFragment extends MyBaseFragment
     @Override
     public void onResume() {
         super.onResume();
-        friends = getMyApplication().getFriends();
-        freshList();
+//        friends = getMyApplication().getFriends();
+//        freshList();
         queryFriendList();
     }
 
@@ -133,8 +133,9 @@ public class MsgListFragment extends MyBaseFragment
                 LogUtils.d(TAG, "friends result=");
                 //解析json
                 getlistFromJson(result);
-                mRefreshLayout.endRefreshing();
+
                 freshList();
+                mRefreshLayout.endRefreshing();
             }
 
             @Override
@@ -147,7 +148,7 @@ public class MsgListFragment extends MyBaseFragment
     /**
      * 刷新列表
      */
-    private void freshList(){
+    private void freshList() {
         for (Friend friend : friends) {
             List<Message> messages = getMsg();
             //消息条数
@@ -159,7 +160,7 @@ public class MsgListFragment extends MyBaseFragment
                     friend.setLastContent(message.getContent());
                     friend.setLastChatTimeMillis(message.getSendTimeMillis());
                     count++;
-                    if (message.getIsRead()==0){
+                    if (message.getIsRead() == 0) {
                         unReadcount++;
                     }
                 }
@@ -177,6 +178,7 @@ public class MsgListFragment extends MyBaseFragment
 
     /**
      * 获取数据库中的消息列表
+     *
      * @return
      */
     private List<Message> getMsg() {
@@ -228,13 +230,14 @@ public class MsgListFragment extends MyBaseFragment
                 if (length != 0) {
                     for (int j = 0; j < length; j++) {
                         JSONObject friendObject = jsonArray.getJSONObject(j);
-                        LogUtils.d(TAG, "friendObject=" + friendObject.toString());
+//                        LogUtils.d(TAG, "friendObject=" + friendObject.toString());
                         Friend friend = gson.fromJson(friendObject.toString(), new TypeToken<Friend>() {
                         }.getType());
                         friends.add(friend);
-                        //设置为全局变量
-                        getMyApplication().setFriends(friends);
                     }
+                    LogUtils.d(TAG, "friends>>" + friends.toString());
+                    //设置为全局变量
+                    getMyApplication().setFriends(friends);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

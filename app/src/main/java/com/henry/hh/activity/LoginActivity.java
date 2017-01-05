@@ -324,6 +324,7 @@ public class LoginActivity extends BaseActivity
                     //设置为全局变量
                     ((MyApplication) getApplication()).setUser(user);
                     startActivity(MainActivity.class);
+                    finish();
                 } else {
                     showErrlog(user.getMessage());
                 }
