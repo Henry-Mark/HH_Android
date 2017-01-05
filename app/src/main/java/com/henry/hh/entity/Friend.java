@@ -2,6 +2,11 @@ package com.henry.hh.entity;
 
 import android.os.Parcelable;
 
+import com.litesuits.orm.db.annotation.Ignore;
+import com.litesuits.orm.db.annotation.PrimaryKey;
+import com.litesuits.orm.db.annotation.Table;
+import com.litesuits.orm.db.enums.AssignType;
+
 import java.io.Serializable;
 
 /**
@@ -10,6 +15,7 @@ import java.io.Serializable;
  * Email: heneymark@gmail.com
  * Description: 好友的实体类
  */
+@Table("friend")
 public class Friend implements Serializable {
     /**
      * 用户Id
@@ -18,6 +24,7 @@ public class Friend implements Serializable {
     /**
      * 好友Id
      */
+    @PrimaryKey(AssignType.BY_MYSELF)
     private int friendUid;
     /**
      * 成为好友时间
@@ -40,6 +47,7 @@ public class Friend implements Serializable {
     /**
      * 好友信息
      */
+    @Ignore
     private User friendInfo = new User();
     /**
      * 最后聊天时间

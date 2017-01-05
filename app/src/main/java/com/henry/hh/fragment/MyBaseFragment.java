@@ -4,8 +4,12 @@ import android.os.Bundle;
 
 import com.google.gson.Gson;
 import com.henry.hh.activity.MyApplication;
+import com.henry.hh.activity.MyBaseActivity;
+import com.henry.hh.entity.Friend;
 import com.henry.library.fragment.BaseFragment;
 import com.litesuits.orm.LiteOrm;
+
+import java.util.List;
 
 /**
  * Date: 2016/12/14. 11:49
@@ -43,5 +47,23 @@ public class MyBaseFragment extends BaseFragment {
         return (MyApplication) getActivity().getApplication();
     }
 
+    /**
+     * 从本地数据库中查询好友列表
+     *
+     * @return
+     */
+    protected List<Friend> getFriendFromOrm() {
+
+        return ((MyBaseActivity) getActivity()).getFriendFromOrm();
+    }
+
+    /**
+     * 将好友列表保存到数据库中
+     *
+     * @param friends
+     */
+    protected void writeFriendToOrm(List<Friend> friends) {
+        ((MyBaseActivity) getActivity()).writeFriendToOrm(friends);
+    }
 
 }

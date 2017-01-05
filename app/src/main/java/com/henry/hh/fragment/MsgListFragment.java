@@ -18,6 +18,7 @@ import com.henry.hh.entity.Friend;
 import com.henry.hh.entity.Message;
 import com.henry.hh.entity.User;
 import com.henry.hh.interfaces.OnRecyclerItemClickListener;
+import com.henry.hh.utils.JsonUtils;
 import com.henry.library.View.DividerItemDecoration;
 import com.henry.library.utils.LogUtils;
 import com.henry.library.utils.ToastUtils;
@@ -45,7 +46,7 @@ public class MsgListFragment extends MyBaseFragment
         implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
     private RecyclerView recyclerView;
-    private MsgAdapter roomAdapter;
+    private MsgAdapter msgAdapter;
     private LinearLayoutManager mLayoutManager;
 
     private BGARefreshLayout mRefreshLayout;
@@ -67,9 +68,7 @@ public class MsgListFragment extends MyBaseFragment
         mRefreshLayout = getViewById(R.id.refreshLayout);
         initRefresh();
         initList();
-//        queryFriendList();
-
-        roomAdapter.addOnItemClickListener(new OnRecyclerItemClickListener() {
+        msgAdapter.addOnItemClickListener(new OnRecyclerItemClickListener() {
             @Override
             public void onItemClick(View view, List data, int position) {
                 Intent intent = new Intent(getActivity(), ChatActivity.class);
@@ -96,9 +95,9 @@ public class MsgListFragment extends MyBaseFragment
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
         //创建并设置Adapter
-        roomAdapter = new MsgAdapter(getActivity());
+        msgAdapter = new MsgAdapter(getActivity());
 
-        recyclerView.setAdapter(roomAdapter);
+        recyclerView.setAdapter(msgAdapter);
     }
 
     /**
@@ -113,11 +112,17 @@ public class MsgListFragment extends MyBaseFragment
     @Override
     public void onResume() {
         super.onResume();
-//        friends = getMyApplication().getFriends();
-//        freshList();
-        queryFriendList();
+        friends = getFriendFromOrm();
+        freshList();
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+
+        }
+    }
 
     /**
      * 获取好友列表
@@ -132,8 +137,10 @@ public class MsgListFragment extends MyBaseFragment
                 String result = new String(bytes);
                 LogUtils.d(TAG, "friends result=");
                 //解析json
-                getlistFromJson(result);
-
+//                getlistFromJson(result);
+                friends = JsonUtils.getFriendlistFromJson(result);
+                //保存到数据库中
+                writeFriendToOrm(friends);
                 freshList();
                 mRefreshLayout.endRefreshing();
             }
@@ -170,9 +177,7 @@ public class MsgListFragment extends MyBaseFragment
             }
             friend.setAmountUnread(unReadcount);
         }
-
-
-        roomAdapter.refresh(friends);
+        msgAdapter.refresh(friends);
     }
 
 
@@ -195,8 +200,7 @@ public class MsgListFragment extends MyBaseFragment
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         queryFriendList();
-//        freshList();
-        mRefreshLayout.endRefreshing();
+//        mRefreshLayout.endRefreshing();
     }
 
     @Override
@@ -206,8 +210,7 @@ public class MsgListFragment extends MyBaseFragment
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-//                roomAdapter.refresh(getDatas(10));
-//                queryFriendList();
+
                 ToastUtils.showShort(getActivity(), "没有最新数据了");
                 mRefreshLayout.endLoadingMore();
             }
@@ -215,33 +218,4 @@ public class MsgListFragment extends MyBaseFragment
         return true;
     }
 
-    /**
-     * 解析出好友列表
-     *
-     * @param result
-     */
-    private void getlistFromJson(String result) {
-        if (result != null) {
-            friends = new ArrayList<Friend>();
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray jsonArray = jsonObject.getJSONArray("datas");
-                int length = jsonArray.length();
-                if (length != 0) {
-                    for (int j = 0; j < length; j++) {
-                        JSONObject friendObject = jsonArray.getJSONObject(j);
-//                        LogUtils.d(TAG, "friendObject=" + friendObject.toString());
-                        Friend friend = gson.fromJson(friendObject.toString(), new TypeToken<Friend>() {
-                        }.getType());
-                        friends.add(friend);
-                    }
-                    LogUtils.d(TAG, "friends>>" + friends.toString());
-                    //设置为全局变量
-                    getMyApplication().setFriends(friends);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

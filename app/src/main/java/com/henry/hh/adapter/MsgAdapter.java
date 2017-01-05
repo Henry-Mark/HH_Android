@@ -2,6 +2,7 @@ package com.henry.hh.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -48,7 +49,21 @@ public class MsgAdapter
     public void onBindViewHolder(ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         Friend friend = datalist.get(position);
-        holder.mUser.setText(friend.getFriendUid() + "");
+        /**
+         * 设置名称：
+         * 首选备注名
+         * 若为null，则显示昵称
+         * 若还是null，则显示账号
+         */
+        String name;
+        if (TextUtils.isEmpty(friend.getRemarkName())) {
+            name = TextUtils.isEmpty(friend.getFriendInfo().getNickname())
+                    ? String.valueOf(friend.getFriendInfo().getAccount()) : friend.getFriendInfo().getNickname();
+        } else {
+            name = friend.getRemarkName();
+        }
+        holder.mUser.setText(name);
+
         holder.mContent.setText(friend.getLastContent());
         holder.mTime.setText(TimeUtils.getRelativeTime(context, friend.getLastChatTimeMillis()));
 

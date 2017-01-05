@@ -3,8 +3,6 @@ package com.henry.hh.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,13 +14,13 @@ import com.henry.hh.activity.ChatActivity;
 import com.henry.hh.adapter.FriendAdapter;
 import com.henry.hh.constants.Condtsnts_URL;
 import com.henry.hh.entity.Friend;
-import com.henry.hh.entity.RequestMsg;
+import com.henry.hh.entity.Message;
 import com.henry.hh.entity.User;
 import com.henry.hh.interfaces.OnRecyclerItemClickListener;
+import com.henry.hh.utils.JsonUtils;
 import com.henry.library.View.DividerItemDecoration;
-import com.henry.library.fragment.BaseFragment;
 import com.henry.library.utils.LogUtils;
-import com.henry.library.utils.ToastUtils;
+import com.litesuits.orm.db.assit.QueryBuilder;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -32,11 +30,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -74,7 +69,8 @@ public class FriendsListFragment extends MyBaseFragment
     @Override
     public void onResume() {
         super.onResume();
-        friends = getMyApplication().getFriends();
+//        friends = getMyApplication().getFriends();
+        friends = getFriendFromOrm();
         LogUtils.d(TAG, "friends=>" + friends.toString());
         friendAdapter.refresh(friends);
     }
@@ -82,12 +78,10 @@ public class FriendsListFragment extends MyBaseFragment
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!hidden) {
-            friends = getMyApplication().getFriends();
-            LogUtils.d(TAG, "friends=>" + friends.toString());
-            friendAdapter.refresh(friends);
-        }
+
     }
+
+
 
     /**
      * 初始化列表
@@ -153,7 +147,7 @@ public class FriendsListFragment extends MyBaseFragment
                 String result = new String(bytes);
                 LogUtils.d(TAG, "friends result=");
                 //解析json
-                getlistFromJson(result);
+                friends=JsonUtils.getFriendlistFromJson(result);
                 mRefreshLayout.endRefreshing();
                 friendAdapter.refresh(friends);
             }
@@ -165,32 +159,4 @@ public class FriendsListFragment extends MyBaseFragment
         });
     }
 
-    /**
-     * 解析出好友列表
-     *
-     * @param result
-     */
-    private void getlistFromJson(String result) {
-        if (result != null) {
-            friends = new ArrayList<Friend>();
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray jsonArray = jsonObject.getJSONArray("datas");
-                int length = jsonArray.length();
-                if (length != 0) {
-                    for (int j = 0; j < length; j++) {
-                        JSONObject friendObject = jsonArray.getJSONObject(j);
-                        LogUtils.d(TAG, "friendObject=" + friendObject.toString());
-                        Friend friend = gson.fromJson(friendObject.toString(), new TypeToken<Friend>() {
-                        }.getType());
-                        friends.add(friend);
-                        //设置为全局变量
-                        getMyApplication().setFriends(friends);
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

@@ -8,12 +8,16 @@ import android.os.Bundle;
 import android.os.IBinder;
 
 import com.henry.hh.broadcastreceiver.ChattingMsgBroadcastReceiver;
+import com.henry.hh.entity.Friend;
 import com.henry.hh.entity.Message;
 import com.henry.hh.entity.User;
 import com.henry.hh.service.ChatService;
 import com.henry.library.activity.TitleActivity;
 import com.henry.library.utils.LogUtils;
 import com.litesuits.orm.LiteOrm;
+import com.litesuits.orm.db.assit.QueryBuilder;
+
+import java.util.List;
 
 /**
  * Date: 2016/11/30. 16:28
@@ -112,6 +116,37 @@ public class MyBaseActivity extends TitleActivity {
      */
     protected void onReceive(Message message) {
         LogUtils.d(TAG, "onReceive....");
+    }
+
+    /**
+     * 从本地数据库中查询好友列表
+     *
+     * @return
+     */
+    public List<Friend> getFriendFromOrm() {
+        List<Friend> friends = liteOrm.query(Friend.class);
+        for (Friend friend : friends) {
+            List<User> friendinfos = liteOrm.<User>query(new QueryBuilder<User>(User.class)
+                    .where("userId=?", friend.getFriendUid()));
+            if (friendinfos != null && friendinfos.size() != 0)
+                friend.setFriendInfo(friendinfos.get(0));
+        }
+        return friends;
+    }
+
+
+    /**
+     * 将好友列表保存到数据库中
+     *
+     * @param friends
+     */
+    public void writeFriendToOrm(List<Friend> friends) {
+        liteOrm.save(friends);
+//        LogUtils.d(TAG, "friend orm>>" + liteOrm.query(Friend.class));
+        for (Friend friend : friends) {
+            liteOrm.save(friend.getFriendInfo());
+        }
+//        LogUtils.d(TAG, "friend info orm>>" + liteOrm.query(User.class));
     }
 
 }
