@@ -1,14 +1,19 @@
 package com.henry.hh.activity;
 
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,6 +25,7 @@ import com.henry.hh.fragment.FriendsListFragment;
 import com.henry.hh.fragment.LivingCircleLogFragment;
 import com.henry.hh.fragment.MsgListFragment;
 import com.henry.hh.fragment.MyHomeLogFragment;
+import com.henry.library.utils.ScreenUtils;
 import com.litesuits.orm.db.model.ConflictAlgorithm;
 
 public class MainActivity extends MyBaseActivity implements View.OnClickListener {
@@ -36,12 +42,20 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
     private RelativeLayout mRlTitle;
     //收索图标
     private ImageView mSearch;
+    //添加图标
+    private ImageView mAdd;
     //对应到消息列表、朋友列表布局
     private TextView mMsg, mFriend;
+    //加好友
+    private LinearLayout mAddFreinds;
+    //扫一扫
+    private LinearLayout mScan;
     //当前索引
     private int TabIndex = -1;
     //聊天室索引
     private int TabChating = Constants.TabIndex.MESSAGE;
+
+    private PopupWindow mPopup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +63,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         setContentView(R.layout.activity_main);
         hideTitle();
         initView();
+        initPop();
         switchTab(TabChating);
     }
 
@@ -92,10 +107,30 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
                 //切换Tab，及Fragment显示
                 switchTab(TabChating);
                 break;
+            case R.id.iv_add:
+                mPopup.showAsDropDown(mRlTitle, ScreenUtils.getScreenWidth(mContext) - mPopup.getWidth(), 0);
+                break;
+            case R.id.ll_addfriend:
+                mPopup.dismiss();
+                break;
             default:
                 break;
         }
         super.onClick(v);
+    }
+
+    /**
+     * 初始化PopupWindow
+     */
+    private void initPop() {
+        View popView = getLayoutInflater().inflate(R.layout.layout_popupwindow_add, null);
+        mAddFreinds = (LinearLayout) popView.findViewById(R.id.ll_addfriend);
+        mAddFreinds.setOnClickListener(this);
+//        mScan = (LinearLayout) popView.findViewById(R.id.ll_addfriend);
+        mPopup = new PopupWindow(popView, FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, true);
+        mPopup.setTouchable(true);
+        mPopup.setOutsideTouchable(true);
+        mPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), (Bitmap) null));
     }
 
     /**
@@ -126,6 +161,8 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         mFriend.setOnClickListener(this);
         mMsg = getViewById(R.id.tv_msg_main);
         mMsg.setOnClickListener(this);
+        mAdd = getViewById(R.id.iv_add);
+        mAdd.setOnClickListener(this);
     }
 
     /**

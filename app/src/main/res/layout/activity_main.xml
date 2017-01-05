@@ -43,12 +43,21 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/iv_search"
+            android:id="@+id/iv_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
+            android:src="@android:drawable/ic_input_add" />
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/iv_add"
             android:src="@android:drawable/ic_menu_search" />
     </RelativeLayout>
     <!--存放Fragment容器-->

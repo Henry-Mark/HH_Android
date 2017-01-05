@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.google.gson.reflect.TypeToken;
 import com.henry.hh.R;
 import com.henry.hh.activity.ChatActivity;
 import com.henry.hh.adapter.MsgAdapter;
@@ -28,11 +27,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
@@ -137,7 +132,6 @@ public class MsgListFragment extends MyBaseFragment
                 String result = new String(bytes);
                 LogUtils.d(TAG, "friends result=");
                 //解析json
-//                getlistFromJson(result);
                 friends = JsonUtils.getFriendlistFromJson(result);
                 //保存到数据库中
                 writeFriendToOrm(friends);
