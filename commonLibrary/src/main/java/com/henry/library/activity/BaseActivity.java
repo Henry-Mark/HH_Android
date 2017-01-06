@@ -1,5 +1,6 @@
 package com.henry.library.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,10 +22,32 @@ public class BaseActivity extends BaseLogActivity {
 
     protected Gson gson = new Gson();
 
+    protected ProgressDialog progressDialog = null;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+
+    /**
+     * 显示加载对话框
+     *
+     * @param resId
+     */
+    protected void showProgressDialog(int resId) {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getResources().getString(resId));
+        progressDialog.show();
+    }
+
+    /**
+     * 取消加载对话框
+     */
+    protected void cancelProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 
     /**

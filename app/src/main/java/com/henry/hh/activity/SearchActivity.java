@@ -42,6 +42,14 @@ public class SearchActivity extends MyBaseActivity
     private RecyclerView mRecyclerView;
     private SearchAdapter searchAdapter;
     private LinearLayoutManager mLayoutManager;
+    //搜索列表所在布局
+    private LinearLayout mLLSearchList;
+    //搜索内容所在布局
+    private LinearLayout mLLSearchContent;
+    //搜索内容
+    private TextView mSearchContent;
+    //用户不存在布局
+    private LinearLayout mNotExist;
     //是否为添加好友
     private boolean isAddFriend = false;
 
@@ -51,8 +59,8 @@ public class SearchActivity extends MyBaseActivity
         setContentView(R.layout.activity_search);
 
         bindView();
-        initList();
         initData();
+        initList();
     }
 
     /**
@@ -65,9 +73,11 @@ public class SearchActivity extends MyBaseActivity
         if (MainActivity.ADDFRIEND.equals(value)) {
             isAddFriend = true;
             mSearch.setHint(R.string.search_hint_add_freind);
+            mLLSearchList.setVisibility(View.GONE);
         } else {
             isAddFriend = false;
             mSearch.setHint(R.string.search_hint_find_freind);
+            mLLSearchList.setVisibility(View.VISIBLE);
         }
     }
 
@@ -84,11 +94,16 @@ public class SearchActivity extends MyBaseActivity
         mClear = getViewById(R.id.iv_clear);
         mListTitle = getViewById(R.id.tv_list_title);
         mRecyclerView = getViewById(R.id.recycler_search);
+        mLLSearchList = getViewById(R.id.ll_search_list);
+        mLLSearchContent = getViewById(R.id.ll_search_content);
+        mSearchContent = getViewById(R.id.tv_content_search);
+        mNotExist = getViewById(R.id.ll_not_exist);
         mSearchImg.setOnClickListener(this);
         mBack.setOnClickListener(this);
         mSearch.addTextChangedListener(this);
         mSearch.setOnKeyListener(this);
         mClear.setOnClickListener(this);
+        mLLSearchContent.setOnClickListener(this);
         ControlsUtils.setWidth(mLayoutSearch, ScreenUtils.getScreenWidth(mContext) * 7 / 10);
     }
 
@@ -156,10 +171,18 @@ public class SearchActivity extends MyBaseActivity
             case R.id.iv_clear:
                 mSearch.setText("");
                 break;
+            //搜索内容，点击效果，新的好友信息
+            case R.id.ll_search_content:
+                showToast(mSearch.getText().toString());
+                mNotExist.setVisibility(View.VISIBLE);
+                mLLSearchContent.setVisibility(View.GONE);
+               showProgressDialog(R.string.looking_for_contacts);
+                break;
             default:
                 break;
         }
     }
+
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -168,12 +191,22 @@ public class SearchActivity extends MyBaseActivity
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (TextUtils.isEmpty(s)) {
-            mClear.setVisibility(View.GONE);
-            searchHistory();
+        if (isAddFriend) {
+            mNotExist.setVisibility(View.GONE);
+            if (TextUtils.isEmpty(s)) {
+                mLLSearchContent.setVisibility(View.GONE);
+            } else {
+                mLLSearchContent.setVisibility(View.VISIBLE);
+                mSearchContent.setText(s);
+            }
         } else {
-            mClear.setVisibility(View.VISIBLE);
-            search(s);
+            if (TextUtils.isEmpty(s)) {
+                mClear.setVisibility(View.GONE);
+                searchHistory();
+            } else {
+                mClear.setVisibility(View.VISIBLE);
+                search(s);
+            }
         }
     }
 

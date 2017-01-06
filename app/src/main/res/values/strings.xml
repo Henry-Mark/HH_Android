@@ -19,5 +19,8 @@
 
     <string name="add_friend">加好友</string>
     <string name="scan">扫一扫</string>
+    <string name="search_with_colon">搜索：</string>
+    <string name="user_donot_exist">该用户不存在</string>
+    <string name="looking_for_contacts">正在查找联系人...</string>
 
 </resources>
