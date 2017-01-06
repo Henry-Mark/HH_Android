@@ -41,7 +41,6 @@ public class BaseActivity extends BaseLogActivity {
         progressDialog.show();
     }
 
-
     /**
      * 取消加载对话框
      */
