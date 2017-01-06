@@ -29,7 +29,7 @@ public class User extends BaseMsgBean implements Serializable {
     @PrimaryKey(AssignType.BY_MYSELF)
     private int userId;
     /**
-     * 账号
+     * 账号,长度小于10
      */
     private String account;
     /**

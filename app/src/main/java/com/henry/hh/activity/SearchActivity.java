@@ -14,9 +14,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.reflect.TypeToken;
 import com.henry.hh.R;
 import com.henry.hh.adapter.SearchAdapter;
+import com.henry.hh.constants.Condtsnts_URL;
 import com.henry.hh.entity.Friend;
+import com.henry.hh.entity.RequestMsg;
+import com.henry.hh.entity.User;
 import com.henry.hh.fragment.FriendsListFragment;
 import com.henry.hh.interfaces.OnRecyclerItemClickListener;
 import com.henry.library.View.DividerItemDecoration;
@@ -25,6 +29,11 @@ import com.henry.library.utils.LogUtils;
 import com.henry.library.utils.ScreenUtils;
 import com.henry.library.utils.ToastUtils;
 import com.litesuits.orm.db.assit.QueryBuilder;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +41,8 @@ import java.util.List;
 public class SearchActivity extends MyBaseActivity
         implements View.OnClickListener, TextWatcher, View.OnKeyListener,
         OnRecyclerItemClickListener, SearchAdapter.OnClearClickListener {
+
+    public static final String INFO = "info";
 
     private ImageView mBack;
     private EditText mSearch;
@@ -159,6 +170,47 @@ public class SearchActivity extends MyBaseActivity
     }
 
 
+    /**
+     * 查看用户
+     *
+     * @param content
+     */
+    private void queryUser(String content) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("Msg", content);
+        client.get(Condtsnts_URL.QUERY_USER, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                String result = new String(bytes);
+                LogUtils.d(TAG, "QUERY_UERY result>>" + result);
+                RequestMsg msg = gson.fromJson(result, new TypeToken<RequestMsg<User>>() {
+                }.getType());
+                if (msg.getCode() == 1) {  //用户存在
+                    User user = (User) msg.getData();
+                    cancelProgressDialog();
+                    //跳转到查看详情页面
+                    Intent intent = new Intent(mContext, UserInfoActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(INFO, user);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else if (msg.getCode() == 2) {    //用户不存在
+                    mNotExist.setVisibility(View.VISIBLE);
+                    mLLSearchContent.setVisibility(View.GONE);
+                    cancelProgressDialog();
+                } else {
+                    LogUtils.e(TAG, "query user > " + msg.getData());
+                }
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                LogUtils.e(TAG, "fail...." + bytes);
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -173,10 +225,8 @@ public class SearchActivity extends MyBaseActivity
                 break;
             //搜索内容，点击效果，新的好友信息
             case R.id.ll_search_content:
-                showToast(mSearch.getText().toString());
-                mNotExist.setVisibility(View.VISIBLE);
-                mLLSearchContent.setVisibility(View.GONE);
-               showProgressDialog(R.string.looking_for_contacts);
+                showProgressDialog(R.string.looking_for_contacts);
+                queryUser(mSearch.getText().toString());
                 break;
             default:
                 break;

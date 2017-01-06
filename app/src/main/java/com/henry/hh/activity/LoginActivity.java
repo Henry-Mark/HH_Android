@@ -220,6 +220,7 @@ public class LoginActivity extends BaseActivity
      * 执行登录事件
      */
     private void dologin() {
+        showProgressDialog(R.string.loginning);
         if (checkLoginCondition()) {
             User user = new User();
             user.setAccount(mAccount.getText().toString());
@@ -323,6 +324,7 @@ public class LoginActivity extends BaseActivity
                 if (msg.getCode() == 1) {
                     //设置为全局变量
                     ((MyApplication) getApplication()).setUser(user);
+                    cancelProgressDialog();
                     startActivity(MainActivity.class);
                     finish();
                 } else {

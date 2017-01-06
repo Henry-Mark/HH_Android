@@ -50,6 +50,12 @@ public class BaseActivity extends BaseLogActivity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cancelProgressDialog();
+    }
+
     /**
      * 查找View
      *

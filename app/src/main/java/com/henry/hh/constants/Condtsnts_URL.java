@@ -19,5 +19,7 @@ public class Condtsnts_URL {
     public static final String LOGIN = HTTP_HEAD + "Login";
     //好友列表
     public static final String FRIENDLIST = HTTP_HEAD + "friendlist";
+    //查找好友
+    public static final String QUERY_USER = HTTP_HEAD + "QueryUser";
 
 }
