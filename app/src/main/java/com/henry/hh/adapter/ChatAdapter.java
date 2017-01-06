@@ -93,7 +93,7 @@ public class ChatAdapter extends BaseRecyclerAdapter<ChatAdapter.ViewHolder, Mes
         }
 
 
-        if (getItemViewType(position) == 0)
+        if (getItemViewType(position) != 0)
             holder.mLayoutContent.setBackgroundResource(R.drawable.chat_from_bg_selector);
         else
             holder.mLayoutContent.setBackgroundResource(R.drawable.chat_to_bg_selector);

@@ -108,20 +108,27 @@ public class MsgListFragment extends MyBaseFragment
     @Override
     public void onResume() {
         super.onResume();
-        friends = getFriendFromOrm();
-        if (friends != null && friends.size() != 0) {
-            freshList(friends);
-        } else {
-            queryFriendList();
-        }
-
+        initData();
     }
+
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
+            initData();
+        }
+    }
 
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        friends = getFriendFromOrm();
+        if (friends != null && friends.size() != 0) {
+            freshList(friends);
+        } else {
+            queryFriendList();
         }
     }
 
@@ -201,21 +208,12 @@ public class MsgListFragment extends MyBaseFragment
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         queryFriendList();
-//        mRefreshLayout.endRefreshing();
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                ToastUtils.showShort(getActivity(), "没有最新数据了");
-                mRefreshLayout.endLoadingMore();
-            }
-        }, 3000);
+        ToastUtils.showShort(getActivity(), "没有最新数据了");
+        mRefreshLayout.endLoadingMore();
         return true;
     }
 

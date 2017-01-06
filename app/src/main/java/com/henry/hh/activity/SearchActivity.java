@@ -120,6 +120,7 @@ public class SearchActivity extends MyBaseActivity
                 .appendOrderDescBy("searchTimeMillis")
                 .where("isSearched=?", 1));
         friends = getFriendInfo(friends);
+        LogUtils.d(TAG, "searchHistory friend>>>" + friends);
         searchAdapter.setSearched(false);
         searchAdapter.refresh(friends);
     }
