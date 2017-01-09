@@ -23,6 +23,7 @@
     <string name="user_donot_exist">该用户不存在</string>
     <string name="looking_for_contacts">正在查找联系人...</string>
     <string name="adding_friend">正在提交添加申请...</string>
+    <string name="string_has_already_been_friend">该用户已经是您的好友，请不要重复添加</string>
     <string name="loginning">正在登录...</string>
     <string name="apply_adding_success">已申请，等待对方同意</string>
     <string name="region">地区</string>

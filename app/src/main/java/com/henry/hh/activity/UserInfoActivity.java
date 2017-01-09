@@ -6,11 +6,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.henry.hh.R;
+import com.henry.hh.entity.Friend;
 import com.henry.hh.entity.Message;
 import com.henry.hh.entity.User;
 import com.henry.hh.entity.base.BaseSendMsg;
 import com.henry.library.View.CircleImageView;
 import com.henry.library.utils.LogUtils;
+
+import java.util.List;
 
 public class UserInfoActivity extends MyBaseActivity {
 
@@ -62,6 +65,24 @@ public class UserInfoActivity extends MyBaseActivity {
         }
     }
 
+    /**
+     * 判断是否已经是好友
+     *
+     * @param userId
+     * @return
+     */
+    private boolean isFriendAlready(int userId) {
+        boolean isFriend = false;
+        List<Friend> friends = getFriendFromOrm();
+        for (Friend friend : friends) {
+            if (friend.getFriendUid() == userId) {
+                isFriend = true;
+                break;
+            }
+        }
+        return isFriend;
+    }
+
     @Override
     protected void onBackward(View backwardView) {
         super.onBackward(backwardView);
@@ -72,11 +93,14 @@ public class UserInfoActivity extends MyBaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_add:
+                if (isFriendAlready(user.getUserId())) {
+                    showToast(R.string.string_has_already_been_friend);
+                }else {
                 BaseSendMsg baseSendMsg =
                         new BaseSendMsg(BaseSendMsg.ADDFRIEND, String.valueOf(user.getUserId()),
                                 System.currentTimeMillis(), System.currentTimeMillis());
                 sendChatMsg(gson.toJson(baseSendMsg));
-                showProgressDialog(R.string.adding_friend);
+                showProgressDialog(R.string.adding_friend);}
                 break;
             default:
                 break;

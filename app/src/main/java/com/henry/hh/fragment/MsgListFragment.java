@@ -212,8 +212,15 @@ public class MsgListFragment extends MyBaseFragment
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        ToastUtils.showShort(getActivity(), "没有最新数据了");
-        mRefreshLayout.endLoadingMore();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ToastUtils.showShort(getActivity(), "没有最新数据了");
+                if (mRefreshLayout.isLoadingMore())
+                    mRefreshLayout.endLoadingMore();
+            }
+        }, 500);
+
         return true;
     }
 
