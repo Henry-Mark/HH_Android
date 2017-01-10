@@ -28,8 +28,10 @@ public class ChatService extends Service {
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "onCreate...");
-
-//        connect();
+        if (mConnect.isConnected()) {
+            mConnect.disconnect();
+        } else
+            connect();
     }
 
     @Override
@@ -70,31 +72,33 @@ public class ChatService extends Service {
      */
     private void connect() {
         Log.i(TAG, "ws connect....");
-        userId = ((MyApplication)getApplication()).getUser().getUserId();
-        Log.d(TAG,"userId="+userId);
-        try {
-            mConnect.connect(Condtsnts_URL.WEBSOCKET_CHAT + userId, new WebSocketHandler() {
-                @Override
-                public void onOpen() {
-                    LogUtils.i(TAG, "Status:Connect to server ");
-                }
+        userId = ((MyApplication) getApplication()).getUser().getUserId();
+        Log.d(TAG, "userId=" + userId);
+        if (userId != 0) {
+            try {
+                mConnect.connect(Condtsnts_URL.WEBSOCKET_CHAT + userId, new WebSocketHandler() {
+                    @Override
+                    public void onOpen() {
+                        LogUtils.i(TAG, "Status:Connect to server ");
+                    }
 
-                @Override
-                public void onTextMessage(String payload) {
-                    Log.i(TAG, "payload=" + payload);
-                    Intent intent = new Intent(ChattingMsgBroadcastReceiver.RECEIVE_MSG);
-                    intent.putExtra(ChattingMsgBroadcastReceiver.MSG, payload);
-                    sendBroadcast(intent);
-                }
+                    @Override
+                    public void onTextMessage(String payload) {
+                        Log.i(TAG, "payload=" + payload);
+                        Intent intent = new Intent(ChattingMsgBroadcastReceiver.RECEIVE_MSG);
+                        intent.putExtra(ChattingMsgBroadcastReceiver.MSG, payload);
+                        sendBroadcast(intent);
+                    }
 
-                @Override
-                public void onClose(int code, String reason) {
-                    LogUtils.i(TAG, "Connection lost..");
-                    connect();
-                }
-            });
-        } catch (WebSocketException e) {
-            e.printStackTrace();
+                    @Override
+                    public void onClose(int code, String reason) {
+                        LogUtils.i(TAG, "Connection lost..");
+                        connect();
+                    }
+                });
+            } catch (WebSocketException e) {
+                e.printStackTrace();
+            }
         }
     }
 

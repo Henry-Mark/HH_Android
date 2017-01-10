@@ -74,7 +74,7 @@ public class Friend implements Serializable {
     @Override
     public String toString() {
         String string = "userId=" + userUid
-                + ",friendId=" + friendUid
+                + ",friendUid=" + friendUid
                 + ",remarkName=" + remarkName
                 + ",beFriendTimeMillis=" + beFriendTimeMillis
                 + ",splitTimeMillis=" + splitTimeMillis

@@ -54,17 +54,25 @@ public class MsgAdapter
          * 首选备注名
          * 若为null，则显示昵称
          * 若还是null，则显示账号
+         * 添加好友消息，则显示“好友申请”
          */
         String name;
-        if (TextUtils.isEmpty(friend.getRemarkName())) {
-            name = TextUtils.isEmpty(friend.getFriendInfo().getNickname())
-                    ? String.valueOf(friend.getFriendInfo().getAccount()) : friend.getFriendInfo().getNickname();
+        //uid==-1为添加好友消息
+        if (friend.getFriendUid() == -1) {
+            name = context.getResources().getString(R.string.friend_apply);
+            holder.mContent.setVisibility(View.GONE);
         } else {
-            name = friend.getRemarkName();
+
+            if (TextUtils.isEmpty(friend.getRemarkName())) {
+                name = TextUtils.isEmpty(friend.getFriendInfo().getNickname())
+                        ? String.valueOf(friend.getFriendInfo().getAccount()) : friend.getFriendInfo().getNickname();
+            } else {
+                name = friend.getRemarkName();
+            }
+            holder.mContent.setVisibility(View.VISIBLE);
+            holder.mContent.setText(friend.getLastContent());
         }
         holder.mUser.setText(name);
-
-        holder.mContent.setText(friend.getLastContent());
         holder.mTime.setText(TimeUtils.getRelativeTime(context, friend.getLastChatTimeMillis()));
 
         /**

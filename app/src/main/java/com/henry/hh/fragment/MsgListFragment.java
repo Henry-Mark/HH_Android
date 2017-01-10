@@ -11,11 +11,13 @@ import android.view.View;
 
 import com.henry.hh.R;
 import com.henry.hh.activity.ChatActivity;
+import com.henry.hh.activity.FriendApplyListActivity;
 import com.henry.hh.adapter.MsgAdapter;
 import com.henry.hh.constants.Condtsnts_URL;
 import com.henry.hh.entity.Friend;
 import com.henry.hh.entity.Message;
 import com.henry.hh.entity.User;
+import com.henry.hh.entity.base.BaseSendMsg;
 import com.henry.hh.interfaces.OnRecyclerItemClickListener;
 import com.henry.hh.utils.JsonUtils;
 import com.henry.library.View.DividerItemDecoration;
@@ -39,7 +41,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * 聊天消息列表
  */
 public class MsgListFragment extends MyBaseFragment
-        implements BGARefreshLayout.BGARefreshLayoutDelegate {
+        implements BGARefreshLayout.BGARefreshLayoutDelegate, OnRecyclerItemClickListener {
 
     private RecyclerView recyclerView;
     private MsgAdapter msgAdapter;
@@ -64,16 +66,12 @@ public class MsgListFragment extends MyBaseFragment
         mRefreshLayout = getViewById(R.id.refreshLayout);
         initRefresh();
         initList();
-        msgAdapter.addOnItemClickListener(new OnRecyclerItemClickListener() {
-            @Override
-            public void onItemClick(View view, List data, int position) {
-                Intent intent = new Intent(getActivity(), ChatActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(FriendsListFragment.UID, friends.get(position));
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+//        msgAdapter.addOnItemClickListener(new OnRecyclerItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, List data, int position) {
+//
+//            }
+//        });
     }
 
     /**
@@ -92,8 +90,9 @@ public class MsgListFragment extends MyBaseFragment
 
         //创建并设置Adapter
         msgAdapter = new MsgAdapter(getActivity());
-
+        msgAdapter.addOnItemClickListener(this);
         recyclerView.setAdapter(msgAdapter);
+
     }
 
     /**
@@ -164,14 +163,20 @@ public class MsgListFragment extends MyBaseFragment
      */
     private void freshList(List<Friend> friends) {
         List<Friend> friendList = new ArrayList<>();
+        List<Message> messages = liteOrm.query(Message.class);
+        //用于存储添加好友消息
+        Friend addFriend = null;
+        //未读好友申请条数
+        int unReadApply = 0;
         for (Friend friend : friends) {
-            List<Message> messages = getMsg();
             //消息条数
             int count = 0;
             //未读消息条数
             int unReadcount = 0;
+            unReadApply = 0;
             for (Message message : messages) {
-                if (message.getFromUserId() == friend.getFriendUid() || message.getToUserId() == friend.getFriendUid()) {
+                if ((message.type.equals(BaseSendMsg.CHAT) || message.type.equals(BaseSendMsg.CHAT_BACK))
+                        && (message.getFromUserId() == friend.getFriendUid() || message.getToUserId() == friend.getFriendUid())) {
                     friend.setLastContent(message.getContent());
                     friend.setLastChatTimeMillis(message.getSendTimeMillis());
                     count++;
@@ -179,12 +184,28 @@ public class MsgListFragment extends MyBaseFragment
                         unReadcount++;
                     }
                 }
+
             }
             if (count != 0) {
                 friendList.add(friend);
             }
             friend.setAmountUnread(unReadcount);
         }
+        for (Message message : messages) {
+            if (BaseSendMsg.ADDFRIEND.equals(message.type) && message.getToUserId() == user.getUserId()) {
+                if (message.getIsRead() == 0)
+                    unReadApply++;
+                addFriend = new Friend();
+                //设定添加好友消息的uid为-1
+                addFriend.setFriendUid(-1);
+                addFriend.setLastChatTimeMillis(message.getSendTimeMillis());
+            }
+        }
+        if (addFriend != null) {
+            addFriend.setAmountUnread(unReadApply);
+            friendList.add(addFriend);
+        }
+
         msgAdapter.refresh(friendList);
     }
 
@@ -224,4 +245,18 @@ public class MsgListFragment extends MyBaseFragment
         return true;
     }
 
+    @Override
+    public void onItemClick(View view, List data, int position) {
+        int uid = ((Friend) data.get(position)).getFriendUid();
+        if (uid == -1) {
+            Intent applyIntent = new Intent(getActivity(), FriendApplyListActivity.class);
+            startActivity(applyIntent);
+        } else if (uid >= 0) {
+            Intent intent = new Intent(getActivity(), ChatActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(FriendsListFragment.UID, friends.get(position));
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+    }
 }

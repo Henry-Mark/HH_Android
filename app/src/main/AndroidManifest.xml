@@ -58,7 +58,8 @@
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.FindPasswordActivity" />
         <activity android:name=".activity.ModifyPasswordActivity" />
-        <activity android:name=".activity.UserInfoActivity"></activity>
+        <activity android:name=".activity.UserInfoActivity" />
+        <activity android:name=".activity.FriendApplyListActivity"></activity>
     </application>
 
 </manifest>

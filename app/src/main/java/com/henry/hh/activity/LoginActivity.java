@@ -328,6 +328,7 @@ public class LoginActivity extends BaseActivity
                     startActivity(MainActivity.class);
                     finish();
                 } else {
+                    cancelProgressDialog();
                     showErrlog(user.getMessage());
                 }
             }

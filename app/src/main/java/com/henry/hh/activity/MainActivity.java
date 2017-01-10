@@ -347,6 +347,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
     @Override
     protected void onReceive(Message message) {
         super.onReceive(message);
+        message.setIsRead(0);
         //保存到数据库
         liteOrm.insert(message, ConflictAlgorithm.Abort);
     }

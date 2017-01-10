@@ -19,6 +19,7 @@ import com.henry.hh.entity.Emojicon;
 import com.henry.hh.entity.Friend;
 import com.henry.hh.entity.Message;
 import com.henry.hh.entity.User;
+import com.henry.hh.entity.base.BaseMsgBean;
 import com.henry.hh.entity.base.BaseSendMsg;
 import com.henry.hh.fragment.FriendsListFragment;
 import com.henry.hh.interfaces.OnChatItemClickListener;
@@ -223,6 +224,7 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
         showLastItem();
         if (message.getState() == Message.MSG_STATE_SENDING) {
             map.put(message.getUid(), false);
+            message.setIsRead(1);
             liteOrm.insert(message, ConflictAlgorithm.Abort);
             LogUtils.d(TAG, "list=" + liteOrm.query(Message.class));
             //5m则发送失败
@@ -376,8 +378,9 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
     private void setMsgReaded() {
 
         liteOrm.update(new WhereBuilder(Message.class).
-                        where("type=? and fromUserId=? or toUserId=?", "chat", friend.getFriendUid(), friend.getFriendUid()),
+                        where("type=? and fromUserId=? or toUserId=?", BaseSendMsg.CHAT, friend.getFriendUid(), friend.getFriendUid()),
                 new ColumnsValue(new String[]{"isRead"}, new Object[]{1}),
                 ConflictAlgorithm.Fail);
+
     }
 }
