@@ -11,6 +11,7 @@ import com.henry.hh.entity.Message;
 import com.henry.library.View.CircleImageView;
 import com.henry.library.adapter.BaseRecyclerAdapter;
 import com.henry.library.adapter.RecyclerHolder;
+import com.henry.library.utils.TimeUtils;
 
 import java.util.List;
 
@@ -43,6 +44,7 @@ public class FriendApplyAdapter extends BaseRecyclerAdapter<FriendApplyAdapter.V
         super.onBindViewHolder(holder, position);
         Message message = datalist.get(position);
 
+        holder.mTime.setText(TimeUtils.getRelativeTime(context, message.getSendTimeMillis()));
         holder.mAccount.setText(message.getFromUserId() + "");
         holder.mMsg.setText(message.getContent());
         /**
@@ -100,7 +102,8 @@ public class FriendApplyAdapter extends BaseRecyclerAdapter<FriendApplyAdapter.V
         public TextView mDisagree;
         //同意布局
         public LinearLayout mLLAgree;
-
+        //时间
+        private TextView mTime;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -111,6 +114,7 @@ public class FriendApplyAdapter extends BaseRecyclerAdapter<FriendApplyAdapter.V
             mAgree = getViewById(R.id.tv_agree);
             mDisagree = getViewById(R.id.tv_disagree);
             mLLAgree = getViewById(R.id.ll_argee);
+            mTime = getViewById(R.id.tv_time);
         }
     }
 
