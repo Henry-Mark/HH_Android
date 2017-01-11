@@ -6,15 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.henry.hh.R;
-import com.henry.hh.adapter.FriendAdapter;
 import com.henry.hh.adapter.FriendApplyAdapter;
 import com.henry.hh.entity.Message;
 import com.henry.hh.entity.base.BaseSendMsg;
-import com.henry.library.View.DividerItemDecoration;
 import com.henry.library.utils.LogUtils;
 import com.litesuits.orm.db.assit.QueryBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FriendApplyListActivity extends MyBaseActivity implements FriendApplyAdapter.OnAgreeClickListener {
