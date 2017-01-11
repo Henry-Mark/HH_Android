@@ -75,7 +75,7 @@ public class UserInfoActivity extends MyBaseActivity {
         boolean isFriend = false;
         List<Friend> friends = getFriendFromOrm();
         for (Friend friend : friends) {
-            if (friend.getFriendUid() == userId) {
+            if (friend.getFriendUid() == userId && friend.getUserUid() == user.getUserId()) {
                 isFriend = true;
                 break;
             }
@@ -95,12 +95,13 @@ public class UserInfoActivity extends MyBaseActivity {
             case R.id.btn_add:
                 if (isFriendAlready(user.getUserId())) {
                     showToast(R.string.string_has_already_been_friend);
-                }else {
-                BaseSendMsg baseSendMsg =
-                        new BaseSendMsg(BaseSendMsg.ADDFRIEND, String.valueOf(user.getUserId()),
-                                System.currentTimeMillis(), System.currentTimeMillis());
-                sendChatMsg(gson.toJson(baseSendMsg));
-                showProgressDialog(R.string.adding_friend);}
+                } else {
+                    BaseSendMsg baseSendMsg =
+                            new BaseSendMsg(BaseSendMsg.ADDFRIEND, String.valueOf(user.getUserId()),
+                                    System.currentTimeMillis(), System.currentTimeMillis());
+                    sendChatMsg(gson.toJson(baseSendMsg));
+                    showProgressDialog(R.string.adding_friend);
+                }
                 break;
             default:
                 break;

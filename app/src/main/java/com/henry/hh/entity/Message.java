@@ -44,6 +44,8 @@ public class Message extends BaseSendMsg {
     private int fromUserId;
     /*消息接收者ID*/
     private int toUserId;
+    /*当前用户账号*/
+    private String currentAccount;
 
     /*缩略图Url*/
     private String thumbnailUrl;
@@ -100,10 +102,19 @@ public class Message extends BaseSendMsg {
         return messageId;
     }
 
+    public void setCurrentAccount(String currentAccount) {
+        this.currentAccount = currentAccount;
+    }
+
+    public String getCurrentAccount() {
+        return currentAccount;
+    }
+
     @Override
     public void setUid(long uid) {
         super.setUid(uid);
     }
+
 
     @Override
     public String toString() {
@@ -113,6 +124,7 @@ public class Message extends BaseSendMsg {
                 + ";fromUserId:" + fromUserId
                 + ";toUserId:" + toUserId
                 + ";messageId:" + messageId
+                + ";currentAccount:" + currentAccount
                 + ";thumbnailUrl:" + thumbnailUrl;
         return string;
     }

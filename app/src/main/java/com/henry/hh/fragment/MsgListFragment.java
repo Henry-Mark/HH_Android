@@ -219,7 +219,7 @@ public class MsgListFragment extends MyBaseFragment
         //升序查找消息列表
         List<Message> messages = liteOrm.<Message>query(new QueryBuilder<Message>(Message.class)
                 .appendOrderAscBy("SendTimeMillis")
-                .where("type=? and fromUserId=? or toUserId=?", "chat", user.getUserId(), user.getUserId()));
+                .where("type=? and currentAccount=? and fromUserId=? or toUserId=?", "chat", user.getAccount(), user.getUserId(), user.getUserId()));
 //        LogUtils.d(TAG, "list>>> " + messages.toString());
 
         return messages;

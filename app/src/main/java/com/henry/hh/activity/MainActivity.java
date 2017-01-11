@@ -97,8 +97,8 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
             //收索
             case R.id.iv_search:
                 Bundle bundle = new Bundle();
-                bundle.putString(KEY,FINDFRIEND);
-                startActivity(SearchActivity.class,bundle);
+                bundle.putString(KEY, FINDFRIEND);
+                startActivity(SearchActivity.class, bundle);
                 break;
             //切换到消息列表
             case R.id.tv_msg_main:
@@ -348,6 +348,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
     protected void onReceive(Message message) {
         super.onReceive(message);
         message.setIsRead(0);
+        message.setCurrentAccount(user.getAccount());
         //保存到数据库
         liteOrm.insert(message, ConflictAlgorithm.Abort);
     }

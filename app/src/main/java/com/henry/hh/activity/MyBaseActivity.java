@@ -88,7 +88,7 @@ public class MyBaseActivity extends TitleActivity {
     /**
      * 停止service
      */
-    protected void stopService(){
+    protected void stopService() {
         if (intent != null) {
             stopService(intent);
         }
@@ -135,8 +135,9 @@ public class MyBaseActivity extends TitleActivity {
      * @return
      */
     public List<Friend> getFriendFromOrm() {
-        List<Friend> friends = liteOrm.query(Friend.class);
-
+//        List<Friend> friends = liteOrm.query(Friend.class);
+        List<Friend> friends = liteOrm.<Friend>query(new QueryBuilder<Friend>(Friend.class)
+                .where("userUid=?", user.getUserId()));
         return getFriendInfo(friends);
     }
 
