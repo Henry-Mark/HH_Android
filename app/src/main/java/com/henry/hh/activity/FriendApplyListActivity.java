@@ -11,6 +11,9 @@ import com.henry.hh.entity.Message;
 import com.henry.hh.entity.base.BaseSendMsg;
 import com.henry.library.utils.LogUtils;
 import com.litesuits.orm.db.assit.QueryBuilder;
+import com.litesuits.orm.db.assit.WhereBuilder;
+import com.litesuits.orm.db.model.ColumnsValue;
+import com.litesuits.orm.db.model.ConflictAlgorithm;
 
 import java.util.List;
 
@@ -64,6 +67,12 @@ public class FriendApplyListActivity extends MyBaseActivity implements FriendApp
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        updateApplyReadState();
+    }
+
+    @Override
     protected void onBackward(View backwardView) {
         super.onBackward(backwardView);
         finish();
@@ -71,11 +80,67 @@ public class FriendApplyListActivity extends MyBaseActivity implements FriendApp
 
     @Override
     public void onAgree(List data, int position) {
-//        showToast(data + ">>" + position);
+        Message message = (Message) data.get(position);
+        doApplyConform(message, BaseSendMsg.APPLY_AGREE);
     }
 
     @Override
     public void onRefuse(List data, int position) {
-//        showToast(data + ">>" + position);
+        Message message = (Message) data.get(position);
+        doApplyConform(message, BaseSendMsg.APPLY_DISAGREE);
+    }
+
+    @Override
+    protected void onReceive(Message message) {
+        super.onReceive(message);
+        if (message.getType().equals(BaseSendMsg.ADDFRIEND_CONFORM_BACK)) {
+            cancelProgressDialog();
+            if (message.getContent().equals(BaseSendMsg.APPLY_DISAGREE)) {
+                updateApplyState(Message.MSG_STATE_ALREADY_REFUSE, message.getUid());
+            } else if (message.getContent().equals(BaseSendMsg.APPLY_AGREE)) {
+                updateApplyState(Message.MSG_STATE_ALREADY_ARGEE, message.getUid());
+            } else {
+                LogUtils.d(TAG, "conform fail..");
+            }
+        } else if (message.getType().equals(BaseSendMsg.ADDFRIEND)) {
+            applyAdapter.refresh(getMsg());
+        }
+    }
+
+    /**
+     * 更新数据库状态 好友申请状态
+     *
+     * @param state
+     * @param uid
+     */
+    private void updateApplyState(int state, long uid) {
+        liteOrm.update(new WhereBuilder(Message.class).
+                        where("type=? and toUserId=? and uid=? ", BaseSendMsg.ADDFRIEND, user.getUserId(), uid),
+                new ColumnsValue(new String[]{"state"}, new Object[]{state}),
+                ConflictAlgorithm.Fail);
+        applyAdapter.refresh(getMsg());
+    }
+
+    /**
+     * 更新申请信息均为已读
+     */
+    private void updateApplyReadState() {
+        liteOrm.update(new WhereBuilder(Message.class).
+                        where("type=? and toUserId=? ", BaseSendMsg.ADDFRIEND, user.getUserId()),
+                new ColumnsValue(new String[]{"isRead"}, new Object[]{1}),
+                ConflictAlgorithm.Fail);
+    }
+
+    /**
+     * 申请确认
+     *
+     * @param msg
+     * @param content
+     */
+    private void doApplyConform(Message msg, String content) {
+        BaseSendMsg baseSendMsg = new BaseSendMsg(BaseSendMsg.ADDFRIEND_CONFORM,
+                content, msg.getUid(), System.currentTimeMillis());
+        sendChatMsg(gson.toJson(baseSendMsg));
+        showProgressDialog(R.string.commiting_result);
     }
 }

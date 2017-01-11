@@ -24,6 +24,7 @@ import com.henry.hh.fragment.FriendsListFragment;
 import com.henry.hh.fragment.LivingCircleLogFragment;
 import com.henry.hh.fragment.MsgListFragment;
 import com.henry.hh.fragment.MyHomeLogFragment;
+import com.henry.library.utils.LogUtils;
 import com.henry.library.utils.ScreenUtils;
 import com.litesuits.orm.db.model.ConflictAlgorithm;
 
@@ -350,7 +351,8 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         message.setIsRead(0);
         message.setCurrentAccount(user.getAccount());
         //保存到数据库
-        liteOrm.insert(message, ConflictAlgorithm.Abort);
+        long ret = liteOrm.insert(message, ConflictAlgorithm.Abort);
+        LogUtils.d(TAG, "insert result = " + ret);
     }
 
     @Override

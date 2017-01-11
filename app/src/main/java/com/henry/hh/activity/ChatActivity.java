@@ -129,7 +129,7 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
         //升序查找消息列表
         List<Message> messages = liteOrm.<Message>query(new QueryBuilder<Message>(Message.class).
                 appendOrderAscBy("SendTimeMillis")
-                .where("type=? and fromUserId=? or toUserId=?", "chat", friend.getFriendUid(), friend.getFriendUid()));
+                .where("type=? and currentAccount=? and fromUserId=? or toUserId=?", "chat", user.getAccount(), friend.getFriendUid(), friend.getFriendUid()));
 //        LogUtils.d(TAG, "list>>> " + messages.toString());
 
         return messages;
@@ -225,8 +225,9 @@ public class ChatActivity extends MyBaseActivity implements OnOperationListener,
         if (message.getState() == Message.MSG_STATE_SENDING) {
             map.put(message.getUid(), false);
             message.setIsRead(1);
+            message.setCurrentAccount(user.getAccount());
             liteOrm.insert(message, ConflictAlgorithm.Abort);
-            LogUtils.d(TAG, "list=" + liteOrm.query(Message.class));
+//            LogUtils.d(TAG, "list=" + liteOrm.query(Message.class));
             //5m则发送失败
             new Handler().postDelayed(new myRunnable(message.getUid()), 5000);
         }

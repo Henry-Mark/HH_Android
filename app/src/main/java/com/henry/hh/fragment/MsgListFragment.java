@@ -175,7 +175,7 @@ public class MsgListFragment extends MyBaseFragment
             int unReadcount = 0;
             unReadApply = 0;
             for (Message message : messages) {
-                if ((message.type.equals(BaseSendMsg.CHAT) || message.type.equals(BaseSendMsg.CHAT_BACK))
+                if (message.type.equals(BaseSendMsg.CHAT) && user.getAccount().equals(message.getCurrentAccount())
                         && (message.getFromUserId() == friend.getFriendUid() || message.getToUserId() == friend.getFriendUid())) {
                     friend.setLastContent(message.getContent());
                     friend.setLastChatTimeMillis(message.getSendTimeMillis());
