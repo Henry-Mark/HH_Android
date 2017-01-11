@@ -50,11 +50,16 @@ public class FriendApplyAdapter extends BaseRecyclerAdapter<FriendApplyAdapter.V
         /**
          * 使用state变量：
          * 5.表示已同意
-         *
+         * 6.已拒绝
          */
         if (message.getState() == Message.MSG_STATE_ALREADY_ARGEE) {
             holder.mLLAgree.setVisibility(View.GONE);
             holder.mAlreadyAgree.setVisibility(View.VISIBLE);
+            holder.mAlreadyAgree.setText(R.string.already_agree);
+        } else if (message.getState() == Message.MSG_STATE_ALREADY_REFUSE) {
+            holder.mLLAgree.setVisibility(View.GONE);
+            holder.mAlreadyAgree.setVisibility(View.VISIBLE);
+            holder.mAlreadyAgree.setText(R.string.already_refuse);
         } else {
             holder.mLLAgree.setVisibility(View.VISIBLE);
             holder.mAlreadyAgree.setVisibility(View.GONE);

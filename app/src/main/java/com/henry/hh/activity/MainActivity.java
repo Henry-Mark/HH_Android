@@ -351,4 +351,11 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         //保存到数据库
         liteOrm.insert(message, ConflictAlgorithm.Abort);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        user.setUserId(0);
+        stopService();
+    }
 }

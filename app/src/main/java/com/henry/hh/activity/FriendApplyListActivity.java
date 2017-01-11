@@ -48,8 +48,9 @@ public class FriendApplyListActivity extends MyBaseActivity implements FriendApp
         applyAdapter.addAgreeMentClickListener(this);
     }
 
+
     private List<Message> getMsg() {
-        //升序查找消息列表
+        //降序查找消息列表
         List<Message> messages = liteOrm.<Message>query(new QueryBuilder<Message>(Message.class)
                 .appendOrderDescBy("SendTimeMillis")
                 .where("type=? and toUserId=?", BaseSendMsg.ADDFRIEND, user.getUserId()));

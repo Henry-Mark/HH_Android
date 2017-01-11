@@ -14,6 +14,7 @@
     <string name="add_friends">加为好友</string>
     <string name="friend_apply">好友申请</string>
     <string name="already_agree">已同意</string>
+    <string name="already_refuse">已拒绝</string>
     <string name="string_agree">同意</string>
     <string name="string_refuse">拒绝</string>
     <string name="string_friend_new">新朋友</string>

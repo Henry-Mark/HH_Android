@@ -111,7 +111,7 @@ public class UserInfoActivity extends MyBaseActivity {
     @Override
     protected void onReceive(Message message) {
         super.onReceive(message);
-        if (BaseSendMsg.ADDFRIEND.equals(message.getType())) {
+        if (BaseSendMsg.ADDFRIEND_BACK.equals(message.getType())) {
             cancelProgressDialog();
             showToast(R.string.apply_adding_success);
         }

@@ -20,6 +20,7 @@ public class Message extends BaseSendMsg {
     public final static int MSG_STATE_SUCCESS = 1;
     public final static int MSG_STATE_FAIL = 2;
     public final static int MSG_STATE_ALREADY_ARGEE = 5;
+    public final static int MSG_STATE_ALREADY_REFUSE = 6;
 
 
     /**
@@ -36,6 +37,7 @@ public class Message extends BaseSendMsg {
      * 2.发送失败
      * <p>
      * 5.好友申请，已同意
+     * 6.好友申请，已同意
      */
     private int state;
     /*消息发送者ID*/

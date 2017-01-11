@@ -34,6 +34,8 @@ public class MyBaseActivity extends TitleActivity {
     //用户信息
     protected User user = new User();
 
+    Intent intent = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +48,7 @@ public class MyBaseActivity extends TitleActivity {
         liteOrm.setDebugged(true); // open the log
 
 
-        Intent intent = new Intent(this, ChatService.class);
+        intent = new Intent(this, ChatService.class);
         startService(intent);// 启动服务
 
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);//绑定目标Service
@@ -82,6 +84,15 @@ public class MyBaseActivity extends TitleActivity {
             // 连接断开
         }
     };
+
+    /**
+     * 停止service
+     */
+    protected void stopService(){
+        if (intent != null) {
+            stopService(intent);
+        }
+    }
 
     @Override
     protected void onDestroy() {
