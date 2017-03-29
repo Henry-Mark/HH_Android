@@ -3,4 +3,6 @@
     <string name="title">标题</string>
     <string name="back">返回</string>
     <string name="commit">提交</string>
+
+    <string name="isconnectde_failed">服务器连接失败</string>
 </resources>
